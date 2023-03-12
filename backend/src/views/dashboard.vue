@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <h1>dashboard...</h1>
+<h1>首頁..</h1>
 </template>
 
 <style lang="scss" scoped>
