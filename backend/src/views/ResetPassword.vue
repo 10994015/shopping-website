@@ -6,16 +6,8 @@
 <div class="login">
     <div class="darken"></div>
     <div class="main">
-        <h1>FZR CMS</h1>
-        <form @submit.prevent="login">
-            <div class="form-group">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                    </svg>
-                </div>
-                <input type="email" name="email" placeholder="Email">
-            </div>
+        <h1>設定新密碼</h1>
+        <form @submit.prevent="">
             <div class="form-group">
                 <div class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -24,10 +16,18 @@
                 </div>
                 <input type="password" name="password" placeholder="Password">
             </div>
-            <div class="commit-text">
-                <router-link :to="{name: 'requestPassword'}">忘記密碼?</router-link>
+            <div class="form-group">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                    </svg>
+                </div>
+                <input type="password" name="password-repeat" placeholder="Password Repeat">
             </div>
-            <button type="submit">Login</button>
+            <div class="commit-text">
+                <router-link :to="{name: 'login'}">Go back to login?</router-link>
+            </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
 </div>
@@ -61,7 +61,7 @@
         align-items: center;
         h1{
             font-weight: 900;
-            font-size: 30px;
+            font-size: 24px;
             letter-spacing: 2px;
             color:#fff;
         }
@@ -99,9 +99,8 @@
             >.commit-text{
                 color:#ccc;
                 font-size: 14px;
-                margin-left: auto;
+                margin-right: auto;
                 transition: .3s;
-                padding: 0 10px;
                 &:hover{
                     color:#fff;
                 }
