@@ -3,7 +3,7 @@ import AppLayout from "../components/AppLayout.vue"
 </script>
 
 <template>
-asdsda
+
 
 </template>
 
