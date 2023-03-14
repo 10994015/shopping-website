@@ -16,6 +16,9 @@
                 </div>
                 <input type="email" name="email" placeholder="Email address">
             </div>
+            <div class="commit-text">
+                <router-link :to="{name: 'login'}">Go back to login?</router-link>
+            </div>
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -83,6 +86,15 @@
                     outline: none;
                     padding: 15px 18px 15px 16px;
                     font-size: 14px;
+                }
+            }
+            >.commit-text{
+                color:#ccc;
+                font-size: 14px;
+                margin-right: auto;
+                transition: .3s;
+                &:hover{
+                    color:#fff;
                 }
             }
             >button{

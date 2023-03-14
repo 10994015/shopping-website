@@ -1,10 +1,9 @@
 <script setup>
-import AppLayout from "../components/AppLayout.vue"
+
 </script>
 
 <template>
-asdsda
-
+<h1>products</h1>
 </template>
 
 <style lang="scss" scoped>
