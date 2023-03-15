@@ -6,7 +6,7 @@ use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
 
-class ProdcutController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
