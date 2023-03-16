@@ -4,13 +4,19 @@ import store from '../store';
 import {PRODUCTS_PER_PAGE} from "../constants";
 const perPage = ref(PRODUCTS_PER_PAGE);
 const search = ref('');
+const sortField = ref('updated_at');
+const sortDirection = ref('desc');
 const products = computed(()=> store.state.products);
-
 onMounted(() => {
     getProducts();
 })
-const getProducts = ()=>{
-    store.dispatch('getProducts');
+const getProducts = (url = null)=>{
+    store.dispatch('getProducts', {url, sort_field:sortField.value, sort_direction: sortDirection.value, search: search.value, perPage:perPage.value});
+};
+const getForPage = (ev, link)=>{
+    if(!link.url || link.active) return;
+
+    getProducts(link.url);
 };
 </script>
 
@@ -44,7 +50,7 @@ const getProducts = ()=>{
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-auto">
+            <table class="table table-auto w-full">
                 <thead>
                     <tr>
                         <th><input type="checkbox"></th>
@@ -56,8 +62,18 @@ const getProducts = ()=>{
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="product of products.data.data" :key="product.id">
+                <tbody v-if="products.loading" class="loadingTable">
+                    <tr>
+                        <td colspan="7" class="w-full" style="text-align:center">
+                            <svg class="animate-spin h-5 w-5 text-white"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr v-for="product of products.data" :key="product.id">
                         <td><input type="checkbox" :name="product.slug"></td>
                         <td>{{product.id}}</td>
                         <td><img :src="product.image" /></td>
@@ -68,6 +84,14 @@ const getProducts = ()=>{
                     </tr>
                 </tbody>
                 </table>
+        </div>
+        <div class="paging" v-if="products.total > products.limit">
+            <div class="pageInfo">Showing from {{products.from}} to {{products.to}}</div>
+            <div class="pageBtn">
+                <nav>
+                    <a href="#" v-for="(link, i) of products.links" :key="i" @click.prevent="getForPage($event, link)" :disabled="!link.url" :class="[{'active': link.active}, {'disabled':!link.url}]" v-html="link.label"></a>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
@@ -169,6 +193,15 @@ const getProducts = ()=>{
                 }
                 >tbody{
                     background-color: transparent;
+                    &.loadingTable{
+                        td{
+                            text-align: center;
+                            padding: 30px 0;
+                            >svg{
+                                margin:0 auto;
+                            }
+                        }
+                    }
                     >tr{
                         border-bottom: 1px #2f373f solid;
                         >td{
@@ -178,6 +211,52 @@ const getProducts = ()=>{
                                 width:65px;
                                 height: 40px;
                                 object-fit: cover;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        >.paging{
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            >.pageBtn{
+                nav{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    a{
+                        color: #fff;
+                        border-radius: 30px!important;
+                        margin: 0 3px!important;
+                        border: none;
+                        width: 32px;
+                        height: 32px;
+                        padding: 0;
+                        text-align: center;
+                        line-height: 32px;
+                        font-size: 12px;
+                        transition: .3s;
+                        &:hover{
+                            color:#1c84ee;
+                            background-color: #282f36;
+                        }
+                        &.active{
+                            background-color: #1c84ee;
+                            border-color: #1c84ee;
+                            &:hover{
+                                color:#fff;
+                                background-color: #1c84ee;
+                            }
+                        }
+                        &.disabled{
+                            cursor: default;
+                            color:#777;
+                            &:hover{
+                                color:#777;
+                                background-color: #242A30;
                             }
                         }
                     }

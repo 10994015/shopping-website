@@ -27,7 +27,7 @@ const openSideBar = ()=>{
         <main>
             <router-view></router-view>
         </main>
-        <Footer text="Dashboard" />
+        <Footer text="FZR" />
     </div>
 </div>
 <div class="loading" v-else>
