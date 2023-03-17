@@ -18,6 +18,21 @@ const getForPage = (ev, link)=>{
 
     getProducts(link.url);
 };
+const sortProducts = (field)=>{
+    sortField.value = field;
+    if(sortField.value === field){
+        if(sortDirection.value === 'asc'){
+            sortDirection.value = 'desc'
+        }else{
+            sortDirection.value = 'asc'
+        }
+    }else{
+        sortField.value = field;
+        sortDirection.value = 'asc';
+    }
+
+    getProducts();
+}
 </script>
 
 <template>
@@ -32,10 +47,10 @@ const getForPage = (ev, link)=>{
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
                     </div>
-                    <input type="text" placeholder="Search..." v-model="search" />
+                    <input type="text" placeholder="Search..." v-model="search" @change="getProducts()" />
                 </div>
                 <div class="form-group">
-                    <select v-model="perPage">
+                    <select v-model="perPage" @change="getProducts()">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -53,13 +68,73 @@ const getForPage = (ev, link)=>{
             <table class="table table-auto w-full">
                 <thead>
                     <tr>
-                        <th><input type="checkbox"></th>
-                        <th>ID</th>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Price</th>
-                        <th>Last Updated At</th>
-                        <th>Status</th>
+                        <th><input type="checkbox" /></th>
+                        <th @click="sortProducts('id')" :class="['cursor-pointer', {'active': sortField==='id'}]">
+                            <div class="flex items-center ">
+                                <div>Id</div>
+                                <div class="ml-2" v-if="sortField === 'id'">
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
+                        <th @click="sortProducts('image')" :class="['cursor-pointer', {'active': sortField==='image'}]">
+                            <div class="flex items-center ">
+                                <div>Image</div>
+                                <div class="ml-2" v-if="sortField === 'image'">
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
+                        <th @click="sortProducts('title')" :class="['cursor-pointer', {'active': sortField==='title'}]">
+                            <div class="flex items-center ">
+                                <div>Title</div>
+                                <div class="ml-2" v-if="sortField === 'title'">
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
+                        <th @click="sortProducts('price')" :class="['cursor-pointer', {'active': sortField==='price'}]">
+                            <div class="flex items-center ">
+                                <div>Price</div>
+                                <div class="ml-2" v-if="sortField === 'price'">
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
+                        <th @click="sortProducts('updated_at')" :class="['cursor-pointer', {'active': sortField==='updated_at'}]">
+                            <div class="flex items-center ">
+                                <div>Last Updated At</div>
+                                <div class="ml-2" v-if="sortField === 'updated_at'">
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody v-if="products.loading" class="loadingTable">
@@ -74,13 +149,13 @@ const getForPage = (ev, link)=>{
                 </tbody>
                 <tbody v-else>
                     <tr v-for="product of products.data" :key="product.id">
-                        <td><input type="checkbox" :name="product.slug"></td>
+                        <td><input type="checkbox" :name="product.slug" /></td>
                         <td>{{product.id}}</td>
                         <td><img :src="product.image" /></td>
                         <td>{{product.title}}</td>
                         <td>{{product.price}}</td>
                         <td>{{ product.updated_at }}</td>
-                        <td>Status</td>
+                        <td>Action</td>
                     </tr>
                 </tbody>
                 </table>
@@ -188,6 +263,9 @@ const getForPage = (ev, link)=>{
                         >th{
                             text-align: left;
                             padding:  15px;
+                            &.active{
+                                background-color: #313533;
+                            }
                         }
                     }
                 }
