@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -30,7 +36,23 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        return new ProductResource(Product::create($request->validated()));
+        $data = $request->validated();
+        $data['created_by'] = $request->user()->id;
+        $data['updated_by'] = $request->user()->id;
+
+        $image = $data['image'] ?? null;
+
+        if($image){
+            $relatevePath = $this->saveImage($image);
+            $data['image'] = URL::to(Storage::url($relatevePath));
+            $data['image_mime'] = $image->getClientMimeType();
+            $data['image_size'] = $image->getSize();
+        }
+
+        $product = Product::create($data);
+
+        return new ProductResource($product);
+        // return new ProductResource(Product::create($request->validated()));
     }
 
     /**
@@ -67,5 +89,17 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->noContent(); //回應204
+    }
+    
+    public function saveImage(UploadedFile $image){
+        $path = 'images/' . Str::random();
+        if(!Storage::exists($path)){
+            Storage::makeDirectory($path, 0755, true);
+        }
+        if(!Storage::putFileAs('public/' . $path, $image, $image->getClientOriginalName())){
+            throw new \Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
+        }
+
+        return $path . '/' .$image->getClientOriginalName();
     }
 }

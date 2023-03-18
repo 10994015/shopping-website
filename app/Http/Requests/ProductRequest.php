@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'title'=> ['required', 'max:2000'],
-            'image'=> ['nullable', 'image'],
+            'image'=> ['required', 'image'],
             'price'=> ['required', 'numeric'],
             'description'=> ['nullable', 'string'],
         ];
