@@ -1,9 +1,21 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import store from '../store';
-import {useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
+const route = useRoute();
 
 const router = useRouter();
+
+const DEFAULT_PRODUCT = {
+    id: "",
+    title:"",
+    image:"",
+    description:"",
+    price:0
+}
+const image_url = ref('');
+const randerLoading = ref(false);
+
 
 const loading = ref(false);
 const previewLoading = ref(false);
@@ -11,21 +23,40 @@ const previewImg = ref(null);
 const isPreview = ref(false);
 const errorMsg = ref(null);
 const successMsg = ref(null);
-const product = ref({
-    id: "",
-    title:"",
-    image:"",
-    description:"",
-    price:0
+const product = ref({...DEFAULT_PRODUCT})
+const isCreate = ref(false);
+onMounted(() => {
+    const productId = route.params.id;
+    if(productId === 'create') {
+        randerLoading.value = true;
+        product.id = productId;
+        isCreate.value = true;
+        return;
+    };
+    store.dispatch('isExistProduct', productId).then(res=>{
+        if(res.data){
+            store.dispatch('getProduct', productId).then(res=>{
+                product.value = res.data;
+                image_url.value = res.data.image_url;
+                isPreview.value = true
+                randerLoading.value = true;
+            }).then(()=>{
+                if(image_url.value != ""){
+                    previewImg.value.src = image_url.value;
+                }
+            });
+        }else{
+            router.push({path:'/notfound'})
+        }
+    }).catch(err=>{
+        console.error(err);
+    })
 })
-const cancel = ()=>{
-}
+
 const previewImage = (ev)=>{
     previewLoading.value = true;
     if(ev.target.files && ev.target.files[0]){
         product.value.image = ev.target.files[0];
-        console.log(product.value.image);
-
         const reader = new FileReader();
         reader.onload = (e)=> {
             previewImg.value.src = e.target.result;
@@ -37,17 +68,30 @@ const previewImage = (ev)=>{
 }
 const onSubmit = ()=>{
     loading.value = true;
-    store.dispatch('createProduct', product.value).then(res=>{
-      if(res.status === 200 || res.status === 201){
-        successMsg.value = "上傳成功！";
-        errorMsg.value = null;
-      }
-      loading.value = false;
-    }).catch(err=>{
+    if(isCreate.value){
+        store.dispatch('createProduct', product.value).then(res=>{
+        if(res.status === 200 || res.status === 201){
+            successMsg.value = "上傳成功！";
+            errorMsg.value = null;
+        }
         loading.value = false;
-        console.error(err);
-        errorMsg.value = err.response.data.errors;
-    })
+        }).catch(err=>{
+            loading.value = false;
+            errorMsg.value = err.response.data.errors;
+        })
+    }else{
+        store.dispatch('updateProduct', product.value).then(res=>{
+            if(res.status === 200 || res.status === 201){
+                successMsg.value = "更新成功！";
+                errorMsg.value = null;
+            }
+            loading.value = false;
+        }).catch(err=>{
+            loading.value = false;
+            // errorMsg.value = err.response.data.errors;
+        })
+    }
+    
 };
 
 </script>
@@ -61,14 +105,21 @@ const onSubmit = ()=>{
             <p>Fill all information below</p>
             <span v-if="successMsg">{{ successMsg }}</span>
         </div>
-        <form action="" @submit.prevent="onSubmit()">
+        <form v-if="randerLoading" action="" @submit.prevent="onSubmit()">
             <div class="form-group">
                 <label for="">產品名稱</label>
                 <input type="text" v-model="product.title" />
             </div>
             <div class="form-group">
                 <label for="">產品價格</label>
-                <input type="number" v-model="product.price" />
+                <div class="input-group">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <input type="number" v-model="product.price" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="">產品描述</label>
@@ -88,7 +139,7 @@ const onSubmit = ()=>{
                         <span>將文件拖放到此處或單擊以上傳。</span>
                     </div>
                     <div v-else class="isPreview">
-                        <img src=""  ref="previewImg" />
+                        <img src=""  ref="previewImg" id="previewImg" />
                     </div>
                 </label>
                 <input type="file" id="imagefile" hidden @change="previewImage($event)"  />
@@ -104,6 +155,12 @@ const onSubmit = ()=>{
                 <button class="pre" type="button" @click="router.push({name:'app.products'})" >回列表</button>
             </div>
         </form>
+        <div v-else class="flex items-center justify-center py-10">
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
         <div class="errorMsg" v-if="errorMsg">
             <span v-for="(error, i) in errorMsg" :key="i"> {{error[0]}}</span>
         </div>
@@ -122,7 +179,7 @@ const onSubmit = ()=>{
     >.card{
         background-color: #242A30;
         border-radius:12px;
-        padding: 1.5rem 2.5rem;
+        padding: 1.5rem 4rem 1.5rem 2.5rem;
         margin-top: 25px;
         >.card-title{
             border-bottom: 1px #2d343c solid;
@@ -196,7 +253,7 @@ const onSubmit = ()=>{
                     }
                     
                 }
-                >input[type='text'], input[type='number']{
+                input[type='text'], input[type='number']{
                     border:none;
                     outline: none;
                     border-radius: 5px;
@@ -206,6 +263,25 @@ const onSubmit = ()=>{
                     border:1px #30373f solid;
                     height: 36px;
                     font-size: 14px;
+                }
+                >.input-group{
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    .icon{
+                        background-color: hsla(0,0%,100%,.1);
+                        width: 36px;
+                        height: 36px;
+                        border:none;
+                        padding: 7.5px 0 7.5px 9px;
+                        border-radius: 5px 0 0 5px;
+                        margin-right: 0;
+                    }
+                    
+                    input{
+                        margin-left: 0;
+                        width: calc(100% - 36px);
+                    }
                 }
                 >textarea{
                     border:none;

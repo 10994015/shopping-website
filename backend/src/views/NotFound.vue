@@ -7,7 +7,7 @@
         <h2>404!</h2>
         <h6>SORRY, PAGE NOT FOUND</h6>
         <p>It will be as simple as Occidental in fact, it will Occidental to an English person</p>
-        <router-link :to="{name:'dashboard'}">Back to Dashboard</router-link>
+        <router-link :to="{name:'app.dashboard'}">Back to Dashboard</router-link>
     </div>
 </template>
 

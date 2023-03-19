@@ -33,9 +33,7 @@ export function getProducts({commit}, {url = null, search = '', perPage = 10, so
 }
 
 export function createProduct({commit}, product){
-    console.log(product.image);
     if(product.image instanceof File){
-        console.log(1);
         const form = new FormData();
         form.append('title', product.title);
         form.append('image', product.image);
@@ -45,4 +43,36 @@ export function createProduct({commit}, product){
     }
 
     return axiosClient.post('/products', product);
+}
+
+export function updateProduct({commit}, product){
+    const id = product.id;
+    if(product.image instanceof File){
+        const form = new FormData();
+        form.append('id', product.id);
+        form.append('title', product.title);
+        form.append('image', product.image);
+        form.append('price', product.price);
+        form.append('description', product.description);
+        form.append('_method', 'PUT');
+        product = form;
+    }else{
+        product._method = 'PUT'
+    }
+
+    return axiosClient.post(`/products/${id}`, product);
+}
+
+export function deleteProduct({commit}, id){
+    return axiosClient.delete(`/products/${id}`);
+}
+
+export function getProduct({commit}, id){
+    return axiosClient.get(`/products/${id}`);
+}
+
+export function isExistProduct({commit}, id){
+    return axiosClient.post(`/isExistProduct`, {id: id}).then(res=>{
+        return res;
+    });
 }

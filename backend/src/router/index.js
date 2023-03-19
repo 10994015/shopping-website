@@ -28,7 +28,7 @@ const routes = [
                 component: Products,
             },
             {
-                path:'add-product',
+                path:'add-product/:id',
                 name:'app.addProduct',
                 component: AddProduct,
             },
@@ -59,7 +59,7 @@ const routes = [
         },
     },
     {
-        path:'/:pathMatch(.*)',
+        path: '/:catchAll(.*)',
         name:'notfound',
         component:NotFound,
     }
@@ -68,7 +68,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
 
 router.beforeEach((to, from, next)=>{
     if(to.meta.requiresAuth && !store.state.user.token){

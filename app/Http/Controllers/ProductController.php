@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -75,6 +76,22 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
+        $data = $request->validated();
+        $data['updated_by'] = $request->user()->id;
+
+        $image = $data['image'] ?? null;
+        
+        if($image){
+            $relativePath = $this->saveImage($image);
+            $data['image'] = URL::to(Storage::url($relativePath));
+            $data['image_mime'] = $image->getClientMimeType();
+            $data['image_size'] = $image->getSize();
+
+            if($product->image){
+                Storage::deleteDirectory('/public/' . dirname($product->image));
+            }
+        }
+        $product->update($data);
         return new ProductResource($product);
     }
 
@@ -101,5 +118,11 @@ class ProductController extends Controller
         }
 
         return $path . '/' .$image->getClientOriginalName();
+    }
+
+    public function isExistProduct(Request $req){
+        Log::info($req->id);
+        $product = Product::find($req->id);
+        return ($product) ? true :false;
     }
 }
