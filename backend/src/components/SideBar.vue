@@ -96,8 +96,9 @@ const sideBarOpen = computed(()=> props.modelValue);
                 transition: .3s;
                 &:hover{
                     background-color: rgba($color: #000, $alpha: .3);
+                    color:#fff;
                 }
-                &.router-link-active{
+                &.active{
                     color:#fff;
                 }
                 svg{

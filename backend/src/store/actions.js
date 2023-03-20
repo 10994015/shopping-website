@@ -38,7 +38,11 @@ export function createProduct({commit}, product){
         form.append('title', product.title);
         form.append('image', product.image);
         form.append('price', product.price);
+        form.append('sale_price', product.sale_price);
         form.append('description', product.description);
+        form.append('short_description', product.short_description);
+        form.append('hidden', product.hidden);
+        form.append('featured', product.featured);
         product = form;
     }
 
@@ -47,19 +51,24 @@ export function createProduct({commit}, product){
 
 export function updateProduct({commit}, product){
     const id = product.id;
+    const hidden = (product.hidden) ? 1 :0;
+    const featured = (product.featured) ? 1 :0;
     if(product.image instanceof File){
         const form = new FormData();
         form.append('id', product.id);
         form.append('title', product.title);
         form.append('image', product.image);
         form.append('price', product.price);
+        form.append('sale_price', product.sale_price);
         form.append('description', product.description);
+        form.append('short_description', product.short_description);
+        form.append('hidden', hidden);
+        form.append('featured', featured);
         form.append('_method', 'PUT');
         product = form;
     }else{
         product._method = 'PUT'
     }
-
     return axiosClient.post(`/products/${id}`, product);
 }
 

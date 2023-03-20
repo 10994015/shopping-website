@@ -15,7 +15,7 @@ class Product extends Model
 
     protected $table = "products";
 
-    protected $fillable = ['title', 'description', 'price', 'image', 'image_mime', 'image_size', 'created_by', 'updated_by'];
+    protected $fillable = ['title', 'description', 'short_description', 'price', 'sale_price', 'image', 'image_mime', 'image_size', 'hidden', 'featured', 'created_by', 'updated_by'];
 
     public function getSlugOptions() : SlugOptions
     {

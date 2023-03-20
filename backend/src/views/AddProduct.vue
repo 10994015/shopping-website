@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onMounted } from 'vue';
 import store from '../store';
 import {useRouter, useRoute} from "vue-router";
 const route = useRoute();
@@ -11,7 +11,11 @@ const DEFAULT_PRODUCT = {
     title:"",
     image:"",
     description:"",
-    price:0
+    short_description:"",
+    price:0,
+    sale_price:null,
+    hidden:false,
+    featured:false,
 }
 const image_url = ref('');
 const randerLoading = ref(false);
@@ -40,6 +44,10 @@ onMounted(() => {
                 image_url.value = res.data.image_url;
                 isPreview.value = true
                 randerLoading.value = true;
+
+                product.value.title = (product.value.title == 'null') ? "" :product.value.title;
+                product.value.description = (product.value.description == 'null') ? "" :product.value.description;
+                product.value.short_description = (product.value.short_description == 'null') ? "" :product.value.short_description;
             }).then(()=>{
                 if(image_url.value != ""){
                     previewImg.value.src = image_url.value;
@@ -88,7 +96,7 @@ const onSubmit = ()=>{
             loading.value = false;
         }).catch(err=>{
             loading.value = false;
-            // errorMsg.value = err.response.data.errors;
+            errorMsg.value = err.response.data.errors;
         })
     }
     
@@ -111,6 +119,10 @@ const onSubmit = ()=>{
                 <input type="text" v-model="product.title" />
             </div>
             <div class="form-group">
+                <label for="">產品簡短描述</label>
+                <input type="text" v-model="product.short_description" />
+            </div>
+            <div class="form-group">
                 <label for="">產品價格</label>
                 <div class="input-group">
                     <div class="icon">
@@ -119,6 +131,17 @@ const onSubmit = ()=>{
                         </svg>
                     </div>
                     <input type="number" v-model="product.price" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">產品售價</label>
+                <div class="input-group">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <input type="number" v-model="product.sale_price" />
                 </div>
             </div>
             <div class="form-group">
@@ -144,7 +167,18 @@ const onSubmit = ()=>{
                 </label>
                 <input type="file" id="imagefile" hidden @change="previewImage($event)"  />
             </div>
-            <div class="form-group btn-group">
+            <div class="chkbox-group">
+                <div class="form-group ">
+                    <label for="">設為精選</label>
+                    <input type="checkbox" v-model="product.featured"  />
+                </div>
+                <div class="form-group ml-10">
+                    <label for="">隱藏產品</label>
+                    <input type="checkbox" v-model="product.hidden" />
+                </div>
+            </div>
+            <div class="form-group"></div>
+            <div class="form-group btn-group mt-10">
                 <button type="submit" :class="{'loading':loading}">
                     <svg v-if="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -198,7 +232,7 @@ const onSubmit = ()=>{
                 background-color: rgb(0, 190, 48);
                 color:#fff;
                 border-radius: 3px;
-                padding:6px 12px ;
+                padding:10px 20px ;
                 font-size: 13px;
             }
         }
@@ -207,7 +241,12 @@ const onSubmit = ()=>{
             display: grid;
             grid-template-columns: repeat(2, 50%);
             grid-column-gap: 30px;
-            >.form-group{
+            .chkbox-group{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+            .form-group{
                 display: flex;
                 flex-direction: column;
                 padding: 12px 0;
@@ -353,5 +392,39 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="checkbox"] ,input[type="radio"]{
+    position: relative;
+    width:50px;
+    height: 25px;
+    outline: none;
+    background:linear-gradient(to right,#bbb ,#999);
+    -webkit-appearance: none;
+    cursor: pointer;
+    border-radius: 20px;
+    &::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width:25px;
+        height: 25px;
+        background: #fff;
+        border-radius: 50%;
+        transform: scale(0.98,0.96);
+        transition: .5s;
+    }
+    &:checked{
+        background: linear-gradient(to right,#1C84EE ,#185CC9);
+        &::before{
+            left:25px;
+        }
+
+    }
+    &::after{
+        content:'';
+    }
+    
 }
 </style>

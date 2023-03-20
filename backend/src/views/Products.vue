@@ -46,7 +46,7 @@ const deleteProduct = (product)=>{
 </script>
 
 <template>
-<div class="products">
+<div class="products" >
     <h1>Products</h1>
     <div class="card">
         <div class="card-header">
@@ -75,11 +75,11 @@ const deleteProduct = (product)=>{
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-auto w-full">
+            <table class="table table-auto w-full animate-fade-in-down">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" /></th>
-                        <th @click="sortProducts('id')" :class="['cursor-pointer', {'active': sortField==='id'}]">
+                        <th class="w-[20px]"><input type="checkbox" /></th>
+                        <th @click="sortProducts('id')" :class="['w-[40px]','cursor-pointer', {'active': sortField==='id'}]">
                             <div class="flex items-center ">
                                 <div>Id</div>
                                 <div class="ml-2" v-if="sortField === 'id'">
@@ -131,6 +131,19 @@ const deleteProduct = (product)=>{
                                 </div> 
                             </div>
                         </th>
+                        <th @click="sortProducts('sale_price')" :class="['cursor-pointer', {'active': sortField==='sale_price'}]">
+                            <div class="flex items-center ">
+                                <div>Sale price</div>
+                                <div class="ml-2" v-if="sortField === 'sale_price'">
+                                    <svg v-if="sortDirection === 'desc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                    </svg>   
+                                    <svg v-if="sortDirection === 'asc'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </div> 
+                            </div>
+                        </th>
                         <th @click="sortProducts('updated_at')" :class="['cursor-pointer', {'active': sortField==='updated_at'}]">
                             <div class="flex items-center ">
                                 <div>Last Updated At</div>
@@ -144,6 +157,8 @@ const deleteProduct = (product)=>{
                                 </div> 
                             </div>
                         </th>
+                        <th>Status</th>
+                        <th>Featured</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -157,14 +172,18 @@ const deleteProduct = (product)=>{
                         </td>
                     </tr>
                 </tbody>
-                <tbody v-else>
-                    <tr v-for="product of products.data" :key="product.id">
-                        <td><input type="checkbox" :name="product.slug" /></td>
-                        <td>{{product.id}}</td>
+                <tbody v-else >
+                    <tr v-for="(product, idx) of products.data" :key="product.id" class="animate-fade-in-down" >
+                        <td class="w-[20px]"><input type="checkbox" :name="product.slug" /></td>
+                        <td class="w-[40px]">{{product.id}}</td>
                         <td><img :src="product.image_url" /></td>
                         <td>{{product.title}}</td>
                         <td>{{product.price}}</td>
+                        <td v-if="product.sale_price">{{product.sale_price}}</td>
+                        <td v-else>{{ product.price }}</td>
                         <td>{{ product.updated_at }}</td>
+                        <td><span v-if="product.hidden">隱藏</span><span v-else class="active">顯示</span></td>
+                        <td><span v-if="product.featured" class="active">焦點</span><span v-else>-</span></td>
                         <td>
                             <button class="edit ml-1" @click="router.push({name:'app.addProduct', params:{id:product.id}})">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -318,6 +337,16 @@ const deleteProduct = (product)=>{
                                 }
                                 &.delete{
                                     color:rgb(200, 6, 6);
+                                }
+                            }
+                            span{
+                                padding: 3px 4px;
+                                border-radius: 3px;
+                                color: #ef6767;
+                                background-color: rgba(239,103,103,.18);
+                                &.active{
+                                    color: #34c38f;
+                                    background-color: rgba(52,195,143,.18);
                                 }
                             }
                         }
