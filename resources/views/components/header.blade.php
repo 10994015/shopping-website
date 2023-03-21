@@ -1,7 +1,7 @@
 <header class="">
     <a href="/" class='logo'>
         <img src="/images/logo.png" alt="" />
-        <span>FZR 植物專賣店</span>
+        <span>房子ROW傢俱專賣店</span>
     </a>
     <nav>
         <a href="">首頁</a>

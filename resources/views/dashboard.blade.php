@@ -2,18 +2,18 @@
     <div class="index">
         <section class="banner">
             <div class="text">
-                <h1>最優質的植物，只在<span>FZR</span></h1>
-                <p>種類繁多的植物只需 200元起</p>
-                <span>Amazing Variety Of Plants Starting Just $ 200</span>
+                <h1>最優質的傢俱，只在<span>房子ROW</span></h1>
+                <p>種類繁多的傢俱只需 200元起</p>
+                <span>A wide range of furniture from as little as $200</span>
                 <a href="/">SHOP NOW</a>
             </div>
         </section>
         <section class="intro">
             <div class="item">
-                <i class="fa-solid fa-spa"></i>
+                <i class="fa-solid fa-chair"></i>
                 <div class="intro-text">
-                    <h3>植物收藏</h3>
-                    <p>適合您房間及花園的任何植物</p>
+                    <h3>家具擺設</h3>
+                    <p>全新現代的傢俱系列</p>
                 </div>
             </div>
             <div class="item">
@@ -27,15 +27,15 @@
                 <i class="fa-solid fa-rotate-right"></i>
                 <div class="intro-text">
                     <h3>完全退款</h3>
-                    <p>如果該產品不合適</p>
+                    <p>如果該產品不適合你家</p>
                 </div>
             </div>
         </section>
-        <section class="featured">
-            <h2>精選植物</h2>
-            <p>精挑細選、萬中選一，以及最新的植物產品搶先看</p>
-            <div class="featured-list">
-                @for($n=0;$n<=12;$n++)
+        <section class="news">
+            <h2>最新傢俱</h2>
+            <p>搶先購買精挑細選、萬中選一的傢俱，讓我們幫助您提高生活品質</p>
+            <div class="news-list">
+                @for($n=0;$n<8;$n++)
                 <div class="item">
                     <div class="add-cart">
                         <i class="fa-solid fa-bag-shopping"></i>
@@ -45,22 +45,100 @@
                     <div class="sale-tag">Sale!</div>
                     <div class="toolbox">Add to cart</div>
                     <img src="/images/plant3-free-img.jpg" alt="" />
-                    <small>植物</small>
-                    <h3>薄荷</h3>
+                    <small>椅子</small>
+                    <h3>黑色扶手椅</h3>
                     <span><i class="fa-solid fa-star"></i>4.7</span>
-                    <div class="price-row"><span class="price">$300</span><span class="sale-price">$200</span></div>
+                    <div class="price-row"><span class="price">$900</span><span class="sale-price">$700</span></div>
+                </div>
+                @endfor
+            </div>
+            <a href="###" class="readmore">
+                查看所有產品
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+            </a>
+        </section>
+        <section class="featured">
+            <h2>精選商品</h2>
+            <div class="featured-list">
+                @for($i=0;$i<3;$i++)
+                <div class="item">
+                    <div class="imgbox"><img src="/images/office3.png" alt=""></div>
+                    <h4>黑色扶手椅</h4>
                 </div>
                 @endfor
             </div>
         </section>
+        <section class="combos">
+            <div class="combo" style="background-image: url('/images/f1.jpg')">
+                <div class="cover"></div>
+                <div class="text-container">
+                    <div>
+                        <p>精選集 / 01</p>
+                        <h4>Neo Futura 辦公家具</h4>
+                    </div>
+                    <a href="###">
+                        店鋪收藏
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="combo" style="background-image: url('/images/f2.jpg')">
+                <div class="cover"></div>
+                <div class="text-container">
+                    <div>
+                        <p>精選集 / 02</p>
+                        <h4>質樸的家庭辦公家具套裝</h4>
+                    </div>
+                    <a href="###">
+                        店鋪收藏
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="feedback">
+            <div class="feedback-list">
+                @for($f=0;$f<3;$f++)
+                <div class="item">
+                    <div class="stars">
+                        @for($i=0;$i<5;$i++) <i class="fa-solid fa-star"></i> @endfor
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit。Ut elit tellus, luctus nec ullamcorper mattis。
+                    </p>
+                    <span>User Name</span>
+                </div>
+                @endfor
+            </div>
+        </section>
+        <section class="bottom-intro">
+            <div class="cover"></div>
+            <div class="text-intro">
+                <span>房子ROW傢俱專賣</span>
+                <h3>讓我們打造您夢想中的工作空間</h3>
+                <a href="###" class="readmore">
+                    立即購物
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+        @include('components.footer')
     </div>
 @push('scripts')
 <script type="text/javascript" >
     
 const addCart = document.getElementsByClassName('add-cart');
-const featured = document.querySelector('.featured');
+const news = document.querySelector('.news');
 
-const featuredItem  = featured.querySelectorAll('.item');
+const newsItem  = news.querySelectorAll('.item');
 
 const addCartFn = (e)=>{
     e.stopPropagation();
@@ -79,8 +157,8 @@ const pushProductPageFn = ()=>{
 for(let i=0;i<addCart.length;i++){
     addCart[i].addEventListener('click', addCartFn)
 }
-for(let i=0;i<featuredItem.length;i++){
-    featuredItem[i].addEventListener('click', pushProductPageFn)
+for(let i=0;i<newsItem.length;i++){
+    newsItem[i].addEventListener('click', pushProductPageFn)
 }
 </script>
 @endpush
