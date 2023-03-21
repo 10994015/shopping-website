@@ -53,6 +53,7 @@ class ProductController extends Controller
         $product = Product::create($data);
 
         return new ProductResource($product);
+        // return response()->json(new ProductResource($product), 201);
         // return new ProductResource(Product::create($request->validated()));
     }
 
