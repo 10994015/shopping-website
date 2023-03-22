@@ -5,7 +5,7 @@
                 <h1>最優質的傢俱，只在<span>房子ROW</span></h1>
                 <p>種類繁多的傢俱只需 200元起</p>
                 <span>A wide range of furniture from as little as $200</span>
-                <a href="/">SHOP NOW</a>
+                <a href="/store">SHOP NOW</a>
             </div>
         </section>
         <section class="intro">
@@ -52,7 +52,7 @@
                 </div>
                 @endfor
             </div>
-            <a href="###" class="readmore">
+            <a href="/store" class="readmore">
                 查看所有產品
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -93,7 +93,7 @@
                         <p>精選集 / 02</p>
                         <h4>質樸的家庭辦公家具套裝</h4>
                     </div>
-                    <a href="###">
+                    <a href="/store">
                         店鋪收藏
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -122,7 +122,7 @@
             <div class="text-intro">
                 <span>房子ROW傢俱專賣</span>
                 <h3>讓我們打造您夢想中的工作空間</h3>
-                <a href="###" class="readmore">
+                <a href="/store" class="readmore">
                     立即購物
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -130,7 +130,6 @@
                 </a>
             </div>
         </section>
-        @include('components.footer')
     </div>
 @push('scripts')
 <script type="text/javascript" >
@@ -151,8 +150,7 @@ const addCartFn = (e)=>{
     }, 1000);
 }
 const pushProductPageFn = ()=>{
-    console.log(23);
-    window.location.href = "/dashboard";
+    window.location.href = "/product-detail";
 }
 for(let i=0;i<addCart.length;i++){
     addCart[i].addEventListener('click', addCartFn)
