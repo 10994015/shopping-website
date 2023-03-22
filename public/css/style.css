@@ -73,6 +73,40 @@ header > nav > a {
 header > nav > a:hover {
   color: #FC5F5F;
 }
+header > nav > a.myaccount {
+  position: relative;
+  height: 35px;
+}
+header > nav > a.myaccount:hover {
+  color: #222;
+}
+header > nav > a.myaccount:hover > ol {
+  display: block;
+}
+header > nav > a.myaccount > ol {
+  position: absolute;
+  top: 30px;
+  left: -25px;
+  width: 150px;
+  background-color: #fff;
+  border: 1px #ddd solid;
+  border-radius: 5px;
+  display: none;
+}
+header > nav > a.myaccount > ol:hover {
+  display: block;
+}
+header > nav > a.myaccount > ol p {
+  padding: 12px;
+  color: #444;
+}
+header > nav > a.myaccount > ol p:hover {
+  background-color: #e9e9e9;
+}
+header > nav > a.myaccount > ol p i {
+  margin-right: 9px;
+  color: #FC5F5F;
+}
 header > nav > a > p {
   color: #FC5F5F;
   font-weight: 900;
@@ -99,11 +133,6 @@ header > nav > a > .icon > .cart-number span {
 }
 header > nav > a > .icon > i {
   color: #FC5F5F;
-}
-header > nav > a > i {
-  font-size: 12px;
-  margin-left: 6px;
-  transition: 0.3s;
 }
 
 .index {
@@ -1303,6 +1332,61 @@ header > nav > a > i {
 }
 .shop-cart-component > .cart > .details > .checkout > button:hover {
   background-color: #75C32C;
+}
+
+.login {
+  width: 100%;
+  padding: 180px 0;
+  background-color: #f1f1f1;
+}
+.login > form {
+  width: 100%;
+  max-width: 800px;
+  padding: 80px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.login > form > h2 {
+  font-size: 20px;
+}
+.login > form > label {
+  width: 100%;
+  color: #333;
+  margin: 10px 0;
+}
+.login > form > label > input[type=email], .login > form > label input[type=password] {
+  width: 100%;
+  border: 1px #ddd solid;
+  box-shadow: none;
+  outline: none;
+}
+.login > form > label > input[type=email]:focus, .login > form > label input[type=password]:focus {
+  outline: none;
+  box-shadow: none;
+}
+.login > form > label > button {
+  width: 150px;
+  height: 42px;
+  background-color: #FC5F5F;
+  font-weight: 700;
+  border-radius: 25px;
+  color: #fff;
+}
+.login > form > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+.login > form > div a {
+  color: #888;
+  font-size: 15px;
+}
+.login > form > div a:hover {
+  color: #FC5F5F;
 }
 
 footer {
