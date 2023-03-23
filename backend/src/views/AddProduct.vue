@@ -9,6 +9,7 @@ const router = useRouter();
 const DEFAULT_PRODUCT = {
     id: "",
     title:"",
+    category :"",
     image:"",
     description:"",
     short_description:"",
@@ -18,8 +19,19 @@ const DEFAULT_PRODUCT = {
     featured:false,
 }
 const image_url = ref('');
+const categories = ref([]);
 const randerLoading = ref(false);
 
+const categoryValue = ref('');
+const categoryLoading = ref(false);
+const categorySuccess = ref(false);
+const openCategoryModel = ref(false);
+const categoryModelFn = (bool)=>{
+    openCategoryModel.value = bool;
+    categorySuccess.value = false;
+    categoryLoading.value = false;
+    categoryValue.value = '';
+}
 
 const loading = ref(false);
 const previewLoading = ref(false);
@@ -60,7 +72,21 @@ onMounted(() => {
         console.error(err);
     })
 })
-
+const createCategoryFn= ()=>{
+    categoryLoading.value = true
+    store.dispatch('createCategory', categoryValue.value).then(()=>{
+        categoryLoading.value = false;
+        categorySuccess.value = true;
+        setTimeout(()=>{
+            categorySuccess.value = false;
+            categoryValue.value = ''
+        },1000)
+    }).catch(error=>{
+        categoryLoading.value = false;
+        categorySuccess.value = false;
+        alert('分類已存在或不得為空！')
+    });
+}
 const previewImage = (ev)=>{
     previewLoading.value = true;
     if(ev.target.files && ev.target.files[0]){
@@ -75,6 +101,9 @@ const previewImage = (ev)=>{
     isPreview.value = true;
 }
 const onSubmit = ()=>{
+    console.log(product.value);
+    console.log(product.value.featured);
+    console.log(product.value.hidden);
     loading.value = true;
     if(isCreate.value){
         store.dispatch('createProduct', product.value).then(res=>{
@@ -106,16 +135,40 @@ const onSubmit = ()=>{
 
 <template>
 <div class="addProduct">
+    <div class="add-category-model" v-show="openCategoryModel">
+        <div class="back"></div>
+        <div class="model" v-show="openCategoryModel">
+            <div class="model-header" ><h3>Create Category</h3><i class="fas fa-times" @click="categoryModelFn(false)"></i></div>
+            <div class="model-body">
+                <input type="text" placeholder="Category name..." v-model="categoryValue" />
+                <button @click="createCategoryFn()" :class="{'disabled':(categoryLoading || categorySuccess)}" :disabled="categoryLoading || categorySuccess">
+                <svg v-if="categoryLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <svg v-if="categorySuccess" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+                <span v-if="!categoryLoading && !categorySuccess">Create Category</span>
+                </button>
+            </div>
+        </div>
+    </div>
     <h1>Add New Product</h1>
     <div class="card">
         <div class="card-title">
             <h2>Basic Information</h2>
             <p>Fill all information below</p>
             <span v-if="successMsg">{{ successMsg }}</span>
+            <button @click="categoryModelFn(true)" class="add-product-category"><i class="fa-solid fa-plus"></i>Add product category</button>
         </div>
         <form v-if="randerLoading" action="" @submit.prevent="onSubmit()">
             <div class="form-group">
                 <label for="">產品名稱</label>
+                <input type="text" v-model="product.title" />
+            </div>
+            <div class="form-group">
+                <label for="">產品分類</label>
                 <input type="text" v-model="product.title" />
             </div>
             <div class="form-group">
@@ -203,9 +256,92 @@ const onSubmit = ()=>{
 </template>
 
 <style lang="scss" scoped>
+
 .addProduct{
     display: flex;
     flex-direction: column;
+    .add-category-model{
+        position: fixed;
+        top: 0;
+        left:0;
+        width: 100%;
+        height: 100vh;
+        z-index: 50;
+        >.back{
+            position: absolute;
+            top: 0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: .5);
+        }
+        >.model{
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            width: 98%;
+            max-width: 500px;
+            background-color: #242A30;
+            border:1px #2d343c solid;
+            border-radius: 0.25rem;
+            animation: openCategoryModel .2s linear;
+            @keyframes openCategoryModel {
+                0%{
+                    transform: translate(-50%, -45%);
+                    opacity: .25;
+                }
+            }
+            >.model-header{
+                border-bottom: 1px #30373f solid;
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                >i{
+                    cursor: pointer;
+                }
+            }
+            >.model-body{
+                padding: 30px 20px;
+                input{
+                    border:none;
+                    outline: none;
+                    border-radius: 5px;
+                    padding: 0 12px;
+                    background-color: #282F36;
+                    color:#adb5bd;
+                    border:1px #30373f solid;
+                    height: 40px;
+                    font-size: 14px;
+                    width: 100%;
+                }
+                button{
+                    background-color: #1C84EE;
+                    color:#fff;
+                    border-radius: 8px;
+                    padding: 10px 23px;
+                    margin-left: auto;
+                    transition: .3s;
+                    font-size: 14px;
+                    width: 100%;
+                    margin-top: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    &.disabled{
+                        background-color: #1870ca;
+                        border-color: #1870ca;
+                        cursor: not-allowed;
+                    }
+                    &:hover{
+                        background-color: #1870ca;
+                        border-color: #1870ca;
+                    }
+                }
+            }
+        }
+    }
     >h1{
         font-weight: 900;
         color:#fff;
@@ -217,7 +353,10 @@ const onSubmit = ()=>{
         margin-top: 25px;
         >.card-title{
             border-bottom: 1px #2d343c solid;
-            padding-bottom: 15px;
+            padding-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
             h2{
                 color:#fff;
                 font-size: 17px;
@@ -234,6 +373,23 @@ const onSubmit = ()=>{
                 border-radius: 3px;
                 padding:10px 20px ;
                 font-size: 13px;
+            }
+            button{
+                background-color: #1C84EE;
+                color:#fff;
+                border-radius: 25px;
+                padding: 10px 23px;
+                margin-left: auto;
+                float: right;
+                transition: .3s;
+                font-size: 13px;
+                &:hover{
+                    background-color: #1870ca;
+                    border-color: #1870ca;
+                }
+                >i{
+                    margin-right: 3px;
+                }
             }
         }
         >form{

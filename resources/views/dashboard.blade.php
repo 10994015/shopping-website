@@ -35,22 +35,28 @@
             <h2>最新傢俱</h2>
             <p>搶先購買精挑細選、萬中選一的傢俱，讓我們幫助您提高生活品質</p>
             <div class="products-list">
-                @for($n=0;$n<8;$n++)
+                @foreach($products as $product)
                 <div class="item">
                     <div class="add-cart">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <div class="loading"></div>
-                        <input type="hidden" value="1" class="productId" />
+                        <input type="hidden" value="{{$product->id}}" class="productId" />
                     </div>
+                    @if($product->sale_price)
                     <div class="sale-tag">Sale!</div>
+                    @endif
                     <div class="toolbox">Add to cart</div>
-                    <img src="/images/plant3-free-img.jpg" alt="" />
+                    <img src="{{$product->image}}" alt="{{$product->title}}" />
                     <small>椅子</small>
-                    <h3>黑色扶手椅</h3>
+                    <h3>{{$product->title}}</h3>
                     <span><i class="fa-solid fa-star"></i>4.7</span>
-                    <div class="price-row"><span class="price">$900</span><span class="sale-price">$700</span></div>
+                    @if($product->sale_price)
+                    <div class="price-row"><span class="price">${{$product->price}}</span><span class="sale-price">${{$product->sale_price}}</span></div>
+                    @else
+                    <div class="price-row"><span class="sale-price">${{$product->price}}</span></div>
+                    @endif
                 </div>
-                @endfor
+                @endforeach
             </div>
             <a href="/store" class="readmore">
                 查看所有產品

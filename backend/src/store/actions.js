@@ -33,6 +33,8 @@ export function getProducts({commit}, {url = null, search = '', perPage = 10, so
 }
 
 export function createProduct({commit}, product){
+    const hidden = (product.hidden) ? 1 :0;
+    const featured = (product.featured) ? 1 :0;
     if(product.image instanceof File){
         const form = new FormData();
         form.append('title', product.title);
@@ -41,8 +43,8 @@ export function createProduct({commit}, product){
         form.append('sale_price', product.sale_price);
         form.append('description', product.description);
         form.append('short_description', product.short_description);
-        form.append('hidden', product.hidden);
-        form.append('featured', product.featured);
+        form.append('hidden', hidden);
+        form.append('featured', featured);
         product = form;
     }
 
@@ -84,4 +86,10 @@ export function isExistProduct({commit}, id){
     return axiosClient.post(`/isExistProduct`, {id: id}).then(res=>{
         return res;
     });
+}
+
+export function createCategory({commit}, category){
+    return axiosClient.post('/category', {category:category}).then(res=>{
+        return res;
+    })
 }

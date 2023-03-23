@@ -41,6 +41,7 @@ class ProductController extends Controller
         $data['created_by'] = $request->user()->id;
         $data['updated_by'] = $request->user()->id;
 
+        
         $image = $data['image'] ?? NULL;
 
         if($image){

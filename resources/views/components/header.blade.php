@@ -17,7 +17,7 @@
         </a>
         @if(Auth::check())
         <a href="javascript:;" class="myaccount">
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user mr-1"></i>{{Auth::user()->name}}
             <ol>
                 <p><i class="fa-solid fa-user"></i>我的帳號</p>
                 <p><i class="fa-solid fa-file"></i>訂單查詢</p>

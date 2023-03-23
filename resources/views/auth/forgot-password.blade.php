@@ -9,7 +9,7 @@
             <x-auth-session-status class="mb-4" :status="session('status')" />
             <label for="">
                 <p>電子郵件 <span>*</span></p>
-                <input type="email" name="email" class="mt-1"  :errors="$errors" required autofocus placeholder="Email address..." />
+                <x-input type="email" name="email" class="mt-1" :value="old('email')"  :errors="$errors" required autofocus placeholder="Email address..." />
             </label>
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
             <label for="" >

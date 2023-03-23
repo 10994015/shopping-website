@@ -348,6 +348,7 @@ header > nav > a > .icon > i {
 .index > .news > .products-list > .item > img {
   width: 100%;
   padding-bottom: 0%;
+  height: 270px;
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
@@ -376,10 +377,10 @@ header > nav > a > .icon > i {
 .index > .news > .products-list > .item > .price-row span.price {
   text-decoration: line-through;
   color: #888;
+  margin-right: 8px;
 }
 .index > .news > .products-list > .item > .price-row span.sale-price {
   color: #000;
-  margin-left: 8px;
 }
 .index > .news > .readmore {
   background-color: #FC5F5F;
@@ -738,6 +739,7 @@ header > nav > a > .icon > i {
 .store > .products-list > .item > img {
   width: 100%;
   padding-bottom: 0%;
+  height: 270px;
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
@@ -766,10 +768,10 @@ header > nav > a > .icon > i {
 .store > .products-list > .item > .price-row span.price {
   text-decoration: line-through;
   color: #888;
+  margin-right: 8px;
 }
 .store > .products-list > .item > .price-row span.sale-price {
   color: #000;
-  margin-left: 8px;
 }
 
 .product-detail {
@@ -1004,7 +1006,7 @@ header > nav > a > .icon > i {
 .product-detail > .detailed > .comment > form label .rating label:hover,
 .product-detail > .detailed > .comment > form label .rating label:hover ~ label,
 .product-detail > .detailed > .comment > form label .rating input[type=radio]:checked ~ label {
-  color: #333;
+  color: #FC5F5F;
 }
 .product-detail > .detailed > .comment > form label textarea {
   width: 100%;
@@ -1136,6 +1138,7 @@ header > nav > a > .icon > i {
 .product-detail > .belike > .products-list > .item > img {
   width: 100%;
   padding-bottom: 0%;
+  height: 270px;
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
@@ -1164,10 +1167,10 @@ header > nav > a > .icon > i {
 .product-detail > .belike > .products-list > .item > .price-row span.price {
   text-decoration: line-through;
   color: #888;
+  margin-right: 8px;
 }
 .product-detail > .belike > .products-list > .item > .price-row span.sale-price {
   color: #000;
-  margin-left: 8px;
 }
 
 .shop-cart-component {
