@@ -679,17 +679,14 @@ select {
 .left-0 {
   left: 0px;
 }
+.left-\[-100\%\] {
+  left: -100%;
+}
 .right-0 {
   right: 0px;
 }
 .top-0 {
   top: 0px;
-}
-.left-\[-100\%\] {
-  left: -100%;
-}
-.left-\[100\%\] {
-  left: 100%;
 }
 .z-0 {
   z-index: 0;
@@ -914,6 +911,9 @@ select {
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.break-all {
+  word-break: break-all;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -1221,12 +1221,6 @@ select {
 }
 .duration-75 {
   transition-duration: 75ms;
-}
-.duration-300 {
-  transition-duration: 300ms;
-}
-.duration-1000 {
-  transition-duration: 1000ms;
 }
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);

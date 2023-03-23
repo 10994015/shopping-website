@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
+    'failed' => '此帳號與我們的憑據不符.',
+    'password' => '提供的密碼不正確.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

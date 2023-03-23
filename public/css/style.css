@@ -1357,13 +1357,14 @@ header > nav > a > .icon > i {
   color: #333;
   margin: 10px 0;
 }
-.login > form > label > input[type=email], .login > form > label input[type=password] {
+.login > form > label > input[type=email], .login > form > label input[type=password], .login > form > label input[type=text] {
   width: 100%;
   border: 1px #ddd solid;
   box-shadow: none;
   outline: none;
+  font-size: 15px;
 }
-.login > form > label > input[type=email]:focus, .login > form > label input[type=password]:focus {
+.login > form > label > input[type=email]:focus, .login > form > label input[type=password]:focus, .login > form > label input[type=text]:focus {
   outline: none;
   box-shadow: none;
 }

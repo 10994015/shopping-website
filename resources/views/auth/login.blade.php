@@ -6,17 +6,20 @@
             }" x-on:submit="loading = true">
             @csrf
             <h2>登入</h2>
+            <x-auth-session-status class="mb-4" :status="session('status')" />
+            
             <label for="">
                 <p>電子郵件 <span>*</span></p>
-                <input type="email" name="email" class="mt-1" required autofocus />
+                <x-input type="email" name="email" class="mt-1" :value="old('email')"  :errors="$errors" required autofocus placeholder="Email address..." />
             </label>
             <label for="">
                 <p>密碼 <span>*</span></p>
-                <input type="password" name="password" class="mt-1" required />
+                <x-input type="password" name="password" class="mt-1"  :errors="$errors" required placeholder="Password..." />
             </label>
             <label for="remember_me" class="flex items-center">
-                <input type="checkbox" id="remember_me" name="remember" class="mr-1" />記住我
+                <input type="checkbox" id="remember_me" name="remember" class="mr-1"  />記住我
             </label>
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
             <label for="" >
                 <button type="submit"  >
                     <svg x-show="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -27,8 +30,8 @@
                 </button>
             </label>
             <div>
-                <a href="/register">還沒有帳號嗎？點擊註冊</a>
-                <a href="/">忘記密碼？</a>
+                <a href="{{route('register')}}">還沒有帳號嗎？點擊註冊</a>
+                <a href="{{route('password.request')}}">忘記密碼？</a>
             </div>
         </form>
     </div>
