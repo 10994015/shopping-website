@@ -162,7 +162,7 @@ header{
                 font-weight: 600;
                 >span{
                     color:$mainColor;
-                    font-weight: 900px;
+                    font-weight: 900;
                     font-size: 28px;
                 }
             }
@@ -239,7 +239,7 @@ header{
         align-items: center;
         flex-direction: column;
         padding: 100px 0;
-        >.news-list{
+        >.products-list{
             margin-top: 70px;
             display: grid;
             width: 100%;
@@ -1036,7 +1036,7 @@ header{
             font-size: 21px;
             color:#000;
         }
-        >.belike-list{
+        >.products-list{
             display: grid;
             margin-top: 20px;
             width: 100%;
@@ -1384,6 +1384,9 @@ header{
                 font-weight: 700;
                 border-radius: 25px;
                 color:#fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
         >div{
@@ -1473,7 +1476,6 @@ footer{
     width: 100%;
     height: 100vh;
     z-index: 11;
-    display: none;
     >.back{
         position: absolute;
         top: 0;
@@ -1485,14 +1487,14 @@ footer{
     >.filter{
         position: absolute;
         top: 0;
-        left:0;
         width: 325px;
         background-color: #fff;
         padding: 35px;
         box-shadow: 0 0 12px 0 rgba(0,0,0,.4);
         overflow: auto;
         height: 100%;
-        animation: openFilter .3s linear ;
+        // animation: openFilter .3s linear ;
+       transition: .3s;
         @keyframes openFilter {
             0%{
                 left:-100%

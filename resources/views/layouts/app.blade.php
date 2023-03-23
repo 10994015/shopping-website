@@ -26,6 +26,7 @@
         @include('components.footer')
         </div>
 
+        <script src="/js/app.js"></script>
         <script src="/js/script.js"></script>
         @stack('scripts')
     </body>

@@ -1,5 +1,7 @@
 <x-app-layout>
-    <div class="store">
+    <div class="store" x-data="{
+        filterOpen:false,
+    }">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
@@ -16,7 +18,7 @@
         </nav>
         <h3>SHOP</h3>
         <div class="filter-list">
-            <div class="flex items-center cursor-pointer" id="filterBtn">
+            <div class="flex items-center cursor-pointer" id="filterBtn" x-on:click="filterOpen = true">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
                 </svg>
@@ -50,10 +52,10 @@
             </div>
             @endfor
         </div>
-        <div class="filter-component">
+        <div class="filter-component" x-show.transition.duration.500ms="filterOpen"  >
             <div class="back"></div>
-            <div class="filter">
-                <i class="fas fa-times close-filter" ></i>
+            <div x-bind:class="['filter']" x-show="filterOpen"    x-transition:enter-start="left-[-100%]" x-transition:enter-end="left-0"  x-transition:leave-start="left-0" x-transition:leave-end="left-[-100%]" x-on:click.outside="filterOpen = false" >
+                <i class="fas fa-times close-filter" x-on:click="filterOpen = false" ></i>
                 <div class="search-product">
                     <input type="text" class="search" placeholder="Search products..." />
                     <button type="button">
@@ -97,36 +99,9 @@
 
 @push('scripts')
 
+
 <script>
     document.querySelector('header').classList.add('isActive');
-
-    const addCart = document.getElementsByClassName('add-cart');
-    const products = document.querySelector('.products-list');
-
-    const productItem  = products.querySelectorAll('.item');
-
-    const addCartFn = (e)=>{
-        e.stopPropagation();
-        if (e.target.tagName  == "I") return  e.target.parentNode.click();
-        e.target.querySelector('.fa-solid').style.display = "none";
-        e.target.querySelector('.loading').style.display = "block";
-        setTimeout(() => {
-            e.target.querySelector('i').style.display = "block";
-            e.target.querySelector('.loading').style.display = "none";
-        }, 1000);
-    }
-    const pushProductPageFn = ()=>{
-        console.log(23);
-        window.location.href = "/product-detail";
-    }
-    for(let i=0;i<addCart.length;i++){
-        addCart[i].addEventListener('click', addCartFn)
-    }
-    for(let i=0;i<productItem.length;i++){
-        productItem[i].addEventListener('click', pushProductPageFn)
-    }
-</script>
-<script>
     const rangeInput = document.querySelectorAll(".range-input input"),
     priceInput = document.querySelectorAll(".price-input input"),
     range = document.querySelector(".slider .progress");
@@ -168,24 +143,8 @@
             }
         });
     });
-    const filterBtn = document.querySelector('#filterBtn');
-    const filter = document.querySelector('.filter');
-    const filterComponent = document.querySelector('.filter-component');
-    const closeFilter = filterComponent.querySelector('.close-filter')
-    const filterBack = filterComponent.querySelector('.back')
-    const closeFilterFn = ()=>{
-        filter.style.left = "-100%";
-        setTimeout(()=>{
-            filterComponent.style.display = "none"
-        },150)
-    }
-    filterBtn.addEventListener('click', ()=>{
-        filter.style.left = "0";
-        filterComponent.style.display = "block"
-    })
-    closeFilter.addEventListener('click', closeFilterFn)
-    filterBack.addEventListener('click', closeFilterFn)
 </script>
+@include('components.add-cart')
 
 @endpush
 </x-app-layout>

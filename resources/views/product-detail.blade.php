@@ -73,7 +73,7 @@
         </div>
         <div class="belike">
             <h3>您可能會喜歡</h3>
-            <div class="belike-list">
+            <div class="products-list">
                 @for($n=0;$n<4;$n++)
                 <div class="item">
                     <div class="add-cart">
@@ -126,34 +126,7 @@
         comment.style.display = "block"
     })
 </script>
-
-<script type="text/javascript" >
-    
-    const addCart = document.getElementsByClassName('add-cart');
-    const belikeList = document.querySelector('.belike-list');
-    
-    const belikeItem  = belikeList.querySelectorAll('.item');
-    
-    const addCartFn = (e)=>{
-        e.stopPropagation();
-        if (e.target.tagName  == "I") return  e.target.parentNode.click();
-        e.target.querySelector('.fa-solid').style.display = "none";
-        e.target.querySelector('.loading').style.display = "block";
-        setTimeout(() => {
-            e.target.querySelector('i').style.display = "block";
-            e.target.querySelector('.loading').style.display = "none";
-        }, 1000);
-    }
-    const pushProductPageFn = ()=>{
-        window.location.href = "/product-detail";
-    }
-    for(let i=0;i<addCart.length;i++){
-        addCart[i].addEventListener('click', addCartFn)
-    }
-    for(let i=0;i<belikeItem.length;i++){
-        belikeItem[i].addEventListener('click', pushProductPageFn)
-    }
-    </script>
+@include('components.add-cart')
 @endpush
 
 </x-app-layout>

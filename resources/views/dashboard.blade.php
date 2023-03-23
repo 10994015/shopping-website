@@ -34,7 +34,7 @@
         <section class="news">
             <h2>最新傢俱</h2>
             <p>搶先購買精挑細選、萬中選一的傢俱，讓我們幫助您提高生活品質</p>
-            <div class="news-list">
+            <div class="products-list">
                 @for($n=0;$n<8;$n++)
                 <div class="item">
                     <div class="add-cart">
@@ -132,33 +132,7 @@
         </section>
     </div>
 @push('scripts')
-<script type="text/javascript" >
-    
-const addCart = document.getElementsByClassName('add-cart');
-const news = document.querySelector('.news');
-
-const newsItem  = news.querySelectorAll('.item');
-
-const addCartFn = (e)=>{
-    e.stopPropagation();
-    if (e.target.tagName  == "I") return  e.target.parentNode.click();
-    e.target.querySelector('.fa-solid').style.display = "none";
-    e.target.querySelector('.loading').style.display = "block";
-    setTimeout(() => {
-        e.target.querySelector('i').style.display = "block";
-        e.target.querySelector('.loading').style.display = "none";
-    }, 1000);
-}
-const pushProductPageFn = ()=>{
-    window.location.href = "/product-detail";
-}
-for(let i=0;i<addCart.length;i++){
-    addCart[i].addEventListener('click', addCartFn)
-}
-for(let i=0;i<newsItem.length;i++){
-    newsItem[i].addEventListener('click', pushProductPageFn)
-}
-</script>
+@include('components.add-cart')
 @endpush
 </x-app-layout>
 
