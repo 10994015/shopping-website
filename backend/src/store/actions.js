@@ -93,3 +93,12 @@ export function createCategory({commit}, category){
         return res;
     })
 }
+
+export function getCategories({commit}){
+    return axiosClient.get('/categories').then(res=>{
+        commit('setCategories', res.data);
+        return res;
+    }).catch(err=>{
+        console.error(err);
+    })
+}

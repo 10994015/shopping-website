@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Log;
 class CategoryController extends Controller
 {
     public function index(){
-
+        $categories = Category::all();
+        return response()->json($categories);
     }
     public function store(Request $req){
-        Log::info($req);
         $category = new Category();
         $category->name = $req->category;
         $category->save();

@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::apiResource('products', ProductController::class);
     Route::post('/isExistProduct', [ProductController::class, 'isExistProduct']);
     Route::post('/category', [CategoryController::class, 'store']);
+    Route::get('/categories', [CategoryController::class, 'index']);
 
 });
 

@@ -43,6 +43,10 @@ const product = ref({...DEFAULT_PRODUCT})
 const isCreate = ref(false);
 onMounted(() => {
     const productId = route.params.id;
+    store.dispatch('getCategories').then(res=>{
+        console.log(store.state.categories.data);
+        categories.value = store.state.categories.data;
+    })
     if(productId === 'create') {
         randerLoading.value = true;
         product.id = productId;
@@ -53,6 +57,7 @@ onMounted(() => {
         if(res.data){
             store.dispatch('getProduct', productId).then(res=>{
                 product.value = res.data;
+                console.log(product.value);
                 image_url.value = res.data.image_url;
                 isPreview.value = true
                 randerLoading.value = true;
@@ -60,11 +65,13 @@ onMounted(() => {
                 product.value.title = (product.value.title == 'null') ? "" :product.value.title;
                 product.value.description = (product.value.description == 'null') ? "" :product.value.description;
                 product.value.short_description = (product.value.short_description == 'null') ? "" :product.value.short_description;
+                
             }).then(()=>{
                 if(image_url.value != ""){
                     previewImg.value.src = image_url.value;
                 }
             });
+            
         }else{
             router.push({path:'/notfound'})
         }
@@ -169,7 +176,10 @@ const onSubmit = ()=>{
             </div>
             <div class="form-group">
                 <label for="">產品分類</label>
-                <input type="text" v-model="product.title" />
+                <select v-model="product.category">
+                    <option value="">請選擇分類</option>
+                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="">產品簡短描述</label>
@@ -448,7 +458,7 @@ const onSubmit = ()=>{
                     }
                     
                 }
-                input[type='text'], input[type='number']{
+                input[type='text'], input[type='number'], select{
                     border:none;
                     outline: none;
                     border-radius: 5px;

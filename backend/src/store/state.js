@@ -12,7 +12,10 @@ const state = {
         page: 1,
         limit: null,
         total: null,
-    }
+    },
+    categories:{
+        data:[],
+    },
 };
 
 export default state;

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class ProductResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class ProductResource extends JsonResource
             'image_url'=>$this->image ?? '',
             'price'=>$this->price,
             'sale_price'=>$this->sale_price ?? '',
+            'category'=> $this->category,
             'hidden'=>$this->hidden ? true : false,
             'featured'=>$this->featured ? true : false,
             'created_at'=>(new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
