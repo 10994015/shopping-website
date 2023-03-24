@@ -15,13 +15,14 @@
             e.target.querySelector('.loading').style.display = "none";
         }, 1000);
     }
-    const pushProductPageFn = ()=>{
-        window.location.href = "/product-detail";
+   
+    const pushProductPageFn = (ev, slug)=>{
+        window.location.href = `/product-detail/${slug}`;
     }
     for(let i=0;i<addCart.length;i++){
         addCart[i].addEventListener('click', addCartFn)
     }
-    for(let i=0;i<productItem.length;i++){
-        productItem[i].addEventListener('click', pushProductPageFn)
-    }
+    // for(let i=0;i<productItem.length;i++){
+    //     productItem[i].addEventListener('click', pushProductPageFn)
+    // }
 </script>

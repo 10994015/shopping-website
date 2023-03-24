@@ -39,10 +39,12 @@ export function createProduct({commit}, product){
         const form = new FormData();
         form.append('title', product.title);
         form.append('image', product.image);
+        form.append('category_id', product.category_id);
         form.append('price', product.price);
         form.append('sale_price', product.sale_price);
         form.append('description', product.description);
         form.append('short_description', product.short_description);
+        form.append('manufacturer_name', product.manufacturer_name);
         form.append('hidden', hidden);
         form.append('featured', featured);
         product = form;
@@ -60,10 +62,12 @@ export function updateProduct({commit}, product){
         form.append('id', product.id);
         form.append('title', product.title);
         form.append('image', product.image);
+        form.append('category_id', product.category_id);
         form.append('price', product.price);
         form.append('sale_price', product.sale_price);
         form.append('description', product.description);
         form.append('short_description', product.short_description);
+        form.append('manufacturer_name', product.manufacturer_name);
         form.append('hidden', hidden);
         form.append('featured', featured);
         form.append('_method', 'PUT');

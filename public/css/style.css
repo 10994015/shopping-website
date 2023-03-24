@@ -841,12 +841,12 @@ header > nav > a > .icon > i {
   text-decoration: line-through;
   font-size: 15px;
   font-weight: 700;
+  margin-right: 8px;
 }
 .product-detail > .product > .product-intro > .price-list > .sale-price {
   color: #222;
   font-size: 24px;
   font-weight: 800;
-  margin-left: 8px;
 }
 .product-detail > .product > .product-intro > .price-list > span {
   color: #8B8698;
@@ -958,7 +958,6 @@ header > nav > a > .icon > i {
 }
 .product-detail > .detailed > .comment {
   margin-top: 20px;
-  display: none;
 }
 .product-detail > .detailed > .comment .null-comment {
   margin-top: 15px;

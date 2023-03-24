@@ -35,22 +35,26 @@
             </div>
         </div>
         <div class="products-list">
-            @for($n=0;$n<8;$n++)
-            <div class="item">
+            @foreach($products as $product)
+            <div class="item" onclick="pushProductPageFn(this,'{{$product->slug}}')">
                 <div class="add-cart">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <div class="loading"></div>
-                    <input type="hidden" value="1" class="productId" />
+                    <input type="hidden" value="{{$product->id}}" class="productId" />
                 </div>
                 <div class="sale-tag">Sale!</div>
                 <div class="toolbox">Add to cart</div>
-                <img src="/images/plant3-free-img.jpg" alt="" />
-                <small>椅子</small>
-                <h3>黑色扶手椅</h3>
+                <img src="{{$product->image}}" alt="{{$product->title}}" />
+                <small>{{$product->category->name}}</small>
+                <h3>{{$product->title}}</h3>
                 <span><i class="fa-solid fa-star"></i>4.7</span>
-                <div class="price-row"><span class="price">$900</span><span class="sale-price">$700</span></div>
+                @if($product->sale_price)
+                <div class="price-row"><span class="price">${{$product->price}}</span><span class="sale-price">${{$product->sale_price}}</span></div>
+                @else
+                <div class="price-row"><span class="sale-price">${{$product->price}}</span></div>
+                @endif
             </div>
-            @endfor
+            @endforeach
         </div>
         <div class="filter-component" x-show.transition.duration.500ms="filterOpen"  >
             <div class="back"></div>
@@ -85,10 +89,9 @@
                 <div class="products-categories">
                     <h3>商品分類</h3>
                     <div class="categories">
-                        <span>桌子 (6)</span>
-                        <span>椅子 (6)</span>
-                        <span>辦公家具 (6)</span>
-                        <span>桌邊植物 (6)</span>
+                        @foreach ($categories as $category)
+                        <span>{{$category->name}} ({{DB::table('products')->where([['category_id', $category->id], ['hidden', 0]])->count()}})</span>
+                        @endforeach
                     </div>
                 </div>
             </div>

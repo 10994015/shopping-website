@@ -836,12 +836,12 @@ header{
                     text-decoration: line-through;
                     font-size: 15px;
                     font-weight: 700;
+                    margin-right: 8px;
                 }
                 >.sale-price{
                     color:#222;
                     font-size: 24px;
                     font-weight: 800;
-                    margin-left: 8px;
                 }
                 >span{
                     color:#8B8698;
@@ -959,7 +959,6 @@ header{
         }
         >.comment{
             margin-top: 20px;
-            display: none;
             .null-comment{
                 margin-top: 15px;
                 font-size: 14px;

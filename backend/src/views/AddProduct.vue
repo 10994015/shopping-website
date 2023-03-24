@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import store from '../store';
 import {useRouter, useRoute} from "vue-router";
 const route = useRoute();
@@ -9,10 +9,11 @@ const router = useRouter();
 const DEFAULT_PRODUCT = {
     id: "",
     title:"",
-    category :"",
+    category_id :"",
     image:"",
     description:"",
     short_description:"",
+    manufacturer_name:"",
     price:0,
     sale_price:null,
     hidden:false,
@@ -137,7 +138,9 @@ const onSubmit = ()=>{
     }
     
 };
-
+watch(()=>product.value, (val)=>{
+    successMsg.value = null;
+}, {deep:true});
 </script>
 
 <template>
@@ -176,7 +179,7 @@ const onSubmit = ()=>{
             </div>
             <div class="form-group">
                 <label for="">產品分類</label>
-                <select v-model="product.category">
+                <select v-model="product.category_id">
                     <option value="">請選擇分類</option>
                     <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
@@ -184,6 +187,10 @@ const onSubmit = ()=>{
             <div class="form-group">
                 <label for="">產品簡短描述</label>
                 <input type="text" v-model="product.short_description" />
+            </div>
+            <div class="form-group">
+                <label for="">生產商名稱</label>
+                <input type="text" v-model="product.manufacturer_name" />
             </div>
             <div class="form-group">
                 <label for="">產品價格</label>

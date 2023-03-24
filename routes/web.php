@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,17 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/store', function () {
-    return view('store');
-});
-Route::get('/product-detail', function () {
-    return view('product-detail');
-});
+Route::get('/store', [ProductController::class, 'index'])->name('store');
+Route::get('/product-detail/{slug}', [ProductController::class, 'show']);
 Route::get('/cart', function () {
     return view('cart');
 });
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -36,7 +36,7 @@
             <p>搶先購買精挑細選、萬中選一的傢俱，讓我們幫助您提高生活品質</p>
             <div class="products-list">
                 @foreach($products as $product)
-                <div class="item">
+                <div class="item" onclick="pushProductPageFn(this, '{{$product->slug}}')">
                     <div class="add-cart">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <div class="loading"></div>
@@ -68,12 +68,12 @@
         <section class="featured">
             <h2>精選商品</h2>
             <div class="featured-list">
-                @for($i=0;$i<3;$i++)
+                @foreach($featured_products as $product)
                 <div class="item">
-                    <div class="imgbox"><img src="/images/office3.png" alt=""></div>
-                    <h4>黑色扶手椅</h4>
+                    <div class="imgbox"><img src="{{$product->image}}" alt="{{$product->title}}"></div>
+                    <h4>{{$product->title}}</h4>
                 </div>
-                @endfor
+                @endforeach
             </div>
         </section>
         <section class="combos">

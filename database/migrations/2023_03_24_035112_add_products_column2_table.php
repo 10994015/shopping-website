@@ -15,7 +15,8 @@ class AddProductsColumn2Table extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->string('manufacturer_name')->nullable()->after('sale_price');
-            $table->string('category')->after('manufacturer_name');
+            $table->unsignedBigInteger('category_id')->after('manufacturer_name')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
@@ -26,6 +27,9 @@ class AddProductsColumn2Table extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('manufacturer_name');
+            $table->dropColumn('category_id');
+        });
     }
 }
