@@ -20,4 +20,18 @@ class CategoryController extends Controller
 
         return response()->json($category);
     }
+    public function update(Request $req){
+        $category = Category::find($req->category['id']);
+        $category->name = $req->category['name'];
+        $category->save();
+
+        return response()->json($category);
+    }
+    public function destroy(Request $req){
+        $category = Category::find($req->id);
+        $category->delete();
+
+        $categories = Category::all();
+        return response()->json($categories);
+    }
 }

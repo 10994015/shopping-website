@@ -97,7 +97,11 @@ export function createCategory({commit}, category){
         return res;
     })
 }
-
+export function editCategory({commit}, category){
+    return axiosClient.put('/category', {category:category}).then(res=>{
+        return res;
+    })
+}
 export function getCategories({commit}){
     return axiosClient.get('/categories').then(res=>{
         commit('setCategories', res.data);
@@ -105,4 +109,7 @@ export function getCategories({commit}){
     }).catch(err=>{
         console.error(err);
     })
+}
+export function deleteCategory({commit}, id){
+    return axiosClient.delete(`/category/${id}`);
 }

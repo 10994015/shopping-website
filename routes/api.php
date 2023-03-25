@@ -25,6 +25,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::post('/isExistProduct', [ProductController::class, 'isExistProduct']);
     Route::post('/category', [CategoryController::class, 'store']);
     Route::get('/categories', [CategoryController::class, 'index']);
+    Route::put('/category', [CategoryController::class, 'update']);
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
 });
 
