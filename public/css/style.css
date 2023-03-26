@@ -73,6 +73,9 @@ header > nav > a {
 header > nav > a:hover {
   color: #FC5F5F;
 }
+header > nav > a#cart-btn:hover {
+  color: #000;
+}
 header > nav > a.myaccount {
   position: relative;
   height: 35px;
@@ -258,7 +261,6 @@ header > nav > a > .icon > i {
 .index > .news > .products-list > .item {
   width: 100%;
   position: relative;
-  cursor: pointer;
 }
 .index > .news > .products-list > .item:hover > .add-cart {
   opacity: 1;
@@ -291,12 +293,14 @@ header > nav > a > .icon > i {
   opacity: 0;
   cursor: pointer;
 }
+.index > .news > .products-list > .item > .add-cart.not {
+  cursor: default;
+}
 .index > .news > .products-list > .item > .add-cart > .loading {
   width: 15px;
   height: 15px;
   background-color: #555;
   border-radius: 50%;
-  display: none;
   animation: loading 0.5s infinite linear;
 }
 @keyframes loading {
@@ -352,6 +356,7 @@ header > nav > a > .icon > i {
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .index > .news > .products-list > .item > small {
   font-size: 13px;
@@ -649,7 +654,6 @@ header > nav > a > .icon > i {
 .store > .products-list > .item {
   width: 100%;
   position: relative;
-  cursor: pointer;
 }
 .store > .products-list > .item:hover > .add-cart {
   opacity: 1;
@@ -682,12 +686,14 @@ header > nav > a > .icon > i {
   opacity: 0;
   cursor: pointer;
 }
+.store > .products-list > .item > .add-cart.not {
+  cursor: default;
+}
 .store > .products-list > .item > .add-cart > .loading {
   width: 15px;
   height: 15px;
   background-color: #555;
   border-radius: 50%;
-  display: none;
   animation: loading 0.5s infinite linear;
 }
 @keyframes loading {
@@ -743,6 +749,7 @@ header > nav > a > .icon > i {
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .store > .products-list > .item > small {
   font-size: 13px;
@@ -1047,7 +1054,6 @@ header > nav > a > .icon > i {
 .product-detail > .belike > .products-list > .item {
   width: 100%;
   position: relative;
-  cursor: pointer;
 }
 .product-detail > .belike > .products-list > .item:hover > .add-cart {
   opacity: 1;
@@ -1080,12 +1086,14 @@ header > nav > a > .icon > i {
   opacity: 0;
   cursor: pointer;
 }
+.product-detail > .belike > .products-list > .item > .add-cart.not {
+  cursor: default;
+}
 .product-detail > .belike > .products-list > .item > .add-cart > .loading {
   width: 15px;
   height: 15px;
   background-color: #555;
   border-radius: 50%;
-  display: none;
   animation: loading 0.5s infinite linear;
 }
 @keyframes loading {
@@ -1141,6 +1149,7 @@ header > nav > a > .icon > i {
   -o-object-fit: cover;
      object-fit: cover;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .product-detail > .belike > .products-list > .item > small {
   font-size: 13px;

@@ -1,4 +1,10 @@
-<header class="">
+<header x-data="{
+    cartItemsCount:{{\App\Http\Helpers\Cart::getCartItemsCount()}},
+    updateCartItemsCount: function(count) {
+        this.cartItemsCount = {{\App\Http\Helpers\Cart::getCartItemsCount()}};
+    }
+}"
+x-ref="header" x-on:cart-change.window="cartItemsCount = $event.detail.count">
     <a href="/" class='logo'>
         <img src="/images/logo.png" alt="" />
         <span>房子ROW</span>
@@ -11,7 +17,7 @@
         <a href="javascript:;" id="cart-btn">
             <p>$ 0</p>
             <div class="icon">
-                <span class="cart-number">0</span>
+                <span class="cart-number" x-show="cartItemsCount" x-text="cartItemsCount" x-cloak></span>
                 <i class="fa-solid fa-bag-shopping"></i>
             </div>
         </a>

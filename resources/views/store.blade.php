@@ -36,15 +36,32 @@
         </div>
         <div class="products-list">
             @foreach($products as $product)
-            <div class="item" onclick="pushProductPageFn(this,'{{$product->slug}}')">
-                <div class="add-cart">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <div class="loading"></div>
+            <div class="item" 
+                x-data="{
+                    isLoading:false,
+                    productItem:{{json_encode($product)}},
+                    addToCart:function(slug){
+                        if(!this.isLoading){
+                            this.isLoading = true;
+                            axios.post('/cart/add/slug',{product:this.productItem}).then(res=>{
+                                this.$dispatch('cart-change', {count: res.data.count})
+                            });
+                            setTimeout(()=>{
+                                this.isLoading = false;
+                            },1000)
+                        }
+                    }
+                }"
+            >
+                <div class="add-cart" x-on:click="addToCart('{{$product->slug}}')">
+                    <i  x-show="!isLoading" class="fa-solid fa-bag-shopping"></i>
+                    <div x-show="isLoading" class="loading"></div>
                     <input type="hidden" value="{{$product->id}}" class="productId" />
                 </div>
                 <div class="sale-tag">Sale!</div>
-                <div class="toolbox">Add to cart</div>
-                <img src="{{$product->image}}" alt="{{$product->title}}" />
+                <div class="toolbox">加入購物車</div>
+                <img src="{{$product->image}}" alt="{{$product->title}}"             onclick="window.location.href=`/product-detail/{{$product->slug}}`"
+                 />
                 <small>{{$product->category->name}}</small>
                 <h3>{{$product->title}}</h3>
                 <span><i class="fa-solid fa-star"></i>4.7</span>
@@ -147,7 +164,7 @@
         });
     });
 </script>
-@include('components.add-cart')
+{{-- @include('components.add-cart') --}}
 
 @endpush
 </x-app-layout>

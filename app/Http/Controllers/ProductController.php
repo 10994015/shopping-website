@@ -18,9 +18,9 @@ class ProductController extends Controller
     }
 
     public function show(Request $req){
-        Log::info($req->slug);
         $product = Product::where('slug', $req->slug)->first();
+        $products = Product::where('hidden', 0)->orderBy('updated_at', 'DESC')->take(4)->get();
 
-        return view('product-detail', ['product'=>$product]);
+        return view('product-detail', ['product'=>$product, 'products'=>$products]);
     }
 }

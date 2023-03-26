@@ -98,22 +98,43 @@
         <div class="belike">
             <h3>您可能會喜歡</h3>
             <div class="products-list">
-                @for($n=0;$n<4;$n++)
-                <div class="item">
-                    <div class="add-cart">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        <div class="loading"></div>
-                        <input type="hidden" value="1" class="productId" />
+                @foreach($products as $product)
+                <div class="item"
+                    x-data="{
+                        isLoading:false,
+                        productItem:{{json_encode($product)}},
+                        addToCart:function(slug){
+                            if(!this.isLoading){
+                                this.isLoading = true;
+                                axios.post('/cart/add/slug',{product:this.productItem}).then(res=>{
+                                    this.$dispatch('cart-change', {count: res.data.count})
+                                });
+                                setTimeout(()=>{
+                                    this.isLoading = false;
+                                },1000)
+                            }
+                        }
+                    }"
+                >
+                    <div :class="['add-cart']" x-on:click="addToCart('{{$product->slug}}')" >
+                        <i x-show="!isLoading" class="fa-solid fa-bag-shopping"></i>
+                        <div x-show="isLoading" class="loading"></div>
                     </div>
+                    @if($product->sale_price)
                     <div class="sale-tag">Sale!</div>
-                    <div class="toolbox">Add to cart</div>
-                    <img src="/images/plant3-free-img.jpg" alt="" />
-                    <small>椅子</small>
-                    <h3>黑色扶手椅</h3>
+                    @endif
+                    <div class="toolbox">加入購物車</div>
+                    <img src="{{$product->image}}" alt="{{$product->title}}" />
+                    <small>{{$product->category->name}}</small>
+                    <h3>{{$product->title}}</h3>
                     <span><i class="fa-solid fa-star"></i>4.7</span>
-                    <div class="price-row"><span class="price">$900</span><span class="sale-price">$700</span></div>
+                    @if($product->sale_price)
+                    <div class="price-row"><span class="price">${{$product->price}}</span><span class="sale-price">${{$product->sale_price}}</span></div>
+                    @else
+                    <div class="price-row"><span class="sale-price">${{$product->price}}</span></div>
+                    @endif
                 </div>
-                @endfor
+                @endforeach
             </div>
         </div>
        
@@ -123,7 +144,6 @@
 <script>
     document.querySelector('header').classList.add('isActive');
 </script>
-@include('components.add-cart')
 @endpush
 
 </x-app-layout>
