@@ -16,7 +16,6 @@ class CartController extends Controller
     
     public function index(){
         $cartItems = Cart::getCartItems();
-        log::info($cartItems);
         $ids = Arr::pluck($cartItems, 'product_id');
         $products = Product::query()->whereIn('id', $ids)->get();
       
@@ -84,7 +83,6 @@ class CartController extends Controller
                 ];
             }
             Cookie::queue('cart_items', json_encode($cartItems), 60*24*30);
-            log::info($cartItems);
 
             return response(['count'=>Cart::getCountFromItems($cartItems), 'cartItems'=>$cartItems]);
         }
@@ -131,15 +129,12 @@ class CartController extends Controller
 
     public function updateQuantity(Request $request){
         $quantity = (int)$request->quantity;
-        log::info($quantity);
-        log::info($request->slug);
         $product = Product::where('slug', $request->slug)->first();
         // $quantity = (int)$request->post('quantity');
         $user = $request->user();
         if($user){
             CartItem::where(['user_id'=>$request->user()->id, 'product_id'=>$product->id])->update(['quantity'=>$quantity]);
             $cartItems = (CartItem::where('user_id', $user->id)->get());
-            log::info($cartItems);
             $cartItems = $cartItems->map(fn($item)=>[
                 'id'=>$item['id'],
                 'user_id'=>$item['user_id'],
@@ -167,7 +162,6 @@ class CartController extends Controller
     }
 
     public function getProducts(Request $request){
-        log::info($request->cartItems);
         $ids = Arr::pluck(($request->cartItems), 'product_id');
         $cartItems = (collect(($request->cartItems))->keyBy('product_id'));
         $products = Product::whereIn('id', $ids)->get();
