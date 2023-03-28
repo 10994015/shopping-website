@@ -24,8 +24,9 @@ Route::middleware(['guestOrVerified'])->group(function(){
     Route::prefix('/cart')->name('cart.')->group(function(){
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/add/{slug}', [CartController::class, 'add'])->name('add');
-        Route::get('/remove/{slug}', [CartController::class, 'remove'])->name('remove');
-        Route::get('/update-quantity/{slug}', [CartController::class, 'updateQuantity'])->name('update-quantity');
+        Route::post('/remove/{slug}', [CartController::class, 'remove'])->name('remove');
+        Route::post('/update-quantity/{slug}', [CartController::class, 'updateQuantity'])->name('update-quantity');
+        Route::post('/get-products', [CartController::class, 'getProducts'])->name('get-products');
     });
 });
 

@@ -1,10 +1,19 @@
 <header x-data="{
     cartItemsCount:{{\App\Http\Helpers\Cart::getCartItemsCount()}},
-    updateCartItemsCount: function(count) {
-        this.cartItemsCount = {{\App\Http\Helpers\Cart::getCartItemsCount()}};
+    cartTotalPrice:{{json_encode(\App\Http\Helpers\Cart::getCartItems())}}.reduce((accum, next) => accum + next.price * next.quantity, 0),
+    updateCartItemsCount: function(data) {
+        console.log(data)
+        this.cartItemsCount = data.count.count
+        
+        this.cartTotalPrice = data.count.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0)
+        console.log(this.cartTotalPrice)
+    },
+    init(){
+        const cartItems = {{json_encode(\App\Http\Helpers\Cart::getCartItems())}};
+        cartTotalPrice =  cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0)
     }
 }"
-x-ref="header" x-on:cart-change.window="cartItemsCount = $event.detail.count">
+x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
     <a href="/" class='logo'>
         <img src="/images/logo.png" alt="" />
         <span>房子ROW</span>
@@ -15,9 +24,9 @@ x-ref="header" x-on:cart-change.window="cartItemsCount = $event.detail.count">
         <a href="">關於我們</a>
         <a href="">聯絡我們</a>
         <a href="javascript:;" id="cart-btn">
-            <p>$ 0</p>
-            <div class="icon">
-                <span class="cart-number" x-show="cartItemsCount" x-text="cartItemsCount" x-cloak></span>
+            <p x-text=`$${cartTotalPrice}`></p>
+            <div class="icon" x-cloak>
+                <span class="cart-number" x-show="cartItemsCount" x-text="cartItemsCount" ></span>
                 <i class="fa-solid fa-bag-shopping"></i>
             </div>
         </a>

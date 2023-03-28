@@ -1,4 +1,48 @@
-<div class="shop-cart" id="shop-cart-sildebar">
+<div class="shop-cart" id="shop-cart-sildebar" 
+    x-data="{
+        cartItems: {{
+            \App\Http\Helpers\Cart::getProducts(json_encode(\App\Http\Helpers\Cart::getCartItems()))
+        }} ,
+        get cartItemsSubTotal(){
+            return Object.values(this.cartItems).reduce((accum, next) => accum + next.price * next.quantity, 0)
+        },
+        get shopProducts(){
+            return Object.values(this.cartItems).reduce((result, currentValue) => {
+                result[currentValue['id']] = currentValue;
+                return result;
+              }, {});
+        },
+        init(){
+            console.log(this.cartItems)
+        },
+        shopRemoveChange(ids){
+            ids = Array.from(ids.cartItems)
+            this.cartItems = Object.values(this.cartItems).filter(p=> ids.includes(Number(p.id)) )
+        },
+        shopAddChange(ev){
+            const cartItems = ev.count.cartItems
+            axios.post(`/cart/get-products`, {cartItems: cartItems}).then(res=>{
+                this.cartItems = res.data
+            })
+        },
+        shopUpdateChange:function(ev){
+            this.cartItems[ev.key].quantity = ev.quantity
+            if(this.cartItems[ev.key].quantity <= 0){
+                axios.post(`/cart/remove/${this.cartItems[ev.key].slug}`).then(res=>{
+                    this.$dispatch('shop-remove-change', {cartItems:res.data.ids})
+                    this.$dispatch('cart-change', {count: res.data})
+                })
+                return;
+            }
+            axios.post(`/cart/update-quantity/${this.shopProducts[ev.key]['slug']}`, {quantity:this.cartItems[ev.key].quantity}).then(res=>{
+                this.$dispatch('cart-change', {count: res.data})
+            })
+        }
+    }"
+    x-on:shop-update-change.window="shopUpdateChange($event.detail)"
+    x-on:shop-remove-change.window="shopRemoveChange($event.detail)"
+    x-on:shop-add-change.window="shopAddChange($event.detail)"
+    >
     <div class="back"></div>
     <div class="cart">
         <div class="cart-title">
@@ -6,30 +50,41 @@
             <i class="fas fa-times" id="close-cart"></i>
         </div>
         <div class="product-list">
-            <div class="item">
-                <div class="product">
-                    <img src="/images/plant3-free-img.jpg" alt="">
-                    <div>
-                        <h4>黑色扶手椅</h4>
-                        <div class="input-number">
-                            <button class="decrement cart-decrement" onclick="cartStepper(this)">-</button>
-                            <input type="number" value="1" id="cart-number" min="1" max="100" step="1" />
-                            <button class="increment cart-increment" onclick="cartStepper(this)">+</button>
+            <template  x-for="(product, key) of cartItems" :key="product.id" x-data="{
+                increment:function(product, key){
+                    let newQuantity = Number(JSON.parse(product).quantity) + 1
+                    this.$dispatch('shop-update-change', {quantity:newQuantity, key:key})
+                },
+                decrement:function(product, key){
+                    let newQuantity = Number(JSON.parse(product).quantity) -1 
+                    this.$dispatch('shop-update-change', {quantity:newQuantity, key:key})
+                },
+            }">
+                <div class="item" >
+                    <div class="product">
+                        <img :src="product.image" :alt="product.title">
+                        <div>
+                            <h4 x-text="product.title"></h4>
+                            <div class="input-number">
+                                <button class="decrement cart-decrement" x-on:click="decrement(`${JSON.stringify(product)}`, key)">-</button>
+                                <input type="number" x-model="product.quantity" id="cart-number" min="1" max="100" step="1" />
+                                <button class="increment cart-increment" x-on:click="increment(`${JSON.stringify(product)}`, key)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="detail-info">
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <p x-text=`$${(product.sale_price)?product.sale_price*product.quantity:product.price*product.quantity}`></p>
                         </div>
                     </div>
                 </div>
-                <div class="detail">
-                    <div class="detail-info">
-                        <i class="fa-regular fa-circle-xmark"></i>
-                        <p>$ 128</p>
-                    </div>
-                </div>
-            </div>
+            </template>
         </div>
         <div class="checkout-btn">
             <div class="subtotal">
                 <p>小計:</p>
-                <p>$ 193</p>
+                <p x-text=`$${cartItemsSubTotal}`></p>
             </div>
             <a href="/cart" class="view-cart">查看購物車</a>
             <a href="##" class="to-checkout">前往結帳</a>

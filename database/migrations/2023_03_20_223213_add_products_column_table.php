@@ -15,7 +15,7 @@ class AddProductsColumnTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->string('short_description')->nullable()->after('description');
-            $table->string('sale_price')->nullable()->after('price');
+            $table->integer('sale_price')->nullable()->after('price');
             $table->boolean('hidden')->default(false)->after('sale_price');
             $table->boolean('featured')->default(false)->after('hidden');
         });

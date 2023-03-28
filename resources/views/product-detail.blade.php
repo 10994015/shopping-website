@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="product-detail">
+    <div class="product-detail" >
         <div class="product">
             <div class="product-image">
                 <div class="imgBox">
@@ -9,7 +9,35 @@
                     <img src="{{$product->image}}" alt="{{$product->title}}" />
                 </div>
             </div>
-            <div class="product-intro">
+            <div class="product-intro" x-data="{
+                productItem:{{json_encode($product)}},
+                quantity:1,
+                decrementFn(){
+                    if(this.quantity>1) {
+                        this.quantity--
+                    }
+                },
+                incrementFn(){
+                    if(this.quantity<100) {
+                        this.quantity++
+                    }
+                },
+                changeQuantity(){
+                    this.quantity = Number($el.querySelector('#cart-number').value) 
+                },
+                addToCart:function(slug){
+                    if(!this.isLoading){
+                        this.isLoading = true;
+                        axios.post('/cart/add/slug',{product:this.productItem, quantity:this.quantity}).then(res=>{
+                            this.$dispatch('cart-change', {count: res.data})
+                            this.$dispatch('shop-add-change', {count: res.data})
+                        });
+                        setTimeout(()=>{
+                            this.isLoading = false;
+                        },1000)
+                    }
+                }
+            }">
                 <a href="/store/{{$product->category->slug}}" class="category-name">{{$product->category->name}}</a>
                 <h1 class="product-title">{{$product->title}}</h1>
                 <div class="price-list">
@@ -23,27 +51,12 @@
                 </div>
                 <p class="short-description">{{$product->short_description}}</p>
                 <div class="add-cart">
-                    <div class="input-number" x-data="{
-                        quantity: 1,
-                        decrementFn(){
-                            if(this.quantity>1) {
-                                this.quantity--
-                            }
-                        },
-                        incrementFn(){
-                            if(this.quantity<100) {
-                                this.quantity++
-                            }
-                        },
-                        changeQuantity(){
-                            this.quantity = Number($el.querySelector('#cart-number').value) 
-                        }
-                    }">
+                    <div class="input-number">
                         <button class="decrement" id="decrement" x-on:click="decrementFn">-</button>
                         <input type="number"  :value="quantity" id="cart-number" min="1" max="100" step="1" x-on:change="changeQuantity" />
                         <button class="increment" id="increment" x-on:click="incrementFn">+</button>
                     </div>
-                    <button type="button" class="addtocart">加入購物車</button>
+                    <button type="button" class="addtocart" x-on:click="addToCart('{{$product->slug}}')">加入購物車</button>
                 </div>
                 <div class="category">Category: <a href="/store/{{$product->category->slug}}">{{$product->category->name}}</a></div>
             </div>
@@ -106,12 +119,13 @@
                         addToCart:function(slug){
                             if(!this.isLoading){
                                 this.isLoading = true;
-                                axios.post('/cart/add/slug',{product:this.productItem}).then(res=>{
-                                    this.$dispatch('cart-change', {count: res.data.count})
-                                });
                                 setTimeout(()=>{
+                                    axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
+                                        this.$dispatch('cart-change', {count: res.data})
+                                        this.$dispatch('shop-add-change', {count: res.data})
+                                    });
                                     this.isLoading = false;
-                                },1000)
+                                },500)
                             }
                         }
                     }"

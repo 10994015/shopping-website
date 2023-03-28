@@ -2,7 +2,11 @@
 
 namespace App\Http\Helpers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\CartItem;
+use App\Models\Product;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class Cart
 {
@@ -22,7 +26,6 @@ class Cart
         }
     }
     public static function getCartItems(){
-        
         $request = \request();
         $user = $request->user();
         if($user){
@@ -64,5 +67,21 @@ class Cart
         if(!empty($newCartItems)){
             CartItem::insert($newCartItems);
         }
+    }
+    public static function getProducts($cartItems){
+        $ids = Arr::pluck(json_decode($cartItems), 'product_id');
+        $cartItems = (collect(json_decode($cartItems))->keyBy('product_id'));
+        $products = Product::whereIn('id', $ids)->get();
+        $products = $products->map(fn($product)=>[
+            'id'=>$product->id,
+            'slug'=>$product->slug,
+            'image'=>$product->image,
+            'title'=>$product->title,
+            'price'=>($product->sale_price) ?(int) $product->sale_price : (int)$product->price,
+            'quantity'=>$cartItems[$product->id]->quantity,
+            'total'=>($product->sale_price) ? (int) $product->sale_price * $cartItems[$product->id]->quantity : (int) $product->price * $cartItems[$product->id]->quantity ,
+        ]);
+        $products = (collect(json_decode($products))->keyBy('id'));
+        return ($products);
     }
 }

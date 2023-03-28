@@ -43,12 +43,13 @@
                     addToCart:function(slug){
                         if(!this.isLoading){
                             this.isLoading = true;
-                            axios.post('/cart/add/slug',{product:this.productItem}).then(res=>{
-                                this.$dispatch('cart-change', {count: res.data.count})
-                            });
                             setTimeout(()=>{
+                                axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
+                                    this.$dispatch('cart-change', {count: res.data})
+                                    this.$dispatch('shop-add-change', {count: res.data})
+                                });
                                 this.isLoading = false;
-                            },1000)
+                            },500)
                         }
                     }
                 }"

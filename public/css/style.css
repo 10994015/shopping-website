@@ -1274,13 +1274,20 @@ header > nav > a > .icon > i {
   -webkit-appearance: none;
   margin: 0;
 }
+.shop-cart-component > .cart > .products table tbody tr td i {
+  color: rgba(190, 0, 0, 0.5);
+  cursor: pointer;
+}
+.shop-cart-component > .cart > .products table tbody tr td i:hover {
+  color: rgba(190, 0, 0, 0.9);
+}
 .shop-cart-component > .cart > .details {
   width: 25%;
   margin-left: 5%;
   margin-top: 30px;
   border: 1px #ddd solid;
   position: relative;
-  height: 400px;
+  height: 420px;
 }
 .shop-cart-component > .cart > .details > .details-title {
   width: 100%;
@@ -1334,7 +1341,6 @@ header > nav > a > .icon > i {
   bottom: 0;
 }
 .shop-cart-component > .cart > .details > .checkout > button {
-  margin-top: 10px;
   background-color: #FC5F5F;
   color: #fff;
   width: 100%;
@@ -1342,6 +1348,28 @@ header > nav > a > .icon > i {
   border-radius: 5px;
 }
 .shop-cart-component > .cart > .details > .checkout > button:hover {
+  background-color: #75C32C;
+}
+.shop-cart-component > .cart > .empiyCart {
+  width: 100%;
+  background-color: #F7F6F7;
+  padding: 25px 0;
+  text-align: center;
+  margin-top: 30px;
+  color: #878787;
+}
+.shop-cart-component > .cart > .empiyCart > a {
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  background-color: #FC5F5F;
+  color: #fff;
+  width: 150px;
+  height: 45px;
+  line-height: 44px;
+  border-radius: 5px;
+}
+.shop-cart-component > .cart > .empiyCart > a:hover {
   background-color: #75C32C;
 }
 

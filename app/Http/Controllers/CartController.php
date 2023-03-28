@@ -20,7 +20,6 @@ class CartController extends Controller
         $products = Product::query()->whereIn('id', $ids)->get();
       
         $cartItems = collect($cartItems)->keyBy('product_id');
-        log::info($cartItems);
         // $cartItems = Arr::keyBy($cartItems, 'product_id');
         $total = 0;
         foreach($products as $product){
@@ -36,9 +35,7 @@ class CartController extends Controller
 
     public function add(Request $request){
         $product = $request->product;
-        Log::info($product);
         $quantity = $request->post('quantity', 1);
-        log::info($quantity);
         $user = $request->user();
         if($user){
             $cartItem = CartItem::where(['user_id'=>$user->id, 'product_id'=>$product['id']])->first();
@@ -57,7 +54,6 @@ class CartController extends Controller
                 'count'=>Cart::getCartItemsCount(),
             ]);
         }else{
-            log::info('no login');
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
             $productFound = false;
             foreach($cartItems as &$item){
@@ -78,14 +74,17 @@ class CartController extends Controller
                 ];
             }
             Cookie::queue('cart_items', json_encode($cartItems), 60*24*30);
+            log::info($cartItems);
 
-            return response(['count'=>Cart::getCountFromItems($cartItems)]);
+            return response(['count'=>Cart::getCountFromItems($cartItems), 'cartItems'=>$cartItems]);
         }
 
          
     }
 
-    public function remove(Request $request, Product $product){
+    public function remove(Request $request){
+        log::info($request->slug);
+        $product = Product::where('slug', $request->slug)->first();
         $user = $request->user();
         if($user){
             $cartItem = CartItem::query()->where(['user_id'=>$user->id, 'product_id'=>$product->id])->first();
@@ -106,14 +105,18 @@ class CartController extends Controller
             }
             Cookie::queue('cart_items', json_encode($cartItems), 60*24*30);
 
-            return response(['count'=>Cart::getCountFromItems($cartItems)]);
+            $ids = Arr::pluck($cartItems, 'product_id');
+            return response(['count'=>Cart::getCountFromItems($cartItems), 'ids'=>$ids, 'cartItems'=>$cartItems]);
         }
     } 
 
-    public function updateQuantity(Request $request, Product $product){
-        $quantity = (int)$request->post('quantity');
+    public function updateQuantity(Request $request){
+        $quantity = (int)$request->quantity;
+        log::info($quantity);
+        log::info($request->slug);
+        $product = Product::where('slug', $request->slug)->first();
+        // $quantity = (int)$request->post('quantity');
         $user = $request->user();
-
         if($user){
             CartItem::where(['user_id'=>$request->user()->id, 'product_id'=>$product->id])->update(['quantity'=>$quantity]);
 
@@ -131,7 +134,25 @@ class CartController extends Controller
 
             Cookie::queue('cart_items', json_encode($cartItems), 60*24*30);
 
-            return response(['count'=>Cart::getCountFromItems($cartItems)]);
+            return response(['count'=>Cart::getCountFromItems($cartItems), 'cartItems'=>$cartItems]);
         }
+    }
+
+    public function getProducts(Request $request){
+        log::info($request->cartItems);
+        $ids = Arr::pluck(($request->cartItems), 'product_id');
+        $cartItems = (collect(($request->cartItems))->keyBy('product_id'));
+        $products = Product::whereIn('id', $ids)->get();
+        $products = $products->map(fn($product)=>[
+            'id'=>$product->id,
+            'slug'=>$product->slug,
+            'image'=>$product->image,
+            'title'=>$product->title,
+            'price'=>($product->sale_price) ?(int) $product->sale_price : (int)$product->price,
+            'quantity'=>$cartItems[$product->id]['quantity'],
+            'total'=>($product->sale_price) ? (int) $product->sale_price * $cartItems[$product->id]['quantity'] : (int) $product->price * $cartItems[$product->id]['quantity'] ,
+        ]);
+        $products = (collect(json_decode($products))->keyBy('id'));
+        return ($products);
     }
 }
