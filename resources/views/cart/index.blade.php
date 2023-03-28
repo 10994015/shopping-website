@@ -64,7 +64,6 @@
                         <template x-for="(product,key) of products" :key="product.id" x-data="{
                             removeCartItem:function(slug){
                                 axios.post(`/cart/remove/${slug}`).then(res=>{
-                                    console.log(res)
                                     this.$dispatch('remove-change', {cartItems:res.data.ids})
                                     this.$dispatch('cart-change', {count: res.data})
                                 })

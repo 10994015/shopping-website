@@ -2,11 +2,9 @@
     cartItemsCount:{{\App\Http\Helpers\Cart::getCartItemsCount()}},
     cartTotalPrice:{{json_encode(\App\Http\Helpers\Cart::getCartItems())}}.reduce((accum, next) => accum + next.price * next.quantity, 0),
     updateCartItemsCount: function(data) {
-        console.log(data)
         this.cartItemsCount = data.count.count
         
         this.cartTotalPrice = data.count.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0)
-        console.log(this.cartTotalPrice)
     },
     init(){
         const cartItems = {{json_encode(\App\Http\Helpers\Cart::getCartItems())}};
@@ -23,6 +21,7 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
         <a href="/store">線上商店</a>
         <a href="">關於我們</a>
         <a href="">聯絡我們</a>
+        @if(strpos(Route::currentRouteName(), 'cart') === false)
         <a href="javascript:;" id="cart-btn">
             <p x-text=`$${cartTotalPrice}`></p>
             <div class="icon" x-cloak>
@@ -30,6 +29,16 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
                 <i class="fa-solid fa-bag-shopping"></i>
             </div>
         </a>
+        @else
+        <a href="/cart">
+            <p x-text=`$${cartTotalPrice}`></p>
+            <div class="icon" x-cloak>
+                <span class="cart-number" x-show="cartItemsCount" x-text="cartItemsCount" ></span>
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+        </a>
+        
+        @endif
         @if(Auth::check())
         <a href="javascript:;" class="myaccount">
             <i class="fa-solid fa-user mr-1"></i>{{Auth::user()->name}}

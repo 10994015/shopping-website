@@ -46,7 +46,6 @@
                                 this.isLoading = true;
                                 setTimeout(()=>{
                                     axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
-                                        console.log('res====>', res)
                                         this.$dispatch('cart-change', {count: res.data})
                                         this.$dispatch('shop-add-change', {count: res.data})
                                     });

@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
@@ -50,8 +51,17 @@ class CartController extends Controller
                 ];
                 CartItem::create($data);
             }
+            // $cartItems = CartItem::find($request->user()->id);
+            $cartItems = CartItem::where('user_id', $user->id)->get()->map(fn($item)=>[
+                'id'=>$item['id'],
+                'user_id'=>$item['user_id'],
+                'product_id'=>$item['product_id'],
+                'quantity'=>$item['quantity'],
+                'price'=>DB::table('products')->where('id', $item['product_id'])->first()->sale_price ?? DB::table('products')->where('id', $item['product_id'])->first()->price,
+            ]);
             return response([
                 'count'=>Cart::getCartItemsCount(),
+                'cartItems'=>$cartItems,
             ]);
         }else{
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
@@ -83,7 +93,6 @@ class CartController extends Controller
     }
 
     public function remove(Request $request){
-        log::info($request->slug);
         $product = Product::where('slug', $request->slug)->first();
         $user = $request->user();
         if($user){
@@ -91,9 +100,19 @@ class CartController extends Controller
             if($cartItem){
                 $cartItem->delete();
             }
-
+            $cartItems = CartItem::where('user_id', $user->id)->get();
+            $ids = Arr::pluck($cartItems, 'product_id');
+            $cartItems = $cartItems->map(fn($item)=>[
+                'id'=>$item['id'],
+                'user_id'=>$item['user_id'],
+                'product_id'=>$item['product_id'],
+                'quantity'=>$item['quantity'],
+                'price'=>DB::table('products')->where('id', $item['product_id'])->first()->sale_price ?? DB::table('products')->where('id', $item['product_id'])->first()->price,
+            ]);
             return response([
                 'count'=> Cart::getCartItemsCount(),
+                'cartItems'=>$cartItems,
+                'ids'=>$ids,
             ]);
         }else{
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
@@ -119,9 +138,18 @@ class CartController extends Controller
         $user = $request->user();
         if($user){
             CartItem::where(['user_id'=>$request->user()->id, 'product_id'=>$product->id])->update(['quantity'=>$quantity]);
-
+            $cartItems = (CartItem::where('user_id', $user->id)->get());
+            log::info($cartItems);
+            $cartItems = $cartItems->map(fn($item)=>[
+                'id'=>$item['id'],
+                'user_id'=>$item['user_id'],
+                'product_id'=>$item['product_id'],
+                'quantity'=>$item['quantity'],
+                'price'=>DB::table('products')->where('id', $item['product_id'])->first()->sale_price ?? DB::table('products')->where('id', $item['product_id'])->first()->price,
+            ]);
             return response([
                 'count'=> Cart::getCartItemsCount(),
+                'cartItems'=>$cartItems,
             ]);
         }else{
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);

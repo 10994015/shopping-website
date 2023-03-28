@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class Cart
@@ -26,11 +27,12 @@ class Cart
         }
     }
     public static function getCartItems(){
+        
         $request = \request();
         $user = $request->user();
         if($user){
             return CartItem::where('user_id', $user->id)->get()->map(
-                fn($item) => ['product_id'=>$item->product_id, 'quantity'=>$item->quantity]
+                fn($item) => ['product_id'=>$item->product_id, 'quantity'=>$item->quantity, 'price'=>DB::table('products')->where('id', $item->product_id)->first()->sale_price ?? DB::table('products')->where('id', $item->product_id)->first()->price]
             );
         }else{
             return self::getCookieCartItems();
