@@ -1373,12 +1373,12 @@ header > nav > a > .icon > i {
   background-color: #75C32C;
 }
 
-.login {
+.login, .reset-password {
   width: 100%;
   padding: 180px 0;
   background-color: #f1f1f1;
 }
-.login > form {
+.login > form, .reset-password > form {
   width: 100%;
   max-width: 800px;
   padding: 80px;
@@ -1388,26 +1388,26 @@ header > nav > a > .icon > i {
   display: flex;
   flex-direction: column;
 }
-.login > form > h2 {
-  font-size: 20px;
+.login > form > h2, .reset-password > form > h2 {
+  font-size: 18px;
 }
-.login > form > label {
+.login > form > label, .reset-password > form > label {
   width: 100%;
   color: #333;
   margin: 10px 0;
 }
-.login > form > label > input[type=email], .login > form > label input[type=password], .login > form > label input[type=text] {
+.login > form > label > input[type=email], .login > form > label input[type=password], .login > form > label input[type=text], .reset-password > form > label > input[type=email], .reset-password > form > label input[type=password], .reset-password > form > label input[type=text] {
   width: 100%;
   border: 1px #ddd solid;
   box-shadow: none;
   outline: none;
   font-size: 15px;
 }
-.login > form > label > input[type=email]:focus, .login > form > label input[type=password]:focus, .login > form > label input[type=text]:focus {
+.login > form > label > input[type=email]:focus, .login > form > label input[type=password]:focus, .login > form > label input[type=text]:focus, .reset-password > form > label > input[type=email]:focus, .reset-password > form > label input[type=password]:focus, .reset-password > form > label input[type=text]:focus {
   outline: none;
   box-shadow: none;
 }
-.login > form > label > button {
+.login > form > label > button, .reset-password > form > label > button {
   width: 150px;
   height: 42px;
   background-color: #FC5F5F;
@@ -1418,17 +1418,174 @@ header > nav > a > .icon > i {
   justify-content: center;
   align-items: center;
 }
-.login > form > div {
+.login > form > div, .reset-password > form > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
 }
-.login > form > div a {
+.login > form > div a, .reset-password > form > div a {
   color: #888;
   font-size: 15px;
 }
-.login > form > div a:hover {
+.login > form > div a:hover, .reset-password > form > div a:hover {
+  color: #FC5F5F;
+}
+
+.profile {
+  width: 100%;
+  padding: 180px 0;
+  background-color: #f1f1f1;
+}
+.profile > form {
+  width: 100%;
+  max-width: 800px;
+  padding: 80px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.profile > form > h2 {
+  font-size: 18px;
+}
+.profile > form > div.label-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+.profile > form > div.label-group > label {
+  width: 48%;
+  color: #333;
+}
+.profile > form > div.label-group > label > p {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.profile > form > div.label-group > label > input[type=email], .profile > form > div.label-group > label input[type=password], .profile > form > div.label-group > label input[type=text], .profile > form > div.label-group > label select {
+  width: 100%;
+  height: 36px;
+  border: 1px #ddd solid;
+  box-shadow: none;
+  outline: none;
+  font-size: 15px;
+}
+.profile > form > div.label-group > label > input[type=email]:focus, .profile > form > div.label-group > label input[type=password]:focus, .profile > form > div.label-group > label input[type=text]:focus, .profile > form > div.label-group > label select:focus {
+  outline: none;
+  box-shadow: none;
+}
+.profile > form > div.label-group > label > button {
+  width: 150px;
+  height: 42px;
+  background-color: #FC5F5F;
+  font-weight: 700;
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile > form > div.label-group > label > select {
+  padding: 0 10px;
+}
+.profile > form > label {
+  width: 100%;
+  color: #333;
+  margin: 6px 0;
+}
+.profile > form > label a {
+  color: #0A7CFF;
+  font-size: 14px;
+}
+.profile > form > label a:hover {
+  color: #1484c4;
+}
+.profile > form > label > p {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.profile > form > label > input[type=email], .profile > form > label input[type=password], .profile > form > label input[type=text], .profile > form > label select {
+  width: 100%;
+  border: 1px #ddd solid;
+  box-shadow: none;
+  outline: none;
+  font-size: 15px;
+  height: 36px;
+}
+.profile > form > label > input[type=email]:focus, .profile > form > label input[type=password]:focus, .profile > form > label input[type=text]:focus, .profile > form > label select:focus {
+  outline: none;
+  box-shadow: none;
+}
+.profile > form > label > button {
+  width: 150px;
+  height: 42px;
+  background-color: #FC5F5F;
+  font-weight: 700;
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile > form > label > select {
+  padding: 0 10px;
+}
+.profile > form > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile > form > div.title-group > h2 {
+  font-size: 18px;
+  margin-top: 18px;
+}
+.profile > form > div.title-group label {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.profile > form > div.title-group label > input {
+  margin-right: 5px;
+}
+.profile > form > div.btn-group {
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+.profile > form > div.btn-group > button {
+  width: 150px;
+  height: 42px;
+  background-color: #FC5F5F;
+  font-weight: 700;
+  border-radius: 25px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.profile > form > div.btn-group > button:hover {
+  background-color: transparent;
+  color: #FC5F5F;
+  border: 1px #FC5F5F solid;
+}
+.profile > form > div.btn-group > button.cancel {
+  color: #555;
+  border: 1px #ccc solid;
+  background-color: transparent;
+}
+.profile > form > div.btn-group > button.cancel:hover {
+  border-color: #555;
+}
+.profile > form > div > a {
+  color: #888;
+  font-size: 15px;
+}
+.profile > form > div > a:hover {
   color: #FC5F5F;
 }
 

@@ -24,7 +24,7 @@
                 <p>確認密碼 <span>*</span></p>
                 <x-input type="password" name="password_confirmation" class="mt-1"  :errors="$errors" required placeholder="Password confirmation..." />
             </label>
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
             <label for="" >
                 <button type="submit"  >
                     <svg x-show="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
