@@ -10,7 +10,7 @@ const text = computed(()=>props.text);
 <template>
 <footer>
     <span>{{text}}</span>
-    <span>2023 © <router-link :to="{name:'app.dashboard'}">FZR.</router-link> </span>
+    <span>2023 © <router-link :to="{name:'app.dashboard'}">{{text}}.</router-link> </span>
 </footer>
 </template>
 

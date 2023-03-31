@@ -8,9 +8,9 @@ export function getUser({commit}){
 }
 
 export function login({commit}, data){
-    return axiosClient.post('login', data).then(res=>{
-        commit('setUser', res.data.user);
-        commit('setToken', res.data.token);
+    return axiosClient.post('login', data).then(({data})=>{
+        commit('setUser', data.user);
+        commit('setToken', data.token);
         return data;
     })
 }
