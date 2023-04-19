@@ -16,7 +16,6 @@
             ]) }},
             sameBilling:false,
             sameBillingAddress:function(e){
-                console.log(this.sameBilling)
                 if(this.sameBilling){
                     this.shippingAddress.address1 = this.billingAddress.address1;
                     this.shippingAddress.city = this.billingAddress.city;

@@ -12,6 +12,7 @@ export function setToken(state, token){
 }
 
 export function setProducts(state, [loading, res=null]){
+    console.log(res);
     if(res){
         state.products = {
             data: res.data,

@@ -42,7 +42,7 @@ const deleteProduct = (product)=>{
         alert('刪除成功！')
         getProducts();
     })
-}
+};
 </script>
 
 <template>

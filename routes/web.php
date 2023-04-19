@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.reset-password');
-    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::post('/profile/upprofile.update-passworddate-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 });
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

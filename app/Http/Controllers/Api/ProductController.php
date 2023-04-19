@@ -123,7 +123,6 @@ class ProductController extends Controller
     }
 
     public function isExistProduct(Request $req){
-        Log::info($req->id);
         $product = Product::find($req->id);
         return ($product) ? true :false;
     }
