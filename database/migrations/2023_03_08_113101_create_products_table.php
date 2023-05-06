@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('image_mime')->nullable();
             $table->integer('image_size')->nullable();
             $table->longText('description')->nullable();
-            $table->integer('price', 10);
+            $table->integer('price');
             $table->foreignIdFor(User::class, 'created_by')->nullable();
             $table->foreignIdFor(User::class, 'updated_by')->nullable();
             $table->softDeletes();
