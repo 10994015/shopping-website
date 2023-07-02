@@ -134,7 +134,7 @@ class CartController extends Controller
         $user = $request->user();
         if($user){
             CartItem::where(['user_id'=>$request->user()->id, 'product_id'=>$product->id])->update(['quantity'=>$quantity]);
-            $cartItems = (CartItem::where('user_id', $user->id)->get());
+            $cartItems = CartItem::where('user_id', $user->id)->get();
             $cartItems = $cartItems->map(fn($item)=>[
                 'id'=>$item['id'],
                 'user_id'=>$item['user_id'],
