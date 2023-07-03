@@ -81,7 +81,6 @@ class ProfileController extends Controller
             $shipping_customer_address->customer_id = $customer->user_id;
             $shipping_customer_address->save();
         }
-        log::info($customerData['first_name']);
         $request->session()->flash('flash_message', '資料儲存更改成功！');
         return redirect()->route('profile');
     }

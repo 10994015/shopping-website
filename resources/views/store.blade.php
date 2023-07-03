@@ -43,10 +43,12 @@
                     addToCart:function(slug){
                         if(!this.isLoading){
                             this.isLoading = true;
+                            console.log(this.productItem)
                             setTimeout(()=>{
-                                axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
-                                    this.$dispatch('cart-change', {count: res.data})
-                                    this.$dispatch('shop-add-change', {count: res.data})
+                                axios.post('/cart/add/' + slug ,{product:this.productItem, quantity:1}).then(res=>{
+                                    console.log(res.data)
+                                    this.$dispatch('cart-change', res.data)
+                                    this.$dispatch('shop-add-change', res.data)
                                 });
                                 this.isLoading = false;
                             },500)

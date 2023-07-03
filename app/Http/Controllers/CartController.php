@@ -34,6 +34,7 @@ class CartController extends Controller
     }
 
     public function add(Request $request){
+        Log::info($request->slug);
         $product = $request->product;
         $quantity = $request->post('quantity', 1);
         $user = $request->user();

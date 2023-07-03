@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $customer = new Customer();
-        $names = explode(" ",$user->name);
+        $names = [mb_substr($user->name,0, 1, 'UTF-8'), mb_substr($user->name,1, null, 'UTF-8')];
         $customer->user_id = $user->id;
         $customer->first_name = $names[0];
         $customer->last_name = $names[1] ?? '';

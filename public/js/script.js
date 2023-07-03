@@ -12,10 +12,12 @@ var cartSildbar = shopCartSildebar.querySelector('.cart');
 window.addEventListener('scroll', function (e) {
   window.scrollY > 0 ? header.classList.add('active') : header.classList.remove('active');
 });
-cartBtn.addEventListener('click', function () {
-  cartSildbar.style.right = "0";
-  shopCartSildebar.style.display = "block";
-});
+if (cartBtn != null) {
+  cartBtn.addEventListener('click', function () {
+    cartSildbar.style.right = "0";
+    shopCartSildebar.style.display = "block";
+  });
+}
 var closeCartFn = function closeCartFn() {
   cartSildbar.style.right = "-100%";
   setTimeout(function () {

@@ -29,23 +29,25 @@
                 return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight)
             },
             removeChange:function(ids){
-                ids = Array.from(ids.cartItems)
+                ids = Array.from(ids)
                 this.cartItems = this.cartItems.filter(p=> ids.includes(Number(p.id)) )
                 
             },
             updateChange(ev){
+                console.log(ev)
                 this.products[ev.key].quantity = ev.quantity;
-                if(this.products[ev.key].quantity <= 0){
+                if(ev.quantity <= 0){
                     axios.post(`/cart/remove/${this.products[ev.key].slug}`).then(res=>{
-                        this.$dispatch('remove-change', {cartItems:res.data.ids})
-                        this.$dispatch('cart-change', {count: res.data})
+                        console.log(res.data.ids)
+                        this.$dispatch('remove-change', res.data.ids)
+                        this.$dispatch('cart-change', res.data)
                     })
 
                     return;
                 }
                 this.products[ev.key].total = (this.products[ev.key].price * this.products[ev.key].quantity).toFixed(2) 
                 axios.post(`/cart/update-quantity/${this.products[ev.key].slug}`, {quantity:this.products[ev.key].quantity}).then(res=>{
-                    this.$dispatch('cart-change', {count: res.data})
+                    this.$dispatch('cart-change', res.data)
                 })
             }
         }" x-on:remove-change.window="removeChange($event.detail)" x-on:update-change.window="updateChange($event.detail)">
@@ -72,11 +74,11 @@
                                 this.$dispatch('update-change', {quantity:quantity, key:key}) 
                             },
                             increment:function(product, key){
-                                let newQuantity = Number(JSON.parse(product).quantity) + 1
+                                let newQuantity = Number(product.quantity) + 1
                                 this.$dispatch('update-change', {quantity:newQuantity, key:key})
                             },
                             decrement:function(product, key){
-                                let newQuantity = Number(JSON.parse(product).quantity) -1 
+                                let newQuantity = Number(product.quantity) -1 
                                 this.$dispatch('update-change', {quantity:newQuantity, key:key})
                             },
                             
@@ -87,17 +89,17 @@
                                     <p x-text="product.title"></p>
                                 </td>
                                 <td>
-                                    <p x-text=`$${product.price}`></p>
+                                    <p x-text=`$${parseInt(product.price)}`></p>
                                 </td>
                                 <td class=" ">
                                     <div class="input-number">
-                                        <button class="decrement cart-decrement" x-on:click="decrement(`${JSON.stringify(product)}`, key)">-</button>
-                                        <input type="number" x-model="products[product.id].quantity" id="cart-number" min="1" max="100" step="1" x-on:change="updateCartItemCount(products[product.id].quantity, key)" />
-                                        <button class="increment cart-increment" x-on:click="increment(`${JSON.stringify(product)}`, key)">+</button>
+                                        <button class="decrement cart-decrement" x-on:click="decrement(product, key)">-</button>
+                                        <input type="number" x-model="product.quantity" id="cart-number" min="1" max="100" step="1" x-on:change="updateCartItemCount(product.quantity, key)" />
+                                        <button class="increment cart-increment" x-on:click="increment(product, key)">+</button>
                                     </div>
                                 </td>
                                 <td>
-                                    <p x-text=`$${product.total}`></p>
+                                    <p x-text=`$${parseInt(product.total)}`></p>
                                 </td>
                                 <td><i class="fa-regular fa-circle-xmark" x-on:click="removeCartItem(`${product.slug}`)"></i></td>
                             </tr>
@@ -114,7 +116,7 @@
                 <div class="subtotal">
                     <div>
                         <p>小計</p>
-                        <p x-text=`$${cartSubTotal}`></p>
+                        <p x-text=`$${parseInt(cartSubTotal)}`></p>
                     </div>
                     <div>
                         <p>運費</p>

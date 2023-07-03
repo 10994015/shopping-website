@@ -926,9 +926,30 @@ header > nav > a > .icon > i {
   font-weight: 700;
   font-size: 14px;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .product-detail > .product > .product-intro > .add-cart > button.addtocart:hover {
   background-color: #75C32C;
+}
+.product-detail > .product > .product-intro > .add-cart > button.addtocart > .loading {
+  width: 15px;
+  height: 15px;
+  background-color: #555;
+  border-radius: 50%;
+  display: block;
+  animation: loading 0.5s infinite linear;
+}
+@keyframes loading {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 .product-detail > .product > .product-intro > .category {
   margin-top: 12px;

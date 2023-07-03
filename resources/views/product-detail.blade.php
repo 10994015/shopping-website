@@ -10,6 +10,7 @@
                 </div>
             </div>
             <div class="product-intro" x-data="{
+                addCartLoading:false,
                 productItem:{{json_encode($product)}},
                 quantity:1,
                 decrementFn(){
@@ -26,14 +27,14 @@
                     this.quantity = Number($el.querySelector('#cart-number').value) 
                 },
                 addToCart:function(slug){
-                    if(!this.isLoading){
-                        this.isLoading = true;
-                        axios.post('/cart/add/slug',{product:this.productItem, quantity:this.quantity}).then(res=>{
-                            this.$dispatch('cart-change', {count: res.data})
-                            this.$dispatch('shop-add-change', {count: res.data})
+                    if(!this.addCartLoading){
+                        this.addCartLoading = true;
+                        axios.post('/cart/add/' + slug,{product:this.productItem, quantity:this.quantity}).then(res=>{
+                            this.$dispatch('cart-change', res.data)
+                            this.$dispatch('shop-add-change', res.data)
                         });
                         setTimeout(()=>{
-                            this.isLoading = false;
+                            this.addCartLoading = false;
                         },1000)
                     }
                 }
@@ -56,7 +57,7 @@
                         <input type="number"  :value="quantity" id="cart-number" min="1" max="100" step="1" x-on:change="changeQuantity" />
                         <button class="increment" id="increment" x-on:click="incrementFn">+</button>
                     </div>
-                    <button type="button" class="addtocart" x-on:click="addToCart('{{$product->slug}}')">加入購物車</button>
+                    <button type="button" class="addtocart" x-on:click="addToCart('{{$product->slug}}')"><span x-show="!addCartLoading">加入購物車</span> <span x-show="addCartLoading" class="loading"></span> </button>
                 </div>
                 <div class="category">Category: <a href="/store/{{$product->category->slug}}">{{$product->category->name}}</a></div>
             </div>
@@ -120,9 +121,9 @@
                             if(!this.isLoading){
                                 this.isLoading = true;
                                 setTimeout(()=>{
-                                    axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
-                                        this.$dispatch('cart-change', {count: res.data})
-                                        this.$dispatch('shop-add-change', {count: res.data})
+                                    axios.post('/cart/add/'+ slug,{product:this.productItem, quantity:1}).then(res=>{
+                                        this.$dispatch('cart-change',res.data)
+                                        this.$dispatch('shop-add-change', res.data)
                                     });
                                     this.isLoading = false;
                                 },500)

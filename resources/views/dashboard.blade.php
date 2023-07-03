@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-rotate-right"></i>
                 <div class="intro-text">
                     <h3>完全退款</h3>
-                    <p>如果該產品不適合你家</p>
+                    <p>如果該產品不適合家裡擺設</p>
                 </div>
             </div>
         </section>
@@ -45,9 +45,9 @@
                             if(!this.isLoading){
                                 this.isLoading = true;
                                 setTimeout(()=>{
-                                    axios.post('/cart/add/slug',{product:this.productItem, quantity:1}).then(res=>{
-                                        this.$dispatch('cart-change', {count: res.data})
-                                        this.$dispatch('shop-add-change', {count: res.data})
+                                    axios.post('/cart/add/' + slug ,{product:this.productItem, quantity:1}).then(res=>{
+                                        this.$dispatch('cart-change', res.data)
+                                        this.$dispatch('shop-add-change', res.data)
                                     });
                                     this.isLoading = false;
                                 },500)
@@ -88,7 +88,7 @@
             <div class="featured-list">
                 @foreach($featured_products as $product)
                 <div class="item">
-                    <div class="imgbox"><img src="{{$product->image}}" alt="{{$product->title}}"></div>
+                    <a href="/product-detail/{{$product->slug}}" class="imgbox"><img src="{{$product->image}}" alt="{{$product->title}}"></a>
                     <h4>{{$product->title}}</h4>
                 </div>
                 @endforeach

@@ -15,26 +15,26 @@
         init(){
         },
         shopRemoveChange(ids){
-            ids = Array.from(ids.cartItems)
             this.cartItems = Object.values(this.cartItems).filter(p=> ids.includes(Number(p.id)) )
         },
         shopCartItemChange(ev){
-            const cartItems = ev.count.cartItems
+            const cartItems = ev.cartItems
             axios.post(`/cart/get-products`, {cartItems: cartItems}).then(res=>{
                 this.cartItems = res.data
             })
         },
         shopUpdateChange:function(ev){
+            console.log(ev)
             this.cartItems[ev.key].quantity = ev.quantity
             if(this.cartItems[ev.key].quantity <= 0){
                 axios.post(`/cart/remove/${this.cartItems[ev.key].slug}`).then(res=>{
-                    this.$dispatch('shop-remove-change', {cartItems:res.data.ids})
-                    this.$dispatch('cart-change', {count: res.data})
+                    this.$dispatch('shop-remove-change', res.data.ids)
+                    this.$dispatch('cart-change', res.data)
                 })
                 return;
             }
             axios.post(`/cart/update-quantity/${this.shopProducts[ev.key]['slug']}`, {quantity:this.cartItems[ev.key].quantity}).then(res=>{
-                this.$dispatch('cart-change', {count: res.data})
+                this.$dispatch('cart-change', res.data)
             })
         }
     }"
@@ -53,19 +53,30 @@
             <template x-if="Object.values(cartItems).length">
                 <template x-for="(product, key) of cartItems" :key="product.id" x-data="{
                     increment:function(product, key){
-                        let newQuantity = Number(JSON.parse(product).quantity) + 1
+                        let newQuantity = Number(product.quantity) + 1
                         this.$dispatch('shop-update-change', {quantity:newQuantity, key:key})
                     },
                     decrement:function(product, key){
-                        let newQuantity = Number(JSON.parse(product).quantity) -1 
+                        let newQuantity = Number(product.quantity) -1 
                         this.$dispatch('shop-update-change', {quantity:newQuantity, key:key})
                     },
                     removeCartItem:function(slug){
                         axios.post(`/cart/remove/${slug}`).then(res=>{
-                            this.$dispatch('shop-remove-change', {cartItems:res.data.ids})
-                            this.$dispatch('cart-change', {count: res.data})
+                            this.$dispatch('shop-remove-change', res.data.ids)
+                            this.$dispatch('cart-change', res.data)
                         })
-                    }
+                    },
+                    changeCount:function(ev, key, slug){
+                        let newQuantity = Number(ev.value)
+                        if(newQuantity > 0){
+                            this.$dispatch('shop-update-change', {quantity:newQuantity, key:key})
+                        }else{
+                            axios.post(`/cart/remove/${slug}`).then(res=>{
+                                this.$dispatch('shop-remove-change', res.data.ids)
+                                this.$dispatch('cart-change', res.data)
+                            })
+                        }
+                    },
                 }">
                     <div class="item" >
                         <div class="product">
@@ -73,9 +84,9 @@
                             <div>
                                 <h4 x-text="product.title"></h4>
                                 <div class="input-number">
-                                    <button class="decrement cart-decrement" x-on:click="decrement(`${JSON.stringify(product)}`, key)">-</button>
-                                    <input type="number" x-model="product.quantity" id="cart-number" min="1" max="100" step="1" />
-                                    <button class="increment cart-increment" x-on:click="increment(`${JSON.stringify(product)}`, key)">+</button>
+                                    <button class="decrement cart-decrement" x-on:click="decrement(product, key)">-</button>
+                                    <input type="number" @change="changeCount($event.target, key, product.slug)" x-model="product.quantity" id="cart-number" min="1" max="100" step="1" />
+                                    <button class="increment cart-increment" x-on:click="increment(product, key)">+</button>
                                 </div>
                             </div>
                         </div>

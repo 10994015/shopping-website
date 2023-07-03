@@ -7,11 +7,13 @@ const cartSildbar = shopCartSildebar.querySelector('.cart')
 window.addEventListener('scroll', (e)=>{
     (window.scrollY > 0) ? header.classList.add('active') : header.classList.remove('active');
 })
+if(cartBtn != null){
+    cartBtn.addEventListener('click', ()=>{
+        cartSildbar.style.right = "0"
+        shopCartSildebar.style.display = "block"
+    })
+}
 
-cartBtn.addEventListener('click', ()=>{
-    cartSildbar.style.right = "0"
-    shopCartSildebar.style.display = "block"
-})
 const closeCartFn = ()=>{
     cartSildbar.style.right = "-100%"
     setTimeout(()=>{
