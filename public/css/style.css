@@ -1878,7 +1878,6 @@ footer > .full > .container > p {
   width: 100%;
   height: 100vh;
   z-index: 12;
-  display: none;
 }
 .shop-cart > .back {
   position: absolute;

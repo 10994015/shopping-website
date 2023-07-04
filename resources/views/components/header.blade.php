@@ -21,7 +21,7 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
         <a href="">關於我們</a>
         <a href="">聯絡我們</a>
 
-        <a @if(strpos(Route::currentRouteName(), 'cart') === false) href="javascript:;" id="cart-btn" @else href="/cart" @endif > 
+        <a @if(strpos(Route::currentRouteName(), 'cart') === false)  @click="$dispatch('cart-open')" href="javascript:;" id="cart-btn" @else href="/cart" @endif > 
             <p x-text=`$${cartTotalPrice}`></p>
             <div class="icon" x-cloak>
                 <span class="cart-number" x-show="cartItemsCount" x-text="cartItemsCount" ></span>

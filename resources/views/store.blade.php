@@ -1,6 +1,35 @@
 <x-app-layout>
     <div class="store" x-data="{
+        products: {{ json_encode($products)}},
+        init(){
+            console.log(this.products.data)
+        },
         filterOpen:false,
+        changeSort(ev){
+            console.log(ev.value)
+            let sortField = 'updated_at'
+            let sortDirection = 'desc'
+            if(ev.value == 0){
+                sortField = 'updated_at'
+                sortDirection = 'desc'
+            }else if(ev.value == 1){
+                sortField = 'updated_at'
+                sortDirection = 'desc'
+            }
+            else if(ev.value == 2){
+                sortField = 'updated_at'
+                sortDirection = 'asc'
+            }else if(ev.value == 3){
+                sortField = 'price'
+                sortDirection = 'asc'
+            }else if(ev.value == 4){
+                sortField = 'price'
+                sortDirection = 'desc'
+            }
+            axios.get('/store', {'sort_field':sortField, 'sort_direction': sortDirection}).then(res=>{
+                console.log(res)
+            })
+        }
     }">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -25,12 +54,12 @@
                 篩選
             </div>
             <div>
-                <select name="" id="">
-                    <option value="">預設排列</option>
-                    <option value="">依時間排列 由近至遠</option>
-                    <option value="">依時間排列 由遠至近</option>
-                    <option value="">依價格排列 由低至高</option>
-                    <option value="">依價格排列 由高至低</option>
+                <select @change="changeSort($event.target)">
+                    <option value="0">預設排列</option>
+                    <option value="1">依時間排列 由近至遠</option>
+                    <option value="2">依時間排列 由遠至近</option>
+                    <option value="3">依價格排列 由低至高</option>
+                    <option value="4">依價格排列 由高至低</option>
                 </select>
             </div>
         </div>
@@ -63,7 +92,7 @@
                 </div>
                 <div class="sale-tag">Sale!</div>
                 <div class="toolbox">加入購物車</div>
-                <img src="{{$product->image}}" alt="{{$product->title}}"             onclick="window.location.href=`/product-detail/{{$product->slug}}`"
+                <img src="{{$product->image}}" alt="{{$product->title}}" onclick="window.location.href=`/product-detail/{{$product->slug}}`"
                  />
                 <small>{{$product->category->name}}</small>
                 <h3>{{$product->title}}</h3>

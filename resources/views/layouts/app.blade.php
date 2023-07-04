@@ -20,7 +20,9 @@
         <div class="min-h-screen">
             @include('components.shop-cart')
             @include('components.header')
-            <main>
+            <main x-data="{
+                
+            }" >
                 {{ $slot }}
             </main>
         @include('components.footer')

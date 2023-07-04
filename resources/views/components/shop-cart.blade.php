@@ -1,5 +1,14 @@
-<div class="shop-cart" id="shop-cart-sildebar" 
+<div class="shop-cart" id="shop-cart-sildebar" x-show="cartOpen" 
     x-data="{
+        cartOpen:false,
+        cartOpenFn(){
+            $refs.shopCartSildebar.style.right = 0
+            this.cartOpen = true
+        },
+        cartCloseFn(){
+            $refs.shopCartSildebar.style.right = '-100%'
+            setTimeout(()=> this.cartOpen = false, 150)
+        },
         cartItems: {{
             \App\Http\Helpers\Cart::getProducts(json_encode(\App\Http\Helpers\Cart::getCartItems()))
         }} ,
@@ -42,12 +51,14 @@
     x-on:shop-remove-change.window="shopRemoveChange($event.detail)"
     x-on:shop-add-change.window="shopCartItemChange($event.detail)"
     x-on:shop-remove-change.window="shopCartItemChange($event.detail)"
+    x-on:cart-open.window="cartOpenFn()"
+    x-on:cart-close.window="cartCloseFn()"
     >
     <div class="back"></div>
-    <div class="cart">
+    <div class="cart" @click.outside="$dispatch('cart-close')" x-ref="shopCartSildebar">
         <div class="cart-title">
             <h4>購物車</h4>
-            <i class="fas fa-times" id="close-cart"></i>
+            <i class="fas fa-times" id="close-cart" @click="$dispatch('cart-close')"></i>
         </div>
         <div class="product-list">
             <template x-if="Object.values(cartItems).length">

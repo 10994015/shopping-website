@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::where('hidden', 0)->orderBy('updated_at', 'DESC')->paginate(16);
+    public function index(Request $request){
+        log::info($request);
+        $sortField = request('sort_field', 'updated_at');
+        $sortDirection = request('sort_direction', 'desc');
+        Log::info($sortField);
+        Log::info($sortDirection);
+        $products = Product::where('hidden', 0)->orderBy($sortField, $sortDirection)->paginate(16);
         $categories = Category::all();
         
         return view('store', ['products'=>$products, 'categories'=>$categories]);
@@ -23,4 +28,5 @@ class ProductController extends Controller
 
         return view('product-detail', ['product'=>$product, 'products'=>$products]);
     }
+    
 }
