@@ -178,4 +178,7 @@ class CartController extends Controller
         $products = (collect(json_decode($products))->keyBy('id'));
         return ($products);
     }
+
+    
+    
 }

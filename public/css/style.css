@@ -1361,14 +1361,17 @@ header > nav > a > .icon > i {
   position: absolute;
   bottom: 0;
 }
-.shop-cart-component > .cart > .details > .checkout > button {
+.shop-cart-component > .cart > .details > .checkout button {
   background-color: #FC5F5F;
   color: #fff;
   width: 100%;
   height: 45px;
   border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.shop-cart-component > .cart > .details > .checkout > button:hover {
+.shop-cart-component > .cart > .details > .checkout button:hover {
   background-color: #75C32C;
 }
 .shop-cart-component > .cart > .empiyCart {
@@ -1610,6 +1613,12 @@ header > nav > a > .icon > i {
   color: #FC5F5F;
 }
 
+.checkout-success {
+  width: 100%;
+  padding: 180px 0;
+  background-color: #f1f1f1;
+}
+
 footer {
   background-color: #F8F8F8;
   width: 100%;
@@ -1741,6 +1750,10 @@ footer > .full > .container > p {
   align-items: center;
   border-radius: 5px;
   margin-left: 2%;
+  transition: 0.3s;
+}
+.filter-component > .filter > .search-product button:hover {
+  background-color: #f74949;
 }
 .filter-component > .filter > .filter-price {
   margin-top: 30px;
@@ -1760,6 +1773,22 @@ footer > .full > .container > p {
 }
 .filter-component > .filter > .filter-price > input[type=range] {
   width: 100%;
+}
+.filter-component > .filter > .filter-price button {
+  background-color: #FC5F5F;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-top: 25px;
+  transition: 0.3s;
+}
+.filter-component > .filter > .filter-price button:hover {
+  background-color: #f74949;
 }
 .filter-component > .filter > .filter-price .price-input {
   width: 100%;
@@ -1941,6 +1970,8 @@ footer > .full > .container > p {
 .shop-cart > .cart > .product-list > .item > .product img {
   width: 60px;
   height: 60px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .shop-cart > .cart > .product-list > .item > .product > div {
   width: 50%;

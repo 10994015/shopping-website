@@ -1370,12 +1370,15 @@ header{
                 padding: 12px;
                 position: absolute;
                 bottom: 0;
-                >button{
+                button{
                     background-color: $mainColor;
                     color:#fff;
                     width: 100%;
                     height: 45px;
                     border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     &:hover{
                         background-color: $secColor;
                     }
@@ -1624,7 +1627,11 @@ header{
         }
     }
 }
-
+.checkout-success{
+    width: 100%;
+    padding: 180px 0;
+    background-color:#f1f1f1 ;
+}
 footer{
     background-color: #F8F8F8;
     width: 100%;
@@ -1759,6 +1766,10 @@ footer{
                 align-items: center;
                 border-radius: 5px;
                 margin-left: 2%;
+                transition: .3s;
+                &:hover{
+                    background-color:#f74949;
+                }
             }
         }
         >.filter-price{
@@ -1774,6 +1785,22 @@ footer{
             }
             >input[type="range"]{
                 width:100%;
+            }
+            button{
+                background-color:$mainColor;
+                color:#fff;
+                font-size: 14px;
+                width: 100%;
+                padding: 10px 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                margin-top: 25px;
+                transition: .3s;
+                &:hover{
+                    background-color:#f74949;
+                }
             }
             .price-input{
                 width: 100%;
@@ -1954,6 +1981,7 @@ footer{
                     img{
                         width: 60px;
                         height: 60px;
+                        object-fit: cover;
                     }
                     >div{
                         width: 50%;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +23,10 @@ Route::middleware(['guestOrVerified'])->group(function(){
     Route::get('/store', [ProductController::class, 'index'])->name('store');
     Route::get('/product-detail/{slug}', [ProductController::class, 'show']);
 
+    Route::get('/change-store-sort', [ProductController::class, 'sort']);
+    Route::get('/search-store', [ProductController::class, 'search']);
+    Route::get('/filter-store-price', [ProductController::class, 'filter']);
+
     Route::prefix('/cart')->name('cart.')->group(function(){
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/add/{slug}', [CartController::class, 'add'])->name('add');
@@ -35,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.reset-password');
     Route::post('/profile/upprofile.update-passworddate-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::post('/checkout/checkout', [CheckoutController::class, 'checkout'])->name('checkout.checkout');
+    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
 });
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

@@ -1,33 +1,32 @@
 <x-app-layout>
     <div class="store" x-data="{
         products: {{ json_encode($products)}},
-        init(){
-            console.log(this.products.data)
-        },
         filterOpen:false,
+        search:'',
+        min:0,
+        max:10000,
+        sortField:'updated_at',
+        sortDirection: 'desc',
         changeSort(ev){
-            console.log(ev.value)
-            let sortField = 'updated_at'
-            let sortDirection = 'desc'
             if(ev.value == 0){
-                sortField = 'updated_at'
-                sortDirection = 'desc'
+                this.sortField = 'updated_at'
+                this.sortDirection = 'desc'
             }else if(ev.value == 1){
-                sortField = 'updated_at'
-                sortDirection = 'desc'
+                this.sortField = 'updated_at'
+                this.sortDirection = 'desc'
             }
             else if(ev.value == 2){
-                sortField = 'updated_at'
-                sortDirection = 'asc'
+                this.sortField = 'updated_at'
+                this.sortDirection = 'asc'
             }else if(ev.value == 3){
-                sortField = 'price'
-                sortDirection = 'asc'
+                this.sortField = 'price'
+                this.sortDirection = 'asc'
             }else if(ev.value == 4){
-                sortField = 'price'
-                sortDirection = 'desc'
+                this.sortField = 'price'
+                this.sortDirection = 'desc'
             }
-            axios.get('/store', {'sort_field':sortField, 'sort_direction': sortDirection}).then(res=>{
-                console.log(res)
+            axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
+                this.products = res.data
             })
         }
     }">
@@ -64,54 +63,71 @@
             </div>
         </div>
         <div class="products-list">
-            @foreach($products as $product)
+            <template x-for="product, ids in products.data" :key="product.id">
             <div class="item" 
                 x-data="{
                     isLoading:false,
-                    productItem:{{json_encode($product)}},
+                    productItem:product,
                     addToCart:function(slug){
                         if(!this.isLoading){
                             this.isLoading = true;
-                            console.log(this.productItem)
                             setTimeout(()=>{
                                 axios.post('/cart/add/' + slug ,{product:this.productItem, quantity:1}).then(res=>{
-                                    console.log(res.data)
                                     this.$dispatch('cart-change', res.data)
                                     this.$dispatch('shop-add-change', res.data)
                                 });
                                 this.isLoading = false;
                             },500)
                         }
-                    }
+                    },
+                    
                 }"
             >
-                <div class="add-cart" x-on:click="addToCart('{{$product->slug}}')">
+                <div class="add-cart" x-on:click="addToCart(product.slug)">
                     <i  x-show="!isLoading" class="fa-solid fa-bag-shopping"></i>
                     <div x-show="isLoading" class="loading"></div>
-                    <input type="hidden" value="{{$product->id}}" class="productId" />
+                    <input type="hidden" :value="product.id" class="productId" />
                 </div>
-                <div class="sale-tag">Sale!</div>
+                <template x-if="product.sale_price">
+                    <div class="sale-tag">Sale!</div>
+                </template>
                 <div class="toolbox">加入購物車</div>
-                <img src="{{$product->image}}" alt="{{$product->title}}" onclick="window.location.href=`/product-detail/{{$product->slug}}`"
+                <img :src="product.image" :alt="product.title" x-on:click="window.location.href='/product-detail/' + product.slug "
                  />
-                <small>{{$product->category->name}}</small>
-                <h3>{{$product->title}}</h3>
+                <small></small>
+                <h3 x-text="product.title"></h3>
                 <span><i class="fa-solid fa-star"></i>4.7</span>
-                @if($product->sale_price)
-                <div class="price-row"><span class="price">${{$product->price}}</span><span class="sale-price">${{$product->sale_price}}</span></div>
-                @else
-                <div class="price-row"><span class="sale-price">${{$product->price}}</span></div>
-                @endif
+                <template x-if="product.sale_price">
+                    <div class="price-row"><span class="price" x-text="'$' + product.price"></span><span class="sale-price" x-text="'$'+product.sale_price"></span></div>
+                </template>
+                <template x-if="!product.sale_price">
+                    <div class="price-row"><span class="sale-price" x-text="'$'+product.price"></span></div>
+                </template>
             </div>
-            @endforeach
+            </template>
         </div>
-        <div class="filter-component" x-show.transition.duration.500ms="filterOpen"  >
+        <div class="filter-component"
+            x-show.transition.duration.500ms="filterOpen"
+            x-data="{
+                
+                searchFn(){
+                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
+                        this.products = res.data
+                    })
+                },
+                filterPriceFn(){
+                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
+                        this.products = res.data
+                    })
+                }
+            }"
+        >
             <div class="back"></div>
-            <div x-bind:class="['filter']" x-show="filterOpen"    x-transition:enter-start="left-[-100%]" x-transition:enter-end="left-0"  x-transition:leave-start="left-0" x-transition:leave-end="left-[-100%]" x-on:click.outside="filterOpen = false" >
+            <div x-bind:class="['filter']" x-show="filterOpen"  x-transition:enter-start="left-[-100%]" x-transition:enter-end="left-0"  x-transition:leave-start="left-0" x-transition:leave-end="left-[-100%]" x-on:click.outside="filterOpen = false" >
                 <i class="fas fa-times close-filter" x-on:click="filterOpen = false" ></i>
                 <div class="search-product">
-                    <input type="text" class="search" placeholder="Search products..." />
-                    <button type="button">
+                    <input type="text" class="search" placeholder="Search products..." x-model="search" @keyup.enter="searchFn()"/>
+                    <button type="button" @click="searchFn()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
@@ -121,18 +137,21 @@
                     <h3>篩選價格</h3>
                     <div class="price-input">
                         <div class="field">
-                            $<input type="number" class="input-min" value="0">
+                            $<input type="number" class="input-min" value="0" x-model="min">
                         </div>
                         <div class="field">
-                            $<input type="number" class="input-max" value="10000">
+                            $<input type="number" class="input-max" value="10000" x-model="max">
                         </div>
                     </div>
                     <div class="slider">
                         <div class="progress"></div>
                     </div>
                     <div class="range-input">
-                        <input type="range" class="range-min" min="0" max="10000" value="0" step="100">
-                        <input type="range" class="range-max" min="0" max="10000" value="10000" step="100">
+                        <input type="range" class="range-min" min="0" max="10000" value="0" step="100" x-model="min">
+                        <input type="range" class="range-max" min="0" max="10000" value="10000" step="100" x-model="max">
+                    </div>
+                    <div>
+                        <button @click="filterPriceFn()">套用</button>
                     </div>
                 </div>
                 <div class="products-categories">
