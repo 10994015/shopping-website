@@ -2080,3 +2080,162 @@ footer > .full > .container > p {
   background-color: #75C32C;
   border: 1px #75C32C solid;
 }
+
+.orders {
+  width: 100%;
+  padding: 180px 0;
+  background-color: #f1f1f1;
+}
+.orders > .order-list {
+  width: 100%;
+  max-width: 830px;
+  padding: 40px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.orders > .order-list > .order-item {
+  width: 100%;
+  border-bottom: 1px #ddd solid;
+  display: flex;
+  padding: 12px 0;
+}
+.orders > .order-list > .order-item.title {
+  padding: 20px 0;
+  border-bottom: 2px #aaa solid;
+}
+.orders > .order-list > .order-item.title > div {
+  font-weight: 600;
+  color: #333;
+}
+.orders > .order-list > .order-item.title > div.number {
+  min-width: 100px;
+}
+.orders > .order-list > .order-item div {
+  min-width: 150px;
+  padding: 5px;
+  color: #666;
+  font-size: 14px;
+}
+.orders > .order-list > .order-item div.number {
+  font-weight: 900;
+  min-width: 100px;
+}
+.orders > .order-list > .order-item div > span {
+  width: 80px;
+  border-radius: 20px;
+  text-align: center;
+  display: block;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 3px;
+}
+.orders > .order-list > .order-item div > span.paid {
+  background-color: #DAF4EB;
+  color: #34C7B6;
+}
+.orders > .order-list > .order-item div > span.unpaid {
+  background-color: #ccc;
+  color: #888;
+}
+.orders > .order-list > .order-item div > span.paidfail {
+  background-color: #FCE4E4;
+  color: #EF6B67;
+}
+.orders > .order-list > .order-item div a, .orders > .order-list > .order-item div button {
+  background-color: #FC5F5F;
+  color: #fff;
+  border-radius: 25px;
+  width: 120px;
+  padding: 10px;
+  display: block;
+  font-size: 13px;
+  text-align: center;
+}
+.orders > .order-list > .order-item div a::-moz-selection, .orders > .order-list > .order-item div button::-moz-selection {
+  color: #fff;
+}
+.orders > .order-list > .order-item div a::selection, .orders > .order-list > .order-item div button::selection {
+  color: #fff;
+}
+.orders > .order-list > .order-item div a.gotopay, .orders > .order-list > .order-item div button.gotopay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #75C32C;
+}
+
+.myOrder {
+  width: 100%;
+  padding: 180px 0;
+  background-color: #f1f1f1;
+}
+.myOrder > .order {
+  width: 100%;
+  max-width: 830px;
+  padding: 40px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.myOrder > .order p {
+  font-size: 15px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 5px;
+}
+.myOrder > .order p > span {
+  font-weight: 900;
+}
+.myOrder > .order p > span.paid {
+  color: #34C7B6;
+}
+.myOrder > .order p > span.unpaid {
+  color: #888;
+}
+.myOrder > .order h2 {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.myOrder > .order > .column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px #ccc solid;
+  padding: 10px 10px;
+  font-size: 14px;
+  color: #333;
+}
+.myOrder > .order > a, .myOrder > .order button {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FC5F5F;
+  color: #fff;
+  max-width: 160px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  font-size: 14px;
+  margin-top: 25px;
+}
+.myOrder > .order > a::-moz-selection, .myOrder > .order button::-moz-selection {
+  color: #fff;
+}
+.myOrder > .order > a::selection, .myOrder > .order button::selection {
+  color: #fff;
+}
+.myOrder > .order > a.gotopay, .myOrder > .order button.gotopay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #75C32C;
+  margin-top: 0px;
+}

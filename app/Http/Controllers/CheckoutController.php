@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Product;
 use Error;
@@ -23,6 +24,7 @@ class CheckoutController extends Controller
         $products = Product::query()->whereIn('id', $ids)->get();
         $cartItems = collect($cartItems)->keyBy('product_id');
         $lineItems = [];
+        $orderItems = [];
         $totalPrice = 0;
         foreach($products as $product){
             $price = ($product->sale_price) ? (int)$product->sale_price  : (int)$product->price;
@@ -38,15 +40,20 @@ class CheckoutController extends Controller
                 ],
                 'quantity' => $cartItems[$product->id]['quantity'],
             ];
+            $orderItems[] = [
+                'product_id'=>$product->id,
+                'quantity'=>$cartItems[$product->id]['quantity'],
+                'unit_price'=>$price,
+            ];
         }
         // dd(route('checkout.success', [], true), route('checkout.failure', [], true));
         $token = Str::random(100);
         $checkout_session = $stripe->checkout->sessions->create([
-        'line_items' => $lineItems,
-        'mode' => 'payment',
-        'customer_creation'=>'always',
-        'success_url' => route('checkout.success', [], true).'?session_id={CHECKOUT_SESSION_ID}'.'&token='.$token,
-        'cancel_url' => route('checkout.failure', [], true),
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'customer_creation'=>'always',
+            'success_url' => route('checkout.success', [], true).'?session_id={CHECKOUT_SESSION_ID}'.'&token='.$token,
+            'cancel_url' => route('checkout.failure', [], true),
         ]);
 
         $orderData = [
@@ -57,6 +64,12 @@ class CheckoutController extends Controller
         ];
         $order = Order::create($orderData);
 
+        //create order items 
+        foreach($orderItems as $orderItem){
+            $orderItem['order_id'] = $order->id;
+            OrderItem::create($orderItem);
+        }
+        
         $paymentData = [
             'order_id'=> $order->id,
             'amount'=> $totalPrice,
@@ -109,5 +122,39 @@ class CheckoutController extends Controller
     }
     public function failure(Request $request){
         dd($request->all());
+    }
+    public function checkoutOrder($order, Request $request){
+        $order = Order::find($order);
+        $user = $request->user();
+        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+
+        $lineItems = [];
+        
+        foreach($order->items as $item){
+            $lineItems[] = [
+                'price_data' => [
+                'currency' => 'TWD',
+                'product_data' => [
+                    'name' => $item->product->title,
+                    'images'=> [$item->product->image]
+                ],
+                'unit_amount' => $item->unit_price * 100,
+                ],
+                'quantity' => $item->quantity,
+            ];
+        }
+
+        $checkout_session = $stripe->checkout->sessions->create([
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'customer_creation'=>'always',
+            'success_url' => route('checkout.success', [], true).'?session_id={CHECKOUT_SESSION_ID}'.'&token='.$order->payment->session_id,
+            'cancel_url' => route('checkout.failure', [], true),
+        ]);
+
+        return redirect($checkout_session->url);
+
+        // $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+        // $session = $stripe->checkout->sessions->retrieve($sessionId);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -40,9 +41,12 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/reset-password', [ProfileController::class, 'resetPassword'])->name('profile.reset-password');
     Route::post('/profile/upprofile.update-passworddate-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
-    Route::post('/checkout/checkout', [CheckoutController::class, 'checkout'])->name('checkout.checkout');
+    Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout.checkout');
+    Route::post('/checkout/{order}', [CheckoutController::class, 'checkoutOrder'])->name('checkout.checkout-order');
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
+    Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/orders/{order}', [OrderController::class, 'view'])->name('order.view');
 });
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

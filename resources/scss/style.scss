@@ -2098,3 +2098,155 @@ footer{
         
     }
 }
+.orders{
+    width: 100%;
+    padding: 180px 0;
+    background-color:#f1f1f1 ;
+    >.order-list{
+        width: 100%;
+        max-width: 830px;
+        padding: 40px;
+        margin:0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        >.order-item{
+            width: 100%;
+            border-bottom: 1px #ddd solid;
+            display: flex;
+            padding: 12px 0;
+            &.title{
+                padding: 20px 0;
+                border-bottom: 2px #aaa solid;
+                >div{
+                    font-weight: 600;
+                    color:#333;
+                    &.number{
+                        min-width: 100px;
+                    }
+                }
+            }
+            div{
+                min-width: 150px;
+                padding: 5px ;
+                color:#666;
+                font-size: 14px;
+                &.number{
+                    font-weight: 900;
+                    min-width: 100px;
+                }
+                >span{
+                    width: 80px;
+                    border-radius: 20px;
+                    text-align: center;
+                    display: block;
+                    font-weight: 900;
+                    font-size: 13px;
+                    padding: 3px;
+                    &.paid{
+                        background-color: #DAF4EB;
+                        color:#34C7B6;
+                    }
+                    &.unpaid{
+                        background-color: #ccc;
+                        color:#888;
+                    }
+                    &.paidfail{
+                        background-color: #FCE4E4;
+                        color:#EF6B67;
+                    }
+                }
+                a, button{
+                    background-color: $mainColor;
+                    color:#fff;
+                    border-radius: 25px;
+                    width: 120px;
+                    padding: 10px;
+                    display: block;
+                    font-size: 13px;
+                    text-align: center;
+                    &::selection{
+                        color:#fff;
+                    }
+                    &.gotopay{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: $secColor;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+.myOrder{
+    width: 100%;
+    padding: 180px 0;
+    background-color:#f1f1f1 ;
+    >.order{
+        width: 100%;
+        max-width: 830px;
+        padding: 40px;
+        margin:0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        p{
+            font-size: 15px;
+            text-align: center;
+            color:#333;
+            margin-bottom: 5px;
+            >span{
+                font-weight: 900;
+                &.paid{
+                    color:#34C7B6;
+                }
+                &.unpaid{
+                    color:#888;
+                }
+            }
+        }
+        h2{
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        >.column{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px #ccc solid;
+            padding: 10px 10px;
+            font-size: 14px;
+            color:#333;
+        }
+        >a , button{
+            margin:15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $mainColor;
+            color:#fff;
+            max-width: 160px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-top: 25px;
+            &::selection{
+                color:#fff;
+            }
+            &.gotopay{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $secColor;
+                margin-top: 0px;
+            }
+        }
+    }
+}
