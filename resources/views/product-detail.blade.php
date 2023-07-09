@@ -77,7 +77,7 @@
             </div>
             <div class="description" x-show="isShowDescription">
                 <p>
-                    @php echo nl2br($product->description) @endphp
+                    {!! nl2br($product->description) !!}
                 </p>
             </div>
             <div class="comment" x-show="!isShowDescription">
