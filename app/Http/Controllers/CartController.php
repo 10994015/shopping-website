@@ -37,6 +37,9 @@ class CartController extends Controller
         Log::info($request->slug);
         $product = $request->product;
         $quantity = $request->post('quantity', 1);
+        if($quantity < 1){
+            return response('購物車數量請勿小於1', 401);
+        }
         $user = $request->user();
         if($user){
             $cartItem = CartItem::where(['user_id'=>$user->id, 'product_id'=>$product['id']])->first();
@@ -130,6 +133,9 @@ class CartController extends Controller
 
     public function updateQuantity(Request $request){
         $quantity = (int)$request->quantity;
+        if($quantity < 1){
+            return response('購物車數量請勿小於1', 401);
+        }
         $product = Product::where('slug', $request->slug)->first();
         // $quantity = (int)$request->post('quantity');
         $user = $request->user();

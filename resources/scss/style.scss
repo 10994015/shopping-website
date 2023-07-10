@@ -9,7 +9,7 @@ $secColor:#75C32C;
     transition:all .3s ease;
 }
 ::selection{
-    color:$mainColor;
+    color:$secColor;
 }
 a{text-decoration: none;}
 header{
@@ -118,6 +118,9 @@ header{
                     padding:0;
                     text-align: center;
                     font-size: 13px;
+                    &::selection{
+                        color:$secColor;
+                    }
                     span{
                         padding: 0;
                         margin:0;
@@ -191,6 +194,9 @@ header{
                 font-weight: 800;
                 font-size: 12px;
                 margin-top: 25px;
+                &::selection{
+                    color:$secColor;
+                }
                 &:hover{
                     background-color: $secColor;
                 }
@@ -392,6 +398,9 @@ header{
             padding-bottom: 15px;
             padding-left: 31px;
             margin-top: 35px;
+            &::selection{
+                color:$secColor;
+            }
             &:hover{
                 background-color: $secColor;
             }
@@ -595,6 +604,9 @@ header{
                 padding-bottom: 15px;
                 padding-left: 31px;
                 margin-top: 35px;
+                &::selection{
+                    color:$secColor;
+                }
                 &:hover{
                     background-color: $secColor;
                 }
@@ -926,6 +938,9 @@ header{
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    &::selection{
+                        color:#fff;
+                    }
                     &:hover{
                         background-color: $secColor;
                     }
@@ -987,6 +1002,41 @@ header{
         }
         >.comment{
             margin-top: 20px;
+            .comment-list{
+                display: flex;
+                flex-direction: column;
+                >.comment-item{
+                    width: 100%;
+                    border-bottom: 1px #eee solid;
+                    padding: 10px 0;
+                    p.name{
+                        font-size: 14px;
+                        color:#444;
+                    }
+                    >.score{
+                        display: flex;
+                        align-items: center;
+                        span{
+                            margin: 0 1px;
+                            color: #ccc;
+                            font-size: 13px;
+                            &.full{
+                                color: $mainColor;
+                            }
+                        }
+                    }
+                    >.date{
+                        font-size: 12px;
+                        color:#777;
+                    }
+                    >article{
+                        font-size: 15px;
+                        color:#111;
+                        margin-top: 15px;
+                    }
+
+                }
+            }
             .null-comment{
                 margin-top: 15px;
                 font-size: 14px;
@@ -1049,6 +1099,12 @@ header{
                         border-radius: 5px;
                         background-color: $mainColor;
                         color:#fff;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        &::selection{
+                            color:$secColor;
+                        }
                         &:hover{
                             background-color: $secColor;
                         }
@@ -1379,6 +1435,9 @@ header{
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    &::selection{
+                        color:$secColor;
+                    }
                     &:hover{
                         background-color: $secColor;
                     }
@@ -1402,6 +1461,9 @@ header{
                 height: 45px;
                 line-height: 44px;
                 border-radius: 5px;
+                &::selection{
+                    color:$secColor;
+                }
                 &:hover{
                     background-color: $secColor;
                 }
@@ -1451,6 +1513,9 @@ header{
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                &::selection{
+                    color:$secColor;
+                }
             }
         }
         >div{
@@ -1519,6 +1584,9 @@ header{
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    &::selection{
+                        color:$secColor;
+                    }
                 }
                 >select{
                     padding: 0 10px;
@@ -1562,6 +1630,9 @@ header{
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                &::selection{
+                    color:$secColor;
+                }
             }
             >select{
                 padding: 0 10px;
@@ -1601,6 +1672,9 @@ header{
                     align-items: center;
                     font-size: 14px;
                     margin-left: 10px;
+                    &::selection{
+                        color:$secColor;
+                    }
                     &:hover{
                         background-color: transparent;
                         color:$mainColor;
@@ -1903,7 +1977,7 @@ footer{
                 margin-top: 10px;
                 display: flex;
                 flex-direction: column;
-                span{
+                a{
                     color:#666;
                     font-size: 14px;
                     margin-top: 4px;
@@ -2089,6 +2163,9 @@ footer{
                 border-radius: 25px;
                 background-color: $mainColor;
                 color:#fff;
+                &::selection{
+                    color:$secColor;
+                }
                 &:hover{
                     background-color: $secColor;                    border:1px $secColor solid;
                     border:1px $secColor solid;
@@ -2167,7 +2244,7 @@ footer{
                     font-size: 13px;
                     text-align: center;
                     &::selection{
-                        color:#fff;
+                        color:$secColor;
                     }
                     &.gotopay{
                         display: flex;
@@ -2238,7 +2315,7 @@ footer{
             font-size: 14px;
             margin-top: 25px;
             &::selection{
-                color:#fff;
+                color:$secColor;
             }
             &.gotopay{
                 display: flex;

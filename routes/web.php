@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guestOrVerified'])->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/store', [ProductController::class, 'index'])->name('store');
+    Route::get('/store/{category}', [ProductController::class, 'category'])->name('store.category');
     Route::get('/product-detail/{slug}', [ProductController::class, 'show']);
 
     Route::get('/change-store-sort', [ProductController::class, 'sort']);
@@ -47,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/orders/{order}', [OrderController::class, 'view'])->name('order.view');
+    Route::post('/comment', [ProductController::class, 'createComment'])->name('comment.create');
+    Route::delete('/comment/{id}', [ProductController::class, 'deleteComment'])->name('comment.delete');
 });
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

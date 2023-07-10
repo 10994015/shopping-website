@@ -9,11 +9,11 @@
 }
 
 ::-moz-selection {
-  color: #FC5F5F;
+  color: #75C32C;
 }
 
 ::selection {
-  color: #FC5F5F;
+  color: #75C32C;
 }
 
 a {
@@ -130,6 +130,12 @@ header > nav > a > .icon > .cart-number {
   text-align: center;
   font-size: 13px;
 }
+header > nav > a > .icon > .cart-number::-moz-selection {
+  color: #75C32C;
+}
+header > nav > a > .icon > .cart-number::selection {
+  color: #75C32C;
+}
 header > nav > a > .icon > .cart-number span {
   padding: 0;
   margin: 0;
@@ -198,6 +204,12 @@ header > nav > a > .icon > i {
   font-weight: 800;
   font-size: 12px;
   margin-top: 25px;
+}
+.index > .banner > .text a::-moz-selection {
+  color: #75C32C;
+}
+.index > .banner > .text a::selection {
+  color: #75C32C;
 }
 .index > .banner > .text a:hover {
   background-color: #75C32C;
@@ -396,6 +408,12 @@ header > nav > a > .icon > i {
   padding-bottom: 15px;
   padding-left: 31px;
   margin-top: 35px;
+}
+.index > .news > .readmore::-moz-selection {
+  color: #75C32C;
+}
+.index > .news > .readmore::selection {
+  color: #75C32C;
 }
 .index > .news > .readmore:hover {
   background-color: #75C32C;
@@ -601,6 +619,12 @@ header > nav > a > .icon > i {
   padding-bottom: 15px;
   padding-left: 31px;
   margin-top: 35px;
+}
+.index > .bottom-intro > .text-intro > .readmore::-moz-selection {
+  color: #75C32C;
+}
+.index > .bottom-intro > .text-intro > .readmore::selection {
+  color: #75C32C;
 }
 .index > .bottom-intro > .text-intro > .readmore:hover {
   background-color: #75C32C;
@@ -930,6 +954,12 @@ header > nav > a > .icon > i {
   align-items: center;
   justify-content: center;
 }
+.product-detail > .product > .product-intro > .add-cart > button.addtocart::-moz-selection {
+  color: #fff;
+}
+.product-detail > .product > .product-intro > .add-cart > button.addtocart::selection {
+  color: #fff;
+}
 .product-detail > .product > .product-intro > .add-cart > button.addtocart:hover {
   background-color: #75C32C;
 }
@@ -986,6 +1016,40 @@ header > nav > a > .icon > i {
 }
 .product-detail > .detailed > .comment {
   margin-top: 20px;
+}
+.product-detail > .detailed > .comment .comment-list {
+  display: flex;
+  flex-direction: column;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item {
+  width: 100%;
+  border-bottom: 1px #eee solid;
+  padding: 10px 0;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item p.name {
+  font-size: 14px;
+  color: #444;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item > .score {
+  display: flex;
+  align-items: center;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item > .score span {
+  margin: 0 1px;
+  color: #ccc;
+  font-size: 13px;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item > .score span.full {
+  color: #FC5F5F;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item > .date {
+  font-size: 12px;
+  color: #777;
+}
+.product-detail > .detailed > .comment .comment-list > .comment-item > article {
+  font-size: 15px;
+  color: #111;
+  margin-top: 15px;
 }
 .product-detail > .detailed > .comment .null-comment {
   margin-top: 15px;
@@ -1049,6 +1113,15 @@ header > nav > a > .icon > i {
   border-radius: 5px;
   background-color: #FC5F5F;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-detail > .detailed > .comment > form label button::-moz-selection {
+  color: #75C32C;
+}
+.product-detail > .detailed > .comment > form label button::selection {
+  color: #75C32C;
 }
 .product-detail > .detailed > .comment > form label button:hover {
   background-color: #75C32C;
@@ -1371,6 +1444,12 @@ header > nav > a > .icon > i {
   justify-content: center;
   align-items: center;
 }
+.shop-cart-component > .cart > .details > .checkout button::-moz-selection {
+  color: #75C32C;
+}
+.shop-cart-component > .cart > .details > .checkout button::selection {
+  color: #75C32C;
+}
 .shop-cart-component > .cart > .details > .checkout button:hover {
   background-color: #75C32C;
 }
@@ -1392,6 +1471,12 @@ header > nav > a > .icon > i {
   height: 45px;
   line-height: 44px;
   border-radius: 5px;
+}
+.shop-cart-component > .cart > .empiyCart > a::-moz-selection {
+  color: #75C32C;
+}
+.shop-cart-component > .cart > .empiyCart > a::selection {
+  color: #75C32C;
 }
 .shop-cart-component > .cart > .empiyCart > a:hover {
   background-color: #75C32C;
@@ -1441,6 +1526,12 @@ header > nav > a > .icon > i {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.login > form > label > button::-moz-selection, .reset-password > form > label > button::-moz-selection {
+  color: #75C32C;
+}
+.login > form > label > button::selection, .reset-password > form > label > button::selection {
+  color: #75C32C;
 }
 .login > form > div, .reset-password > form > div {
   display: flex;
@@ -1512,6 +1603,12 @@ header > nav > a > .icon > i {
   justify-content: center;
   align-items: center;
 }
+.profile > form > div.label-group > label > button::-moz-selection {
+  color: #75C32C;
+}
+.profile > form > div.label-group > label > button::selection {
+  color: #75C32C;
+}
 .profile > form > div.label-group > label > select {
   padding: 0 10px;
 }
@@ -1554,6 +1651,12 @@ header > nav > a > .icon > i {
   justify-content: center;
   align-items: center;
 }
+.profile > form > label > button::-moz-selection {
+  color: #75C32C;
+}
+.profile > form > label > button::selection {
+  color: #75C32C;
+}
 .profile > form > label > select {
   padding: 0 10px;
 }
@@ -1591,6 +1694,12 @@ header > nav > a > .icon > i {
   align-items: center;
   font-size: 14px;
   margin-left: 10px;
+}
+.profile > form > div.btn-group > button::-moz-selection {
+  color: #75C32C;
+}
+.profile > form > div.btn-group > button::selection {
+  color: #75C32C;
 }
 .profile > form > div.btn-group > button:hover {
   background-color: transparent;
@@ -1890,13 +1999,13 @@ footer > .full > .container > p {
   display: flex;
   flex-direction: column;
 }
-.filter-component > .filter > .products-categories > .categories span {
+.filter-component > .filter > .products-categories > .categories a {
   color: #666;
   font-size: 14px;
   margin-top: 4px;
   cursor: pointer;
 }
-.filter-component > .filter > .products-categories > .categories span:hover {
+.filter-component > .filter > .products-categories > .categories a:hover {
   color: #111;
 }
 
@@ -2076,6 +2185,12 @@ footer > .full > .container > p {
   background-color: #FC5F5F;
   color: #fff;
 }
+.shop-cart > .cart > .checkout-btn > a.to-checkout::-moz-selection {
+  color: #75C32C;
+}
+.shop-cart > .cart > .checkout-btn > a.to-checkout::selection {
+  color: #75C32C;
+}
 .shop-cart > .cart > .checkout-btn > a.to-checkout:hover {
   background-color: #75C32C;
   border: 1px #75C32C solid;
@@ -2155,10 +2270,10 @@ footer > .full > .container > p {
   text-align: center;
 }
 .orders > .order-list > .order-item div a::-moz-selection, .orders > .order-list > .order-item div button::-moz-selection {
-  color: #fff;
+  color: #75C32C;
 }
 .orders > .order-list > .order-item div a::selection, .orders > .order-list > .order-item div button::selection {
-  color: #fff;
+  color: #75C32C;
 }
 .orders > .order-list > .order-item div a.gotopay, .orders > .order-list > .order-item div button.gotopay {
   display: flex;
@@ -2227,10 +2342,10 @@ footer > .full > .container > p {
   margin-top: 25px;
 }
 .myOrder > .order > a::-moz-selection, .myOrder > .order button::-moz-selection {
-  color: #fff;
+  color: #75C32C;
 }
 .myOrder > .order > a::selection, .myOrder > .order button::selection {
-  color: #fff;
+  color: #75C32C;
 }
 .myOrder > .order > a.gotopay, .myOrder > .order button.gotopay {
   display: flex;

@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="store" x-data="{
         products: {{ json_encode($products)}},
+        categoryId:{{$category_id}} , 
         filterOpen:false,
         search:'',
         min:0,
@@ -28,7 +29,7 @@
             axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
                 this.products = res.data
             })
-        }
+        },
     }">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -44,7 +45,11 @@
                 </li>
             </ol>
         </nav>
+        @if($category_id === 0)
         <h3>SHOP</h3>
+        @else
+        <h3>{{DB::table('categories')->where('id', $category_id)->first()->name}}</h3>
+        @endif
         <div class="filter-list">
             <div class="flex items-center cursor-pointer" id="filterBtn" x-on:click="filterOpen = true">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-600">
@@ -109,14 +114,13 @@
         <div class="filter-component"
             x-show.transition.duration.500ms="filterOpen"
             x-data="{
-                
                 searchFn(){
-                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
+                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max, 'category_id': this.categoryId}}).then(res=>{
                         this.products = res.data
                     })
                 },
                 filterPriceFn(){
-                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max}}).then(res=>{
+                    axios.get('/search-store', {params:{'sort_field':this.sortField, 'sort_direction': this.sortDirection, 'search':this.search, 'min':this.min, 'max': this.max, 'category_id': this.categoryId}}).then(res=>{
                         this.products = res.data
                     })
                 }
@@ -157,8 +161,9 @@
                 <div class="products-categories">
                     <h3>商品分類</h3>
                     <div class="categories">
+                        <a href="{{route('store')}}">全部 ({{DB::table('products')->where('hidden', 0)->count()}})</a>
                         @foreach ($categories as $category)
-                        <span>{{$category->name}} ({{DB::table('products')->where([['category_id', $category->id], ['hidden', 0]])->count()}})</span>
+                        <a href="{{route('store.category', $category->id)}}">{{$category->name}} ({{DB::table('products')->where([['category_id', $category->id], ['hidden', 0]])->count()}})</a>
                         @endforeach
                     </div>
                 </div>
