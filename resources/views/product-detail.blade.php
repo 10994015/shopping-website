@@ -203,7 +203,9 @@
             </div>
         </div>
         <div class="belike">
+            @if(count($products) > 0)
             <h3>您可能會喜歡</h3>
+            @endif
             <div class="products-list">
                 @foreach($products as $product)
                 <div class="item"
