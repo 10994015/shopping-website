@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function(){
-    Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('products', ProductController::class);
@@ -29,5 +28,6 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::delete('/category/{id}', [CategoryController::class, 'destroy']);
 
 });
+Route::get('/user', [AuthController::class, 'getUser']);
 
 Route::post('/login', [AuthController::class, 'login']);
