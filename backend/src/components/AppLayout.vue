@@ -7,7 +7,9 @@ import Footer from "./Footer.vue"
 import store from '../store';
 
 onMounted(() => {
-    store.dispatch('getUser');
+    store.dispatch('getUser').then(res=>{
+        console.log(res);
+    });
 })
 
 const currentUser = computed(()=> store.state.user.data);
