@@ -16,11 +16,11 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
         <span>房子ROW</span>
     </a>
     <nav>
-        <a href="/">首頁</a>
-        <a href="/store">線上商店</a>
-        <a href="">關於我們</a>
-        <a href="">聯絡我們</a>
-
+        <a href="/" class="md-hidn">首頁</a>
+        <a href="/store" class="md-hidn">線上商店</a>
+        <a href="/about" class="md-hidn">關於我們</a>
+        <a href="/contact" class="md-hidn">聯絡我們</a>
+       
         <a @if(strpos(Route::currentRouteName(), 'cart') === false)  @click="$dispatch('cart-open')" href="javascript:;" id="cart-btn" @else href="/cart" @endif > 
             <p x-text=`$${cartTotalPrice}`></p>
             <div class="icon" x-cloak>
@@ -41,6 +41,9 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
         @else
         <a href="/login" ><i class="fa-solid fa-user"></i></a>
         @endif
+        <a href="javascript:;" class="menu">
+            <i class="fas fa-bars"></i>
+        </a>
     </nav>
 </header>
 

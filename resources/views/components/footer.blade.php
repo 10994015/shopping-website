@@ -32,7 +32,7 @@
         </div>
         <div class="container">
             <h3>聯繫我們以獲得最優質的傢俱和生活品質</h3>
-            <p>Qui dolore ipsum quia dolor sit amet, consec tetur adipisci velit, sed quia non numquam eius modi tempora incidunt lores ta porro ame.
+            <p>歡迎來到房子ROW - 現代家具的最佳選擇！打造您夢寐以求的家居風格，讓每個空間都充滿個性和溫暖。探索我們多樣化的家具系列，為您的家帶來時尚舒適的生活方式。
             </p>
         </div>
     </div>

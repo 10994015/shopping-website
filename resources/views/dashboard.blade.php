@@ -33,7 +33,7 @@
         </section>
         <section class="news" >
             <h2>最新傢俱</h2>
-            <p>搶先購買精挑細選、萬中選一的傢俱，讓我們幫助您提高生活品質</p>
+            <p>品味生活，從家具開始。房子ROW提供多種風格和尺寸的家具，讓您輕鬆找到最適合您家的款式。我們的產品以優質材料打造，舒適耐用，為您的家居增添獨特魅力。</p>
             <div class="products-list">
                 @foreach($products as $product)
                 <div class="item" 
@@ -128,17 +128,17 @@
         </section>
         <section class="feedback">
             <div class="feedback-list">
-                @for($f=0;$f<3;$f++)
+                @foreach($comments as $comment)
                 <div class="item">
                     <div class="stars">
                         @for($i=0;$i<5;$i++) <i class="fa-solid fa-star"></i> @endfor
                     </div>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit。Ut elit tellus, luctus nec ullamcorper mattis。
+                       {{$comment['comment']}} 
                     </p>
-                    <span>User Name</span>
+                    <span>{{$comment['username']}}</span>
                 </div>
-                @endfor
+                @endforeach
             </div>
         </section>
         <section class="bottom-intro">

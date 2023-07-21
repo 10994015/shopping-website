@@ -13,6 +13,7 @@ $secColor:#75C32C;
 }
 a{text-decoration: none;}
 header{
+    max-width: 100%;
     width: 100%;
     height: 87px;
     display: flex;
@@ -24,6 +25,10 @@ header{
     top: 0;
     left:0;
     z-index: 10;
+    @media screen and (max-width:1400px){
+        padding: 18px 50px;
+    }
+    
     &.active, &.isActive{
         background-color: #fff;
         box-shadow: 0 2px 4px #ccc;
@@ -100,6 +105,18 @@ header{
                     }
                 }
             }
+            &.md-hidn{
+                @media screen and (max-width:800px){
+                    display: none;
+                }
+            }
+            &.menu{
+                font-size: 24px;
+                display: none;
+                @media screen and (max-width:800px){
+                    display: block;
+                }
+            }
             >p{
                 color:$mainColor;
                 font-weight: 900;
@@ -163,6 +180,10 @@ header{
             transform: translateX(-50%);
             left:25%;
             letter-spacing: 1.6px;
+            @media screen and (max-width:1200px){
+                transform: translateX(0%);
+                left:5%;
+            }
             h1{
                 font-size: 20px;
                 font-weight: 600;
@@ -211,11 +232,22 @@ header{
         justify-content: center;
         align-items: center;
         padding: 100px 0 10px;
+        @media screen and (max-width:680px){
+            flex-direction: column;
+        }
         >.item{
             margin:0 80px;
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            @media screen and (max-width:1080px){
+                margin:0 40px;
+            }
+            @media screen and (max-width:680px){
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
             >i{
                 color:$secColor;
                 font-size: 24px;
@@ -228,6 +260,10 @@ header{
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-start;
+                @media screen and (max-width:680px){
+                    justify-content: center;
+                    align-items: center;
+                }
                 h3{
                     font-size: 20px;
                     font-weight: 700;
@@ -257,6 +293,16 @@ header{
             grid-row-gap: 2rem;
             justify-content: center;
             margin-bottom: 40px;
+            @media screen and (max-width:1350px) {
+                grid-template-columns: repeat(3, 33%);
+                padding: 0 20px;
+            }
+            @media screen and (max-width:768px) {
+                grid-template-columns: repeat(2, 50%);
+            }
+            @media screen and (max-width:500px) {
+                grid-template-columns: repeat(1, 100%);
+            }
             >.item{
                 width: 100%;
                 position: relative;
@@ -424,13 +470,16 @@ header{
             align-items: center;
             width: 100%;
             margin-top: 70px;
+            flex-wrap: wrap;
             >.item{
                 width:30%;
+                min-width: 300px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
+                margin: 15px;
                 >.imgbox{
                     width:100%;
                     overflow: hidden;
@@ -464,6 +513,10 @@ header{
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
+
+            @media screen and (max-width:1000px){
+                height: 50vh;
+            }
             >.cover{
                 width: 100%;
                 height: 100%;
@@ -480,7 +533,7 @@ header{
                 border-top: 2px #fff solid;
                 width: 100%;
                 max-width: 1200px;
-                padding: 35px 0 55px;
+                padding: 35px 25px 55px;
                 z-index: 9;
                 color:#fff;
                 display: flex;
@@ -522,16 +575,29 @@ header{
         padding: 100px 0;
         margin:0 auto;
         >.feedback-list{
-            display: flex;
+            display: grid;
             justify-content: center;
             align-items: center;
+            grid-template-columns: repeat(3, 30%);
+            grid-column-gap: 22px;
+            width: 100%;
+            @media screen and (max-width:768px){
+                grid-template-columns: repeat(2, 50%);
+            }
+            @media screen and (max-width:500px){
+                grid-template-columns: repeat(1, 100%);
+            }
             >.item{
-                width: 30%;
-                padding: 5%;
-                margin: 0 25px;
+                width: 100%;
+                padding: 8%;
+                margin: 15px 0;
                 text-align: center;
                 background-color: #F1F2F2;
-                border-radius: 10px;
+                min-height: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 >.stars{
                     display: flex;
                     justify-content: center;
@@ -548,7 +614,7 @@ header{
                 >span{
                     font-size: 12px;
                     color:#aaa;
-                    margin-top: 10px;
+                    margin-top: 20px;
                 }
             }
         }
@@ -593,7 +659,11 @@ header{
             }
             >h3{
                 font-size: 52px;
+                text-align: center;
                 font-weight: 900;
+                @media screen and (max-width:768px){
+                    font-size: 40px;
+                }
             }
             >.readmore{
                 background-color: $mainColor;
@@ -1713,6 +1783,9 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width:1800px){
+        padding: 100px;
+    }
     >.full{
         width: 100%;
         max-width: 1200px;
@@ -1720,13 +1793,18 @@ footer{
         display: flex;
         justify-content: center;
         align-items: flex-start;
+        flex-wrap: wrap;
         >.container{
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             max-width: 400px;
-            margin:0 50px;
+            margin:25px 50px;
+            @media screen and (max-width:1500px){
+                max-width: 300px;
+                margin:25px 15px;
+            }
             >h2.web-name{
                 font-size: 18px;
                 color:#555;
@@ -1752,6 +1830,9 @@ footer{
                 font-size: 20px;
                 color:#222;
                 margin-bottom: 12px;
+                @media screen and (max-width:1100px){
+                    text-align: center;
+                }
             }
             >a{
                 margin-top: 3px;
@@ -1764,6 +1845,9 @@ footer{
             >p{
                 color:#555;
                 font-size: 15px;
+                @media screen and (max-width:1100px){
+                    text-align: center;
+                }
             }
     
         }

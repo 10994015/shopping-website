@@ -21,6 +21,7 @@ a {
 }
 
 header {
+  max-width: 100%;
   width: 100%;
   height: 87px;
   display: flex;
@@ -32,6 +33,11 @@ header {
   top: 0;
   left: 0;
   z-index: 10;
+}
+@media screen and (max-width: 1400px) {
+  header {
+    padding: 18px 50px;
+  }
 }
 header.active, header.isActive {
   background-color: #fff;
@@ -110,6 +116,20 @@ header > nav > a.myaccount > ol p i {
   margin-right: 9px;
   color: #FC5F5F;
 }
+@media screen and (max-width: 800px) {
+  header > nav > a.md-hidn {
+    display: none;
+  }
+}
+header > nav > a.menu {
+  font-size: 24px;
+  display: none;
+}
+@media screen and (max-width: 800px) {
+  header > nav > a.menu {
+    display: block;
+  }
+}
 header > nav > a > p {
   color: #FC5F5F;
   font-weight: 900;
@@ -173,6 +193,12 @@ header > nav > a > .icon > i {
   left: 25%;
   letter-spacing: 1.6px;
 }
+@media screen and (max-width: 1200px) {
+  .index > .banner > .text {
+    transform: translateX(0%);
+    left: 5%;
+  }
+}
 .index > .banner > .text h1 {
   font-size: 20px;
   font-weight: 600;
@@ -223,11 +249,28 @@ header > nav > a > .icon > i {
   align-items: center;
   padding: 100px 0 10px;
 }
+@media screen and (max-width: 680px) {
+  .index > .intro {
+    flex-direction: column;
+  }
+}
 .index > .intro > .item {
   margin: 0 80px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+@media screen and (max-width: 1080px) {
+  .index > .intro > .item {
+    margin: 0 40px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .index > .intro > .item {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 }
 .index > .intro > .item > i {
   color: #75C32C;
@@ -241,6 +284,12 @@ header > nav > a > .icon > i {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+@media screen and (max-width: 680px) {
+  .index > .intro > .item > .intro-text {
+    justify-content: center;
+    align-items: center;
+  }
 }
 .index > .intro > .item > .intro-text h3 {
   font-size: 20px;
@@ -269,6 +318,22 @@ header > nav > a > .icon > i {
   grid-row-gap: 2rem;
   justify-content: center;
   margin-bottom: 40px;
+}
+@media screen and (max-width: 1350px) {
+  .index > .news > .products-list {
+    grid-template-columns: repeat(3, 33%);
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .index > .news > .products-list {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+@media screen and (max-width: 500px) {
+  .index > .news > .products-list {
+    grid-template-columns: repeat(1, 100%);
+  }
 }
 .index > .news > .products-list > .item {
   width: 100%;
@@ -437,14 +502,17 @@ header > nav > a > .icon > i {
   align-items: center;
   width: 100%;
   margin-top: 70px;
+  flex-wrap: wrap;
 }
 .index > .featured > .featured-list > .item {
   width: 30%;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin: 15px;
 }
 .index > .featured > .featured-list > .item > .imgbox {
   width: 100%;
@@ -479,6 +547,11 @@ header > nav > a > .icon > i {
   background-size: cover;
   background-position: center;
 }
+@media screen and (max-width: 1000px) {
+  .index > .combos > .combo {
+    height: 50vh;
+  }
+}
 .index > .combos > .combo > .cover {
   width: 100%;
   height: 100%;
@@ -495,7 +568,7 @@ header > nav > a > .icon > i {
   border-top: 2px #fff solid;
   width: 100%;
   max-width: 1200px;
-  padding: 35px 0 55px;
+  padding: 35px 25px 55px;
   z-index: 9;
   color: #fff;
   display: flex;
@@ -536,17 +609,34 @@ header > nav > a > .icon > i {
   margin: 0 auto;
 }
 .index > .feedback > .feedback-list {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
+  grid-template-columns: repeat(3, 30%);
+  grid-column-gap: 22px;
+  width: 100%;
+}
+@media screen and (max-width: 768px) {
+  .index > .feedback > .feedback-list {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+@media screen and (max-width: 500px) {
+  .index > .feedback > .feedback-list {
+    grid-template-columns: repeat(1, 100%);
+  }
 }
 .index > .feedback > .feedback-list > .item {
-  width: 30%;
-  padding: 5%;
-  margin: 0 25px;
+  width: 100%;
+  padding: 8%;
+  margin: 15px 0;
   text-align: center;
   background-color: #F1F2F2;
-  border-radius: 10px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .index > .feedback > .feedback-list > .item > .stars {
   display: flex;
@@ -564,7 +654,7 @@ header > nav > a > .icon > i {
 .index > .feedback > .feedback-list > .item > span {
   font-size: 12px;
   color: #aaa;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .index > .bottom-intro {
   display: flex;
@@ -608,7 +698,13 @@ header > nav > a > .icon > i {
 }
 .index > .bottom-intro > .text-intro > h3 {
   font-size: 52px;
+  text-align: center;
   font-weight: 900;
+}
+@media screen and (max-width: 768px) {
+  .index > .bottom-intro > .text-intro > h3 {
+    font-size: 40px;
+  }
 }
 .index > .bottom-intro > .text-intro > .readmore {
   background-color: #FC5F5F;
@@ -1736,6 +1832,11 @@ footer {
   justify-content: center;
   align-items: center;
 }
+@media screen and (max-width: 1800px) {
+  footer {
+    padding: 100px;
+  }
+}
 footer > .full {
   width: 100%;
   max-width: 1200px;
@@ -1743,6 +1844,7 @@ footer > .full {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 footer > .full > .container {
   display: flex;
@@ -1750,7 +1852,13 @@ footer > .full > .container {
   align-items: center;
   justify-content: flex-start;
   max-width: 400px;
-  margin: 0 50px;
+  margin: 25px 50px;
+}
+@media screen and (max-width: 1500px) {
+  footer > .full > .container {
+    max-width: 300px;
+    margin: 25px 15px;
+  }
 }
 footer > .full > .container > h2.web-name {
   font-size: 18px;
@@ -1776,6 +1884,11 @@ footer > .full > .container > h3 {
   color: #222;
   margin-bottom: 12px;
 }
+@media screen and (max-width: 1100px) {
+  footer > .full > .container > h3 {
+    text-align: center;
+  }
+}
 footer > .full > .container > a {
   margin-top: 3px;
   color: #777;
@@ -1787,6 +1900,11 @@ footer > .full > .container > a:hover {
 footer > .full > .container > p {
   color: #555;
   font-size: 15px;
+}
+@media screen and (max-width: 1100px) {
+  footer > .full > .container > p {
+    text-align: center;
+  }
 }
 
 .filter-component {
