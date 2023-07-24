@@ -28,9 +28,9 @@
             
             get cartTotal(){
                 if(this.discountData.discount_type == 'int' || this.discountData.discount_type == null){
-                    return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight - this.discountData.discount_value)
+                    return Math.round((this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight - this.discountData.discount_value))
                 }else{
-                    return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight) * this.discountData.percentage
+                    return Math.round((this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight) * this.discountData.percentage)
                 }
             },
             removeChange:function(ids){

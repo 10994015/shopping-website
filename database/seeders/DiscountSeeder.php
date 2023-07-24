@@ -15,7 +15,7 @@ class DiscountSeeder extends Seeder
     public function run()
     {
         Discount::create([
-            'code'=>'gogogo123',
+            'code'=>'gogogo',
             'discount_type'=>'percentage',
             'percentage'=> 0.8,
             'discount_value'=> 0,
