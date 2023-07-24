@@ -16,7 +16,8 @@ class Payment extends Model
         'type',
         'created_by',
         'updated_by',
-        'session_id'
+        'session_id',
+        'discount_id'
     ];
     public function order():HasOne
     {

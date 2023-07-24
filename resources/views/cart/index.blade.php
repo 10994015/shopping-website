@@ -25,8 +25,13 @@
             get cartSubTotal(){
                 return this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0)
             },
+            
             get cartTotal(){
-                return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight)
+                if(this.discountData.discount_type == 'int' || this.discountData.discount_type == null){
+                    return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight - this.discountData.discount_value)
+                }else{
+                    return (this.cartItems.reduce((accum, next) => accum + next.price * next.quantity, 0) + this.freight) * this.discountData.percentage
+                }
             },
             removeChange:function(ids){
                 ids = Array.from(ids)
@@ -48,6 +53,44 @@
                 this.products[ev.key].total = (this.products[ev.key].price * this.products[ev.key].quantity).toFixed(2) 
                 axios.post(`/cart/update-quantity/${this.products[ev.key].slug}`, {quantity:this.products[ev.key].quantity}).then(res=>{
                     this.$dispatch('cart-change', res.data)
+                })
+            },
+            discount: '',
+            discount_value: 0,
+            disconutLoading:false,
+            discountError: false,
+            discountErrorText: '',
+            discountSuccess:false,
+            discountSuccessText: '',
+            discountData: {
+                'id':null,
+                'code': null,
+                'discount_type': null,
+                'discount_value': 0,
+                'percentage': 0,
+                'minimum_spend': 0,
+            },
+            inputDiscount:function(){
+                this.disconutLoading = true
+                axios.post('/discount', {
+                    discount: this.discount,
+                }).then(res=>{
+                    this.discountError = true
+                    this.discountErrorText = ''
+                    this.discountSuccess = true
+                    this.discountSuccessText = res.data.message
+                    this.discountData = res.data.data
+                    console.log(this.discountData)
+                    
+                }).catch(error=>{
+                    this.discountSuccess = false
+                    this.discountSuccessText = ''
+                    this.discountError = true
+                    this.discountErrorText = error.response.data.message
+                    console.error(error.response.data.message)
+                })
+                .finally(()=>{
+                    this.disconutLoading = false
                 })
             }
         }" x-on:remove-change.window="removeChange($event.detail)" x-on:update-change.window="updateChange($event.detail)">
@@ -119,6 +162,11 @@
                         <p x-text=`$${parseInt(cartSubTotal)}`></p>
                     </div>
                     <div>
+                        <p>折扣</p>
+                        <p x-show="discountData.discount_type == null || discountData.discount_type == 'int'" x-text=`-$${discountData.discount_value}`></p>
+                        <p x-show="discountData.discount_type == 'percentage'" x-text=`-${100-discountData.percentage*100}%`></p>
+                    </div>
+                    <div>
                         <p>運費</p>
                         <p x-text=`$${freight}`></p>
                     </div>
@@ -128,14 +176,23 @@
                     </div>
                 </div>
                 <div class="coupon">
-                    <input type="text" placeholder="請輸入折扣碼..." />
-                    <button>套用</button>
+                    <input type="text" placeholder="請輸入折扣碼..." x-model="discount" />
+                    <button x-on:click="inputDiscount();" class="flex items-center justify-center" :disabled="disconutLoading">
+                        <span x-show="!disconutLoading">套用</span>
+                        <svg x-show="disconutLoading" class="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                    <span class="text-red-600 text-sm text-center block my-2" x-show="discountError" x-html="discountErrorText"></span>
+                    <span class="text-green-600 text-sm text-center block my-2" x-show="discountSuccess" x-html="discountSuccessText"></span>
                 </div>
                 <div class="checkout">
                     <form action="{{route('checkout.checkout')}}" method="post" x-data="{
                         loading:false,
                     }">
                         @csrf
+                        <input type="hidden" name="discount_id" x-model="discountData.id" />
                         <button @click="loading = true" >
                             <span x-show="!loading">結帳</span>
                             <svg x-show="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

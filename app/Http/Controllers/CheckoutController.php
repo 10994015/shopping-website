@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Helpers\Cart;
 use App\Models\CartItem;
+use App\Models\Discount;
+use App\Models\DiscountCodeUsages;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -11,6 +13,7 @@ use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
@@ -18,7 +21,13 @@ class CheckoutController extends Controller
     public function checkout(Request $request){
         $user = $request->user();
         $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-
+        $discount = (float)$request['percentage'];
+        $discount_id = $request['discount_id'] ?? null;
+        if($discount_id){
+            $discount = Discount::find($discount_id)->percentage ?? 1;
+        }else{
+            $discount = 1;
+        }
         $cartItems = Cart::getCartItems();
         $ids = Arr::pluck($cartItems, 'product_id');
         $products = Product::query()->whereIn('id', $ids)->get();
@@ -27,16 +36,17 @@ class CheckoutController extends Controller
         $orderItems = [];
         $totalPrice = 0;
         foreach($products as $product){
-            $price = ($product->sale_price) ? (int)$product->sale_price  : (int)$product->price;
+            $price = ($product->sale_price) ? (int)$product->sale_price : (int)$product->price;
+            $price = (int)$price * $discount;
             $totalPrice = $totalPrice + ($price * $cartItems[$product->id]['quantity']);
             $lineItems[] = [
                 'price_data' => [
-                'currency' => 'TWD',
-                'product_data' => [
-                    'name' => $product->title,
-                    'images'=> [$product->image]
-                ],
-                'unit_amount' => $price * 100,
+                    'currency' => 'TWD',
+                    'product_data' => [
+                        'name' => $product->title,
+                        'images'=> [$product->image]
+                    ],
+                    'unit_amount' => $price * 100 ,
                 ],
                 'quantity' => $cartItems[$product->id]['quantity'],
             ];
@@ -77,10 +87,20 @@ class CheckoutController extends Controller
             'type'=> 'cc',
             'created_by'=> $user->id,
             'updated_by'=> $user->id,
-            'session_id'=>$token
+            'session_id'=>$token,
+            'discount_id'=> $discount_id,
         ];
         $payment = Payment::create($paymentData);
-
+        $discountCoseUse = [
+            'user_id'=> $user->id,
+            'discount_id'=>$discount_id,
+            'order_id'=>$order->id,
+            'discount_amount'=>$discount,
+            'used_at'=>now(),
+        ];
+        if($discount_id){
+            DiscountCodeUsages::create($discountCoseUse);
+        }
         return redirect($checkout_session->url);
     }
     public function success(Request $request){

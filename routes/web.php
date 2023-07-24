@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -36,6 +37,8 @@ Route::middleware(['guestOrVerified'])->group(function(){
         Route::post('/update-quantity/{slug}', [CartController::class, 'updateQuantity'])->name('update-quantity');
         Route::post('/get-products', [CartController::class, 'getProducts'])->name('get-products');
     });
+    
+    Route::post("/discount", [DiscountController::class, 'input']);
 });
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

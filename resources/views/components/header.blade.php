@@ -31,7 +31,7 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
 
         @if(Auth::check())
         <a href="javascript:;" class="myaccount">
-            <i class="fa-solid fa-user mr-1"></i>{{Auth::user()->name}}
+            <i class="fa-solid fa-user mr-1"></i><span class="username">{{Auth::user()->name}}</span>
             <ol>
                 <p x-on:click="window.location.href='/profile'"><i class="fa-solid fa-user"></i>我的帳號</p>
                 <p x-on:click="window.location.href='/orders'"><i class="fa-solid fa-file"></i>訂單查詢</p>
