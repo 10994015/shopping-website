@@ -5,6 +5,12 @@
             console.log(this.products)
         }
     }">
+        <template x-if="products.length == 0">
+            <div class="noFavorites">
+                <span class="text-gray-500">暫無收藏</span>
+                <a href="/store">立即前往購物</a>
+            </div>
+        </template>
         <div class="products-list">
             <template x-for="product, ids in products" :key="product.product.id">
             <div class="item" 

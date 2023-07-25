@@ -2709,6 +2709,27 @@ footer > .full > .container > p {
   max-width: 1200px;
   margin: 0 auto;
 }
+.favorites-componet > .noFavorites {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.favorites-componet > .noFavorites span {
+  font-size: 14px;
+}
+.favorites-componet > .noFavorites > a {
+  background-color: #FC5F5F;
+  color: #fff;
+  border-radius: 25px;
+  width: 120px;
+  padding: 10px;
+  display: block;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
+}
 .favorites-componet > .products-list {
   display: grid;
   margin-top: 20px;

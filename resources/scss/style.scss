@@ -2578,6 +2578,27 @@ footer{
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    >.noFavorites{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        span{
+            font-size: 14px;
+        }
+        >a{
+            background-color: $mainColor;
+            color:#fff;
+            border-radius: 25px;
+            width: 120px;
+            padding: 10px;
+            display: block;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 15px;
+        }
+    }
     >.products-list{
         display: grid;
         margin-top: 20px;
