@@ -10,10 +10,12 @@
             </div>
             @foreach($orders as $order)
             <div class="order-item">
-                <div class="number">#{{$order->id}}</div>
-                <div>{{$order->orderDate()}}</div>
+                <div class="number">
+                    <small class="md">訂單編號:</small>
+                    #{{$order->id}}</div>
+                <div><small class="md">日期:</small>{{$order->orderDate()}}</div>
                 <div><span class="{{($order->isPaid()) ? 'paid' : 'unpaid'}}">{{($order->isPaid()) ? '已付款' : '未付款'}}</span></div>
-                <div>${{(int)$order->total_price}}</div>
+                <div><small class="md">總金額:</small>${{(int)$order->total_price}}</div>
                 <div>
                     <a href="{{route('order.view', $order)}}">訂單詳情</a>
                     @if(!$order->isPaid())

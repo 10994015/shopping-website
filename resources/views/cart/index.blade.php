@@ -109,8 +109,9 @@
                         <template x-for="(product,key) of products" :key="product.id" x-data="{
                             removeCartItem:function(slug){
                                 axios.post(`/cart/remove/${slug}`).then(res=>{
-                                    this.$dispatch('remove-change', {cartItems:res.data.ids})
-                                    this.$dispatch('cart-change', {count: res.data})
+                                    console.log(res)
+                                    this.$dispatch('remove-change', res.data.ids)
+                                    this.$dispatch('cart-change', res.data)
                                 })
                             },
                             updateCartItemCount:function(quantity, key){
@@ -132,9 +133,11 @@
                                     <p x-text="product.title"></p>
                                 </td>
                                 <td>
+                                    <small class="md">價錢:</small>
                                     <p x-text=`$${parseInt(product.price)}`></p>
                                 </td>
                                 <td class=" ">
+                                    <small class="md">數量:</small>
                                     <div class="input-number">
                                         <button class="decrement cart-decrement" x-on:click="decrement(product, key)">-</button>
                                         <input type="number" x-model="product.quantity" id="cart-number" min="1" max="100" step="1" x-on:change="updateCartItemCount(product.quantity, key)" />
@@ -142,9 +145,13 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <small class="md">小計:</small>
                                     <p x-text=`$${parseInt(product.total)}`></p>
                                 </td>
-                                <td><i class="fa-regular fa-circle-xmark" x-on:click="removeCartItem(`${product.slug}`)"></i></td>
+                                <td>
+                                    <small class="md"></small>
+                                    <i class="fa-regular fa-circle-xmark" x-on:click="removeCartItem(`${product.slug}`)"></i>
+                                </td>
                             </tr>
                         </template> 
                         
