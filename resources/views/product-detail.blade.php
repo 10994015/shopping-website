@@ -91,6 +91,7 @@
                 success:false,
                 fail:false,
                 failtext:'',
+                isNoComment:true,
                 init(){
                     console.log(this.comments)
                 },
@@ -103,10 +104,10 @@
                         rating: this.rating,
                         product_id:{{$product->id}}
                     }).then(res=>{
-                        console.log(res.status)
                         if(res.status===201){
                             this.comments = res.data.comments
                             this.success = true
+                            this.isNoComment = false
                         }
                         this.rating = 0
                         this.comment = ''
@@ -163,7 +164,9 @@
                 @endif
                 <form >
                     @if($count <= 0)
-                    <h3>成為第一個評論"{{$product->title}}"的人</h3>
+                    <template x-if="isNoComment">
+                        <h3>成為第一個評論"{{$product->title}}"的人</h3>
+                    </template>
                     @endif
                     <label>您的電子郵件地址不會被公開。 必填字段已標記*</label>
                     <label class="flex items-center">您的評價* 
