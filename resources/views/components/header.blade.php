@@ -34,6 +34,7 @@ x-ref="header" x-on:cart-change.window="updateCartItemsCount($event.detail)">
             <i class="fa-solid fa-user mr-1"></i><span class="username">{{Auth::user()->name}}</span>
             <ol>
                 <p x-on:click="window.location.href='/profile'"><i class="fa-solid fa-user"></i>我的帳號</p>
+                <p x-on:click="window.location.href='/favorites'"><i class="fa-solid fa-heart"></i>我的收藏</p>
                 <p x-on:click="window.location.href='/orders'"><i class="fa-solid fa-file"></i>訂單查詢</p>
                 <form method="post" action="{{route('logout')}}" id="logoutForm" onclick="logoutForm.submit()"><p>@csrf<i class="fa-solid fa-right-from-bracket"></i>登出</p></form>
             </ol>

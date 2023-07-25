@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -39,6 +40,9 @@ Route::middleware(['guestOrVerified'])->group(function(){
     });
     
     Route::post("/discount", [DiscountController::class, 'input']);
+    Route::post("/add-favorite", [FavoriteController::class, 'add']);
+    Route::post("/remove-favorite", [FavoriteController::class, 'remove']);
+    Route::get('/favorites',[FavoriteController::class, 'index']);
 });
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

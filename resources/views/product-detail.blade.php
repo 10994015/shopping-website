@@ -13,6 +13,7 @@
                 addCartLoading:false,
                 productItem:{{json_encode($product)}},
                 quantity:1,
+                isFavorite: {{$favorite}},
                 decrementFn(){
                     if(this.quantity>1) {
                         this.quantity--
@@ -40,9 +41,25 @@
                             this.addCartLoading = false;
                         },1000)
                     }
+                },
+                init(){
+                },
+                addFavourite(){
+                    axios.post('/add-favorite' ,{id: this.productItem.id}).then(res=>{
+                        if(res.status === 200){
+                            this.isFavorite = true
+                        }
+                    })
+                },
+                removeFavourite(){
+                    axios.post('/remove-favorite' ,{id: this.productItem.id}).then(res=>{
+                        if(res.status === 204){
+                            this.isFavorite = false
+                        }
+                    })
                 }
             }">
-                <a href="/store/{{$product->category->slug}}" class="category-name">{{$product->category->name}}</a>
+                <a href="/store/{{$product->category->id}}" class="category-name">{{$product->category->name}}</a>
                 <h1 class="product-title">{{$product->title}}</h1>
                 <div class="price-list">
                     @if($product->sale_price)
@@ -54,6 +71,14 @@
                     <span>+免運費</span>
                 </div>
                 <p class="short-description">{{$product->short_description}}</p>
+                <div class="favourite">
+                    <template x-if="isFavorite">
+                        <i class="fa-solid fa-heart" @click="removeFavourite"></i>
+                    </template>
+                    <template x-if="!isFavorite">
+                        <i class="fa-regular fa-heart" @click="addFavourite"></i>
+                    </template>
+                </div>
                 <div class="add-cart">
                     <div class="input-number">
                         <button class="decrement" id="decrement" x-on:click="decrementFn">-</button>

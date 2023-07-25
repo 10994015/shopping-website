@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
@@ -45,7 +47,8 @@ class ProductController extends Controller
 
         });
         $user = $req->user() ?? null;
-        return view('product-detail', compact('product', 'products', 'comments', 'count', 'user'));
+        $favorite = Favorite::where(['user_id'=>Auth::id(), 'product_id'=> $product->id])->orderBy('id', 'desc')->first() ? 1 : 0;
+        return view('product-detail', compact('product', 'products', 'comments', 'count', 'user', 'favorite'));
     }
     public function hidename($email){
         $str = explode("@", $email)[0];
