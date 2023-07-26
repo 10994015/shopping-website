@@ -67,7 +67,7 @@ class CheckoutController extends Controller
         $itemDescriptions = rtrim($itemDescriptions, ', ');
         $input = [
             'MerchantID' => '2000132',
-            'MerchantTradeNo' => 'Test' . time(),
+            'MerchantTradeNo' => 'Ftz' . time(),
             'MerchantTradeDate' => date('Y/m/d H:i:s'),
             'PaymentType' => 'aio',
             'TotalAmount' => $totalPrice,
