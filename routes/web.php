@@ -52,6 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout.checkout');
     Route::post('/checkout/{order}', [CheckoutController::class, 'checkoutOrder'])->name('checkout.checkout-order');
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
     Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
     Route::get('/orders/{order}', [OrderController::class, 'view'])->name('order.view');

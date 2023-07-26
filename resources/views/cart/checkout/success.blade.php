@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="checkout-success">
-        {{$customer->name}},感謝您的購買~
+        {{$user->name}},感謝您的購買~
     </div>
 @push('scripts')
 <script>

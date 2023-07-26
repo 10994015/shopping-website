@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::get('/user', [AuthController::class, 'getUser']);
 
     Route::apiResource('products', ProductController::class);
+    Route::apiResource('orders', OrderController::class);
     Route::post('/isExistProduct', [ProductController::class, 'isExistProduct']);
     Route::post('/category', [CategoryController::class, 'store']);
     Route::get('/categories', [CategoryController::class, 'index']);

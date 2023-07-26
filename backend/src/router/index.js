@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue"
 import Products from "../views/Products.vue"
 import AddProduct from "../views/AddProduct.vue"
+import Orders from "../views/Orders.vue"
 import Login from "../views/Login.vue"
 import RequestPassword from "../views/RequestPassword.vue"
 import ResetPassword from "../views/ResetPassword.vue"
@@ -31,6 +32,11 @@ const routes = [
                 path:'add-product/:id',
                 name:'app.addProduct',
                 component: AddProduct,
+            },
+            {
+                path:'orders',
+                name:'app.orders',
+                component: Orders,
             },
         ]
     },
