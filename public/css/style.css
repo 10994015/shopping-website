@@ -1788,6 +1788,17 @@ header > nav > a > .icon > i {
 .login > form > label > button::selection, .reset-password > form > label > button::selection {
   color: #75C32C;
 }
+.login > form > label a.googleLogin, .reset-password > form > label a.googleLogin {
+  width: 100%;
+  max-width: 250px;
+  color: #fff;
+  padding: 9px;
+  text-align: center;
+  display: block;
+  background-color: #EA4335;
+  border-radius: 8px;
+  font-size: 15px;
+}
 .login > form > div, .reset-password > form > div {
   display: flex;
   justify-content: space-between;

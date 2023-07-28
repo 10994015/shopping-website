@@ -29,6 +29,9 @@
                     <p x-show="!loading">登入</p>
                 </button>
             </label>
+            <label for="">
+                <a href="{{route('google-auth')}}" class="googleLogin"><i class="fa-brands fa-google mr-3"></i>使用Google帳戶登入</a>
+            </label>
             <div>
                 <a href="{{route('register')}}">還沒有帳號嗎？點擊註冊</a>
                 <a href="{{route('password.request')}}">忘記密碼？</a>

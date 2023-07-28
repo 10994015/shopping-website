@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -30,7 +31,7 @@ Route::middleware(['guestOrVerified'])->group(function(){
     Route::get('/change-store-sort', [ProductController::class, 'sort']);
     Route::get('/search-store', [ProductController::class, 'search']);
     Route::get('/filter-store-price', [ProductController::class, 'filter']);
-
+    
     Route::prefix('/cart')->name('cart.')->group(function(){
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/add/{slug}', [CartController::class, 'add'])->name('add');
@@ -43,6 +44,9 @@ Route::middleware(['guestOrVerified'])->group(function(){
     Route::post("/add-favorite", [FavoriteController::class, 'add']);
     Route::post("/remove-favorite", [FavoriteController::class, 'remove']);
     Route::get('/favorites',[FavoriteController::class, 'index']);
+
+    Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
+    Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google-callback');
 });
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
