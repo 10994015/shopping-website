@@ -60,7 +60,7 @@
             <h4>購物車</h4>
             <i class="fas fa-times" id="close-cart" @click="$dispatch('cart-close')"></i>
         </div>
-        <div class="product-list">
+        <div class="product-list" >
             <template x-if="Object.values(cartItems).length">
                 <template x-for="(product, key) of cartItems" :key="product.id" x-data="{
                     increment:function(product, key){
