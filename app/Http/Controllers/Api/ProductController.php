@@ -46,7 +46,7 @@ class ProductController extends Controller
 
         if($image){
             $relatevePath = $this->saveImage($image);
-            $data['image'] = URL::to('/storage/public/'.$relatevePath);
+            $data['image'] = URL::to('https://row-file.s3.ap-southeast-1.amazonaws.com/public/'.$relatevePath);
             $data['image_mime'] = $image->getClientMimeType();
             $data['image_size'] = $image->getSize();
         }
@@ -85,7 +85,7 @@ class ProductController extends Controller
         
         if($image){
             $relativePath = $this->saveImage($image);
-            $data['image'] = URL::to('/storage/public/'.$relativePath);
+            $data['image'] = URL::to('https://row-file.s3.ap-southeast-1.amazonaws.com/public/'.$relativePath);
             $data['image_mime'] = $image->getClientMimeType();
             $data['image_size'] = $image->getSize();
 
