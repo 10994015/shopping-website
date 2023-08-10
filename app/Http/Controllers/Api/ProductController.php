@@ -116,7 +116,7 @@ class ProductController extends Controller
             Storage::makeDirectory($path, 0755, true);
         }
         $uploadedPath = 'public/' . $path . '/' . $image->getClientOriginalName();
-        if(!Storage::putFileAs($uploadedPath, $image, $image->getClientOriginalName())){
+        if(!Storage::putFileAs('public/' . $path, $image, $image->getClientOriginalName())){
             throw new \Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
         }
         Storage::disk('s3')->setVisibility($uploadedPath, 'public');
